@@ -13,7 +13,7 @@ struct futureplugin {
   char *provider;
 };
 
-static void *OnFutureStart() {
+static void *OnFutureStart(struct server* srv) {
   signal(SIGPIPE, SIG_IGN);
   struct futureplugin *future =
       (struct futureplugin *)calloc(1, sizeof(struct futureplugin));

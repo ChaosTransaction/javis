@@ -10,7 +10,7 @@
 
 # Where to find user code.
 
-LIB_DIR = ./../../../library
+LIB_DIR = ./../../../../library
 USER_DIR = ./../../pub
 SO_DIR = ./../../bin/plugins
 
@@ -20,8 +20,22 @@ CUSTOM_THIRD_PATH = $(LIB_DIR)/mylib/third_party
 
 LINK_PATHS = -L./ -L/usr/local/libmemcached-1.0.7/lib/  -L/usr/lib64/mysql
 
+# Flags passed to the preprocessor.
+CPPFLAGS += -isystem -shared -fPIC -D_DB_POOL_ -D_DEBUG -DUSR_LOG_MSG\
+	-D_DIC_POOL_ -D_REENTRANT -D_GNU_SOURCE -DUSR_LOG_ERROR -DUSR_LOG_MSG\
+	-DPIPE_WORK -DHEAD_SHORT -DRECORD_MARKET
+
+#CPPFLAGS += -isystem -shared -fPIC -D_DB_POOL_\
+	-D_DIC_POOL_ -D_REENTRANT -D_GNU_SOURCE -DUSR_LOG_ERROR -DUSR_LOG_MSG\
+	-DNET_WORK -DHEAD_SHORT
+
+# Flags passed to the C++ compiler.
+CXXFLAGS += -g -Wall -Wextra -Wno-unused-parameter -pthread -shared -fPIC
+#CXXFLAGS += -Wextra -pthread -shared -fPIC
+
+# All tests produced by this Makefile.  Remember to add new tests you
+# created to the list.
 PLUGIN = $(SO_DIR)/future/future.so
-PLUGIN_TYPE = "LIB"
 
 INCLUDE_PATHS = -I/usr/local/libmemcached-1.0.7/include \
 				-I$(LIB_DIR)/BasicCore \
@@ -30,10 +44,11 @@ INCLUDE_PATHS = -I/usr/local/libmemcached-1.0.7/include \
 				-I/usr/include/mysql\
 				-I$(USER_DIR)\
 				-I$(CUSTOM_THIRD_PATH)/hiredis\
-				-I$(CUSTOM_THIRD_PATH)/librdkafka/src\
 				-I$(CUSTOM_THIRD_PATH)\
+				-I$(CUSTOM_THIRD_PATH)/librdkafka/src\
 				-I$(LIB_DIR)/mylib/base\
 				-I../\
+				-I../../\
 
 
 
@@ -74,17 +89,29 @@ clean :
 # function.
 
 
+future_engine.o : ./future_engine.cc ./future_engine.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_engine.cc $(INCLUDE_PATHS)
+
+
 future_init.o : ./future_init.cc ./future_init.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_init.cc $(INCLUDE_PATHS)
 
+
 future_logic.o : ./future_logic.cc ./future_logic.h
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./users_logic.cc $(INCLUDE_PATHS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_logic.cc $(INCLUDE_PATHS)
 
 
-$(PLUGIN) : future_init.o  future_logic.o\
-	$(CUSTOM_THIRD_PATH)/dmg_fp/lib/dmg_fp.a $(LIB_DIR)/mylib/base/lib/mybase.a $(LIB_DIR)/mylib/third_party/lib/libhiredis.a \
-	$(CUSTOM_THIRD_PATH)/lib/librdkafka.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LINK_PATHS) -lcurl -lpthread -lexpat -lrt -ldl\
+future_infos.o : ./future_infos.cc ./future_infos.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_infos.cc $(INCLUDE_PATHS)
+
+
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_infos.cc $(INCLUDE_PATHS)
+
+symbol_static.pb.o : ./../../proto/symbol_static.pb.cc ./../../proto/symbol_static.pb.h 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../proto/symbol_static.pb.cc
+
+$(PLUGIN) : future_engine.o future_init.o future_logic.o future_logic.o\
+		symbol_static.pb.o\
+	$(LIB_DIR)/mylib/base/lib/mybase.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LINK_PATHS) -liconv -lprotobuf -lpthread -lexpat -lrt -ldl \
 	$^ -o $@
-
-include ../base.mk
