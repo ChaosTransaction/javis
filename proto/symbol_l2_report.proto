@@ -1,0 +1,5 @@
+package chaos_data; message SymbolL2Report {
+  optional uint32 time = 1; //成交时间
+  optional uint32 price = 2; //成交价格
+  optional uint32 volume = 3;//成交量
+}

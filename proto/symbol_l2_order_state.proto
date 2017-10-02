@@ -1,0 +1,23 @@
+package chaos_data; message SymbolL2OrderState {
+  required uint32 time = 1;
+  message SymbolOrderStat {
+  repeated uint64 buy_order_vol = 1;//买入单量 小，中，大，特大
+  repeated uint64 sell_order_vol = 2;//卖出单量 小，中，大，特大
+  repeated uint64 order_num = 3;//委托单数量，买入/卖出
+  repeated uint64 vol = 4;//买入/卖出撤单量,现在暂时将无法判明方向的总撤单量各送一半
+  
+   /*required uint64 buy_order_vol_small = 1; //买入单量(小单)
+   required uint64 sell_order_vol_small = 2; //卖出单量(小单)
+   required uint64 buy_order_vol_medium = 3;  //买入单量(中单)
+   required uint64 sell_order_vol_medium = 4; //卖出单量(中单)
+   required uint64 buy_order_vol_big = 5; //买入单量(大单)
+   required uint64 sell_order_vol_big = 6; //卖出单量(大单)
+   required uint64 buy_order_vol_huge = 7; //买入单量(特大单)
+   required uint64 sell_order_vol_huge = 8; //卖出单量(特大单)
+   required uint64 buy_order_num = 9;//买入，委托单数
+   required uint64 sell_order_num = 10;//出卖，委托单数
+   required uint64 buy_vol = 11; //买入撤单量;现在暂时将无法判明方向的总撤单量各送一半
+   required uint64 sell_vol = 12; //买入撤单量;现在暂时将无法判明方向的总撤单量各送一半*/
+ }
+  optional SymbolOrderStat order_state = 2;
+}

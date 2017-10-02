@@ -1,0 +1,4 @@
+package chaos_data; message SymbolHisMatuYld {
+  optional uint32 time = 1; //时间
+  optional float value = 2; //数据
+}

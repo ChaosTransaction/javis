@@ -1,0 +1,113 @@
+package chaos_data; message SymbolStaticEx {
+
+	enum SYMBOL_SUBTYPE{
+		NILTYPE = 1;
+		ASHARE	= 2;			//A股,仅对STOCK,WARRANT有效
+		BSHARE	= 3;			//B股,仅对STOCK,WARRANT有效
+		GOV_BOND = 4;			//国债,仅对BOND有效
+		ENT_BOND = 5;			//企业债,仅对BOND有效
+		FIN_BOND = 6;			//金融债,仅对BOND有效
+	}
+
+	enum SYMBOL_SP{//股票属性
+		NULLSP = 1;
+		NSP	= 2;//正常
+		SSP	= 3;//ST股
+		PSP = 4;//PT股
+		TSP = 5;//代办转让证券
+		LSP = 6;//上市开放型基金（LOF）
+		OSP = 7;//仅揭示净值的开放式基金
+		FSP = 8;//非交易型开放式基金
+		ESP = 9;//ETF
+		ZSP = 10;//处于退市整理期的证券
+	}
+
+	enum SYMBOL_TYPE{
+		INDEX = 0;				  //指数
+		STOCK = 1;				  //股票
+		FUND = 2;				    //基金
+		BOND = 3;				    //债券
+		OTHER_STOCK = 4;		//其它股票
+		OPTION = 5;		        //选择权
+		EXCHANGE = 6;			  //外汇
+		FUTURE = 7;				  //期货
+		FTR_IDX = 8;			  //期指
+		RGZ = 9;				    //认购证
+		ETF = 10;				    //ETF
+		LOF = 11;				    //LOF
+		COV_BOND = 12;			//可转债
+		TRUST = 13;				  //信托
+		WARRANT = 14;			  //权证
+		REPO = 15;				  //回购
+		COMM = 16;				  //商品现货
+	}
+	optional SYMBOL_TYPE    ctype = 1;     //SYMBOL_TYPE,由该标志决定联合中使用哪一个结构
+	optional SYMBOL_SUBTYPE csub_type = 2; //SYMBOL_SUBTYPE
+
+	message  EquityMessage { //股票	(STOCK,OTHER_STOCK)
+		optional float       face_value = 1; //面值
+		optional float       total_issued = 2; //总股本
+		optional uint32	     industry = 3;		//	行业'A' -- 'M',参见 industryClasify
+		optional int32       trade_status = 4; // 'N'=Normal, 'H'=Halt, 'X'=Not trade on this Market
+		optional float       cash_dividend = 5;	//	每股红利
+		optional SYMBOL_SP   security_properties = 6; //特殊分类标记，取值集合SYMBOL_SP中的值
+		optional uint32      last_tradedate = 7;//最后交易日，目前为空，做预留用
+	}
+
+  	message FundMessage { //基金,ETF,LOF	(FUND,ETF,LOF)
+  		optional float face_value = 1; //面值
+  		optional float total_issued = 2; //总股本
+  		optional float iopv = 3;			//	IOPV净值,仅对ETF,LOF有效
+  	}
+
+  	message WarranMessage {//权证,选择权	(OPTION,WARRANT)
+  			optional int32	style = 1;			//  'A' or 'E'	American or European Style
+    		optional int32	cp = 2;				//	'C' or 'P' Call or Put
+    		optional float	cnvt_ratio = 3;		//  兑换/行权比例
+    		optional float	strike_price = 4;		//	行权价格
+    		optional uint32	maturity_date = 5;	//	到期日,YYYYMMDD
+    		optional bytes	under_line = 6;	//	对应股票,包含市场代码，如SH600000
+    		optional float	balance = 7;			//  流通余额
+    	}
+
+    	message BoundMessage	{//债券	(BOND)
+    		optional uint32	maturity_date = 1;	//	到期日,YYYYMMDD
+    		optional uint32	intaccru_date = 2;	//	起息日，YYYYMMDD
+    		optional float	isssue_price = 3;		//	发行价
+    		optional float	coupon_rate = 4;		//	利率
+    		optional float	face_value = 5;		//	面值
+    		optional float	accrued_int = 6;		//	应计利息,***
+    	}
+
+    	message CNVTMessage	{	//可转债	(COV_BOND)
+    		optional int32	style = 1;			//  'A' or 'E'	American or European Style
+    		optional int32	cp = 2;				  //	'C' or 'P' Call or Put
+    		optional float	cnvt_ratio = 3;		//  兑换/行权比例
+    		optional float	strike_price = 4;		//	行权价格
+    		optional uint32	maturity_date = 5;	//	到期日,YYYYMMDD
+    		optional bytes	under_line = 6;	   //	对应股票,包含市场代码，如SH600000
+    		optional float	accrued_int = 7;		//	应计利息
+  	}
+
+  	message FutureMessage {		//期货,商品	(FUTURE,FTR_IDX,COMM)
+  		optional uint32	last_day_OI = 1;			//昨日持仓量
+  		optional float	last_settle_price = 2;		//昨日结算价
+    }
+
+    message TruestMessage {		//信托	(TRUST)
+    		optional float	asset = 3;			//净资产
+    		optional uint32	asset_date = 4;		//YYYYMMDD
+    }
+
+    message SpecMessage {
+    		optional EquityMessage equity = 1;
+    		optional FundMessage fund = 2;
+    		optional WarranMessage warran = 3;
+    		optional BoundMessage  bound = 4;
+    		optional CNVTMessage cnvt = 5;
+    		optional FutureMessage future = 6;
+    		optional TruestMessage truest = 7;
+    }
+
+    optional SpecMessage spec = 3;
+}

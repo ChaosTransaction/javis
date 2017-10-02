@@ -1,0 +1,4 @@
+package chaos_data; message SymbolHisIOPV {
+  optional uint32 time = 1;
+  optional float  value = 2;
+}

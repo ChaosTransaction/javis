@@ -1,0 +1,11 @@
+package chaos_data; message SymbolL2MMPEX {
+  optional uint32 time = 1; //时间
+  optional uint32 avg_buy_price = 2; //加权平均委买价格
+  optional uint64 all_buy_vol = 3;  //委买总量
+  optional uint32 avg_sell_price = 4; //加权平均委卖价格
+  optional uint64 all_sell_vol = 5; //委卖总量
+  repeated uint32 buy_price = 6; //委买价
+  repeated uint32 buy_vol = 7;//委买量
+  repeated uint32 sell_price = 8;//委卖价
+  repeated uint32 sell_vol = 9;//委卖量
+}
