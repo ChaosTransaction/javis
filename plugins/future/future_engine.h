@@ -7,13 +7,15 @@
 #include "future_infos.h"
 #include "thread/base_thread_handler.h"
 #include "thread/base_thread_lock.h"
+
+#include "proto/symbol_dynam_market.pb.h"
 #include <map>
 
 namespace future_logic {
 
-typedef std::map<int64, future_infos::TickTimePos> MINUTEPOS_MAP;  //每分钟行情的位置 /key:分钟
-typedef std::map<int64, MINUTEPOS_MAP> HOURPOS_MAP;  //每小时行情位置 /key:小时
-typedef std::map<int64, HOURPOS_MAP> DAYPOS_MAP;  //每天行情位置 //key:天
+typedef std::map<int32, future_infos::TickTimePos> MINUTEPOS_MAP;  //每分钟行情的位置 /key:分钟
+typedef std::map<int32, MINUTEPOS_MAP> HOURPOS_MAP;  //每小时行情位置 /key:小时
+typedef std::map<int32, HOURPOS_MAP> DAYPOS_MAP;  //每天行情位置 //key:天20150608
 typedef std::map<std::string, DAYPOS_MAP> SYMBOL_MAP;  //合约行情 //key:合约代码
 //typedef std::map<std::string, SYMBOL_MAP> MKT_MAP;//交易所行情 //交易所编号
 
@@ -43,6 +45,17 @@ class FutureManager {
  protected:
   FutureManager();
   virtual ~FutureManager();
+ protected:
+  bool OnFetchTick(const int socket, const std::string& sec,
+                   const std::string& field, const std::string& start_time,
+                   const std::string& end_time);
+
+
+ private:
+  template <typename MapType,typename KeyType,typename ValType>
+  bool GetCompareTimeTickPos(MapType& ss_start_map,MapType& se_end_map,
+                      const int32 start_time,const int32 end_time,
+                      ValType& start_map,ValType& end_time);
  private:
   void Init();
   void Deinit();

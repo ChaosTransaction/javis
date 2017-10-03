@@ -5,6 +5,31 @@
 
 namespace future_infos {
 
+TimeFrame::TimeFrame(const std::string& start_time,
+                     const std::string& end_time){
+  data_ = new Data(start_time,end_time);
+}
+
+TimeFrame::TimeFrame(const TimeFrame& time_frame)
+  : data_(time_frame.data_){
+  if (data_ != NULL){
+    data_->AddRef();
+  }
+}
+
+TimeFrame& TimeFrame::operator =(const TimeFrame& time_frame) {
+  if (time_frame.data_ != NULL){
+    time_frame.data_->AddRef();
+  }
+
+  if (data_ != NULL){
+    data_->Release();
+  }
+
+  data_ = time_frame.data_;
+  return (*this);
+}
+
 TickTimePos::TickTimePos(const TickTimePos& tit_pos)
     : data_(tit_pos.data_) {
   if (data_ != NULL) {
