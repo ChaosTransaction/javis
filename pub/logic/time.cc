@@ -10,8 +10,7 @@
 #include <limits>
 
 #include "basic/basictypes.h"
-#include "logic/logic_unit.h"
-
+#include "logic/logic_comm.h"
 namespace base {
 
 // The Time routines in this file use standard POSIX routines, or almost-
@@ -167,8 +166,10 @@ Time Time::FromStringFormat(const char* time_string,
          &stm.tm_hour, &stm.tm_min, &stm.tm_sec);
   stm.tm_year -= 1900;
   stm.tm_mon--;
-  return FromTimeT(mktime(&tm));
+  return Time((mktime(&stm) * kMicrosecondsPerSecond) + kTimeTToMicrosecondsOffset);
 }
+
+
 // static
 Time Time::FromTimeT(time_t tt) {
   if (tt == 0)

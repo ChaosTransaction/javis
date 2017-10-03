@@ -36,6 +36,11 @@ TickTimePos::TickTimePos(const TickTimePos& tit_pos)
     data_->AddRef();
   }
 }
+
+TickTimePos::TickTimePos() {
+    data_ = new Data();
+}
+
 TickTimePos::TickTimePos(const int32 start_pos, const int32 end_pos) {
   data_ = new Data(start_pos, end_pos);
 }

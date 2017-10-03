@@ -27,30 +27,35 @@ class TimeFrame {
   }
 
 
-  const int32 start_full_day(){
-    return 10000 * start_time_.year +
-         100 * start_time_.month + start_time.day_of_month;
+  int32 start_full_day() const{
+    return 10000 * data_->start_time_.year +
+         100 * data_->start_time_.month + 
+         data_->start_time_.day_of_month;
   }
 
-  const int32 end_full_day(){
-    return 10000 * end_time_.year +
-         100 * end_time_.month + end_time.day_of_month;
+  int32 end_full_day() const{
+    return 10000 * data_->end_time_.year +
+         100 * data_->end_time_.month + 
+         data_->end_time_.day_of_month;
   }
 
-  const int32 start_hour() {return start_time_.hour;}
-  const int32 end_hour() {return end_time_.hour;}
+  int32 start_hour() const {return data_->start_time_.hour;}
+  int32 end_hour() const {return data_->end_time_.hour;}
 
-  const int32 start_minute() {return start_time_.minute;}
-  const int32 end_minute() {return end_time_.minute;}
+  int32 start_minute() const {return data_->start_time_.minute;}
+  int32 end_minute() const {return data_->end_time_.minute;}
 
-  const int32 start_second() {return start_time_.second;}
-  const int32 end_second() {return end_time_.second;}
+  int32 start_second() const {return data_->start_time_.second;}
+  int32 end_second() const {return data_->end_time_.second;}
 
 
   class Data {
    public:
     Data()
         : refcount_(1){
+        base::Time empty_time;
+        empty_time.LocalExplode(&start_time_);
+        empty_time.LocalExplode(&end_time_);
     }
 
     Data(const std::string& str_start_time, const std::string& str_end_time)
@@ -59,13 +64,13 @@ class TimeFrame {
       const char* format = "%d-%d-%d %d:%d:%d";
       base::Time s_time = base::Time::FromStringFormat(str_start_time.c_str(),format);
       base::Time e_time = base::Time::FromStringFormat(str_end_time.c_str(),format);
-      s_time.LocalExplode(&s_time);
-      e_time.LocalExplode(&e_time);
+      s_time.LocalExplode(&start_time_);
+      e_time.LocalExplode(&end_time_);
     }
 
    public:
-    const base::Time::Exploded start_time_;
-    const base::Time::Exploded end_time_;
+    base::Time::Exploded start_time_;
+    base::Time::Exploded end_time_;
     void AddRef() {
       __sync_fetch_and_add(&refcount_, 1);
     }
@@ -84,6 +89,7 @@ class TimeFrame {
 
 class TickTimePos {
  public:
+  TickTimePos();
   TickTimePos(const TickTimePos& tit_pos);
   TickTimePos(const int32 start_pos, const int32 end_pos);
 
@@ -97,15 +103,15 @@ class TickTimePos {
   class Data {
    public:
     Data()
-        : refcount_(1),
-          start_pos_(0),
-          end_pos_(0) {
+        : start_pos_(0),
+          end_pos_(0),
+          refcount_(1){
     }
 
     Data(const int64 start_pos, const int64 end_pos)
-        : refcount_(1),
-          start_pos_(1),
-          end_pos_(1) {
+        : start_pos_(1),
+          end_pos_(1),
+          refcount_(1){
     }
 
    public:
@@ -143,8 +149,8 @@ class StaticDataInfo {
   class Data {
    public:
     Data()
-        : refcount_(1),
-          alive_time_(0) {
+        : alive_time_(0)
+        , refcount_(1) {
     }
 
    public:

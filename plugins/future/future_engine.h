@@ -47,15 +47,18 @@ class FutureManager {
   virtual ~FutureManager();
  protected:
   bool OnFetchTick(const int socket, const std::string& sec,
+                   const std::string& symbol,
                    const std::string& field, const std::string& start_time,
                    const std::string& end_time);
 
 
  private:
-  template <typename MapType,typename KeyType,typename ValType>
-  bool GetCompareTimeTickPos(MapType& ss_start_map,MapType& se_end_map,
-                      const int32 start_time,const int32 end_time,
-                      ValType& start_map,ValType& end_time);
+  template <typename MapType, typename MapITType, typename KeyType,
+    typename ValType>
+  bool GetCompareTimeTickPos(MapType& ss_start_map, 
+                MapType& se_end_map, KeyType& start_key,
+                KeyType& end_key, ValType& start_val,
+                ValType& end_val);
  private:
   void Init();
   void Deinit();
