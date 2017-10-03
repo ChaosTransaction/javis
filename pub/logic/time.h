@@ -7,25 +7,21 @@
 
 #include <sys/time.h>
 
-
-
 namespace base {
-
 
 class Time {
  public:
   static const int64 kMillisecondsPerSecond = 1000;
   static const int64 kMicrosecondsPerMillisecond = 1000;
-  static const int64 kMicrosecondsPerSecond = kMicrosecondsPerMillisecond *
-                                              kMillisecondsPerSecond;
+  static const int64 kMicrosecondsPerSecond = kMicrosecondsPerMillisecond
+      * kMillisecondsPerSecond;
   static const int64 kMicrosecondsPerMinute = kMicrosecondsPerSecond * 60;
   static const int64 kMicrosecondsPerHour = kMicrosecondsPerMinute * 60;
   static const int64 kMicrosecondsPerDay = kMicrosecondsPerHour * 24;
   static const int64 kMicrosecondsPerWeek = kMicrosecondsPerDay * 7;
   static const int64 kNanosecondsPerMicrosecond = 1000;
-  static const int64 kNanosecondsPerSecond = kNanosecondsPerMicrosecond *
-                                             kMicrosecondsPerSecond;
-
+  static const int64 kNanosecondsPerSecond = kNanosecondsPerMicrosecond
+      * kMicrosecondsPerSecond;
 
   // On Mac & Linux, this value is the delta from the Windows epoch of 1601 to
   // the Posix delta of 1970. This is used for migrating between the old
@@ -33,7 +29,6 @@ class Time {
   // this global header and put in the platform-specific ones when we remove the
   // migration code.
   static const int64 kWindowsEpochDeltaMicroseconds;
-
 
   // Represents an exploded time that can be formatted nicely. This is kind of
   // like the Win32 SYSTEMTIME structure or the Unix "struct tm" with a few
@@ -51,7 +46,8 @@ class Time {
   };
 
   // Contains the NULL time. Use Time::Now() to get the current time.
-  explicit Time() : us_(0) {
+  explicit Time()
+      : us_(0) {
   }
 
   // Returns true if the time object has not been initialized.
@@ -85,8 +81,6 @@ class Time {
 
   struct timeval ToTimeVal() const;
 
-
-
   // Converts an exploded structure representing either the local time or UTC
   // into a Time class.
   static Time FromUTCExploded(const Exploded& exploded) {
@@ -96,11 +90,9 @@ class Time {
     return FromExploded(true, exploded);
   }
 
-
   ///常规时间
   static Time FromStringFormat(const char* time_string,
                                const char* format_string);
-
 
   // Converts an integer value representing Time to a class. This is used
   // when deserializing a |Time| structure, using a value known to be
@@ -173,7 +165,8 @@ class Time {
   // |is_local = true| or UTC |is_local = false|.
   static Time FromExploded(bool is_local, const Exploded& exploded);
 
-  explicit Time(int64 us) : us_(us) {
+  explicit Time(int64 us)
+      : us_(us) {
   }
 
   // The representation of Jan 1, 1970 UTC in microseconds since the

@@ -5,7 +5,6 @@
 #include "future/future_engine.h"
 #include "config/config.h"
 
-
 #define DEFAULT_CONFIG_PATH "./plugins/future/future_config.xml"
 
 namespace future_logic {
@@ -13,8 +12,8 @@ namespace future_logic {
 Futurelogic *Futurelogic::instance_ = NULL;
 
 Futurelogic::Futurelogic() {
-    if (!Init())
-        assert(0);
+  if (!Init())
+    assert(0);
 }
 
 Futurelogic::~Futurelogic() {
@@ -23,71 +22,72 @@ Futurelogic::~Futurelogic() {
 }
 
 bool Futurelogic::Init() {
-    bool r = false;
-    std::string path = DEFAULT_CONFIG_PATH;
-    config::FileConfig *config = config::FileConfig::GetFileConfig();
-    if (config == NULL)
-        return false;
-    r = config->LoadConfig(path);
+  bool r = false;
+  std::string path = DEFAULT_CONFIG_PATH;
+  config::FileConfig *config = config::FileConfig::GetFileConfig();
+  if (config == NULL)
+    return false;
+  r = config->LoadConfig(path);
 
-    FutureEngine::GetSchdulerManager();
-    FutureEngine::GetFutureEngine();
+  FutureEngine::GetSchdulerManager();
+  FutureEngine::GetFutureEngine();
 
-    return true;
+  return true;
 }
 
 Futurelogic *Futurelogic::GetInstance() {
-    if (instance_ == NULL)
-        instance_ = new Futurelogic();
-    return instance_;
+  if (instance_ == NULL)
+    instance_ = new Futurelogic();
+  return instance_;
 }
 
 void Futurelogic::FreeInstance() {
-    delete instance_;
-    instance_ = NULL;
+  delete instance_;
+  instance_ = NULL;
 }
 
 bool Futurelogic::OnFutureConnect(struct server *srv, const int socket) {
-    return true;
+  return true;
 }
 
 bool Futurelogic::OnFutureMessage(struct server *srv, const int socket,
-                                const void *msg, const int len) {
-    bool r = false;
-  
+                                  const void *msg, const int len) {
+  bool r = false;
+
   return true;
 }
 
 bool Futurelogic::OnFutureClose(struct server *srv, const int socket) {
-    return true;
+  return true;
 }
 
 bool Futurelogic::OnBroadcastConnect(struct server *srv, const int socket,
-                                    const void *msg, const int len) {
-    return true;
+                                     const void *msg, const int len) {
+  return true;
 }
 
 bool Futurelogic::OnBroadcastMessage(struct server *srv, const int socket,
-                                    const void *msg, const int len) {
-    return true;
+                                     const void *msg, const int len) {
+  return true;
 }
 
 bool Futurelogic::OnBroadcastClose(struct server *srv, const int socket) {
-    return true;
+  return true;
 }
 
 bool Futurelogic::OnIniTimer(struct server *srv) {
-    if (srv->add_time_task != NULL) {
-    }
-    return true;
+  if (srv->add_time_task != NULL) {
+  }
+  return true;
 }
 
-bool Futurelogic::OnTimeout(struct server *srv, char *id, int opcode, int time) {
-    switch (opcode) {
+bool Futurelogic::OnTimeout(struct server *srv, char *id, int opcode,
+                            int time) {
+  switch (opcode) {
     default:
-        break;
-    }
-    return true;
+      break;
+  }
+  return true;
 }
 
 }  // namespace future_logic
