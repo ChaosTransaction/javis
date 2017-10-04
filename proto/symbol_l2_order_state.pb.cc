@@ -18,9 +18,15 @@
 // @@protoc_insertion_point(includes)
 
 namespace chaos_data {
-class SymbolL2OrderState_SymbolOrderStatDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolL2OrderState_SymbolOrderStat> {
+class SymbolL2OrderState_SymbolOrderStatDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolL2OrderState_SymbolOrderStat>
+     _instance;
 } _SymbolL2OrderState_SymbolOrderStat_default_instance_;
-class SymbolL2OrderStateDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolL2OrderState> {
+class SymbolL2OrderStateDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolL2OrderState>
+     _instance;
 } _SymbolL2OrderState_default_instance_;
 
 namespace protobuf_symbol_5fl2_5forder_5fstate_2eproto {
@@ -33,21 +39,21 @@ namespace {
 }  // namespace
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
-    const TableStruct::entries[] = {
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
 };
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
-    const TableStruct::aux[] = {
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ::google::protobuf::internal::AuxillaryParseTableField(),
 };
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
-    TableStruct::schema[] = {
-  { NULL, NULL, 0, -1, -1, false },
-  { NULL, NULL, 0, -1, -1, false },
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
 };
 
-const ::google::protobuf::uint32 TableStruct::offsets[] = {
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolL2OrderState_SymbolOrderStat, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolL2OrderState_SymbolOrderStat, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -71,8 +77,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   1,
   0,
 };
-
-static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 9, sizeof(SymbolL2OrderState_SymbolOrderStat)},
   { 13, 20, sizeof(SymbolL2OrderState)},
 };
@@ -104,21 +109,15 @@ void protobuf_RegisterTypes(const ::std::string&) {
 }
 
 }  // namespace
-
-void TableStruct::Shutdown() {
-  _SymbolL2OrderState_SymbolOrderStat_default_instance_.Shutdown();
-  delete file_level_metadata[0].reflection;
-  _SymbolL2OrderState_default_instance_.Shutdown();
-  delete file_level_metadata[1].reflection;
-}
-
 void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::internal::InitProtobufDefaults();
-  _SymbolL2OrderState_SymbolOrderStat_default_instance_.DefaultConstruct();
-  _SymbolL2OrderState_default_instance_.DefaultConstruct();
-  _SymbolL2OrderState_default_instance_.get_mutable()->order_state_ = const_cast< ::chaos_data::SymbolL2OrderState_SymbolOrderStat*>(
+  _SymbolL2OrderState_SymbolOrderStat_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolL2OrderState_SymbolOrderStat_default_instance_);_SymbolL2OrderState_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolL2OrderState_default_instance_);_SymbolL2OrderState_default_instance_._instance.get_mutable()->order_state_ = const_cast< ::chaos_data::SymbolL2OrderState_SymbolOrderStat*>(
       ::chaos_data::SymbolL2OrderState_SymbolOrderStat::internal_default_instance());
 }
 
@@ -126,9 +125,10 @@ void InitDefaults() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
+namespace {
 void AddDescriptorsImpl() {
   InitDefaults();
-  static const char descriptor[] = {
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\033symbol_l2_order_state.proto\022\nchaos_dat"
       "a\"\311\001\n\022SymbolL2OrderState\022\014\n\004time\030\001 \002(\r\022C"
       "\n\013order_state\030\002 \001(\0132..chaos_data.SymbolL"
@@ -141,14 +141,14 @@ void AddDescriptorsImpl() {
       descriptor, 245);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "symbol_l2_order_state.proto", &protobuf_RegisterTypes);
-  ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
 }
+} // anonymous namespace
 
 void AddDescriptors() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
+// Force AddDescriptors() to be called at dynamic initialization time.
 struct StaticDescriptorInitializer {
   StaticDescriptorInitializer() {
     AddDescriptors();
@@ -225,6 +225,10 @@ SymbolL2OrderState_SymbolOrderStat* SymbolL2OrderState_SymbolOrderStat::New(::go
 
 void SymbolL2OrderState_SymbolOrderStat::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolL2OrderState.SymbolOrderStat)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
   buy_order_vol_.Clear();
   sell_order_vol_.Clear();
   order_num_.Clear();
@@ -246,12 +250,13 @@ bool SymbolL2OrderState_SymbolOrderStat::MergePartialFromCodedStream(
       // repeated uint64 buy_order_vol = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 8u, input, this->mutable_buy_order_vol())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(10u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_buy_order_vol())));
@@ -264,12 +269,13 @@ bool SymbolL2OrderState_SymbolOrderStat::MergePartialFromCodedStream(
       // repeated uint64 sell_order_vol = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u)) {
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 16u, input, this->mutable_sell_order_vol())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(18u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_sell_order_vol())));
@@ -282,12 +288,13 @@ bool SymbolL2OrderState_SymbolOrderStat::MergePartialFromCodedStream(
       // repeated uint64 order_num = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u)) {
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 24u, input, this->mutable_order_num())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(26u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_order_num())));
@@ -300,12 +307,13 @@ bool SymbolL2OrderState_SymbolOrderStat::MergePartialFromCodedStream(
       // repeated uint64 vol = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u)) {
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  1, 32u, input, this->mutable_vol())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(34u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, this->mutable_vol())));
@@ -317,13 +325,11 @@ bool SymbolL2OrderState_SymbolOrderStat::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -369,13 +375,14 @@ void SymbolL2OrderState_SymbolOrderStat::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolL2OrderState.SymbolOrderStat)
 }
 
 ::google::protobuf::uint8* SymbolL2OrderState_SymbolOrderStat::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolL2OrderState.SymbolOrderStat)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -398,7 +405,7 @@ void SymbolL2OrderState_SymbolOrderStat::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolL2OrderState.SymbolOrderStat)
   return target;
@@ -411,7 +418,7 @@ size_t SymbolL2OrderState_SymbolOrderStat::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   // repeated uint64 buy_order_vol = 1;
   {
@@ -507,13 +514,14 @@ void SymbolL2OrderState_SymbolOrderStat::Swap(SymbolL2OrderState_SymbolOrderStat
   InternalSwap(other);
 }
 void SymbolL2OrderState_SymbolOrderStat::InternalSwap(SymbolL2OrderState_SymbolOrderStat* other) {
+  using std::swap;
   buy_order_vol_.InternalSwap(&other->buy_order_vol_);
   sell_order_vol_.InternalSwap(&other->sell_order_vol_);
   order_num_.InternalSwap(&other->order_num_);
   vol_.InternalSwap(&other->vol_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolL2OrderState_SymbolOrderStat::GetMetadata() const {
@@ -689,9 +697,7 @@ SymbolL2OrderState::~SymbolL2OrderState() {
 }
 
 void SymbolL2OrderState::SharedDtor() {
-  if (this != internal_default_instance()) {
-    delete order_state_;
-  }
+  if (this != internal_default_instance()) delete order_state_;
 }
 
 void SymbolL2OrderState::SetCachedSize(int size) const {
@@ -719,6 +725,10 @@ SymbolL2OrderState* SymbolL2OrderState::New(::google::protobuf::Arena* arena) co
 
 void SymbolL2OrderState::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolL2OrderState)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
   if (has_order_state()) {
     GOOGLE_DCHECK(order_state_ != NULL);
     order_state_->::chaos_data::SymbolL2OrderState_SymbolOrderStat::Clear();
@@ -741,7 +751,7 @@ bool SymbolL2OrderState::MergePartialFromCodedStream(
       // required uint32 time = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           set_has_time();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -755,7 +765,7 @@ bool SymbolL2OrderState::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolL2OrderState.SymbolOrderStat order_state = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u)) {
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_order_state()));
         } else {
@@ -766,13 +776,11 @@ bool SymbolL2OrderState::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -806,13 +814,14 @@ void SymbolL2OrderState::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolL2OrderState)
 }
 
 ::google::protobuf::uint8* SymbolL2OrderState::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolL2OrderState)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -832,7 +841,7 @@ void SymbolL2OrderState::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolL2OrderState)
   return target;
@@ -845,7 +854,7 @@ size_t SymbolL2OrderState::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   // required uint32 time = 1;
   if (has_time()) {
@@ -925,11 +934,12 @@ void SymbolL2OrderState::Swap(SymbolL2OrderState* other) {
   InternalSwap(other);
 }
 void SymbolL2OrderState::InternalSwap(SymbolL2OrderState* other) {
-  std::swap(order_state_, other->order_state_);
-  std::swap(time_, other->time_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  using std::swap;
+  swap(order_state_, other->order_state_);
+  swap(time_, other->time_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolL2OrderState::GetMetadata() const {
@@ -979,9 +989,10 @@ void SymbolL2OrderState::clear_order_state() {
   clear_has_order_state();
 }
 const ::chaos_data::SymbolL2OrderState_SymbolOrderStat& SymbolL2OrderState::order_state() const {
+  const ::chaos_data::SymbolL2OrderState_SymbolOrderStat* p = order_state_;
   // @@protoc_insertion_point(field_get:chaos_data.SymbolL2OrderState.order_state)
-  return order_state_ != NULL ? *order_state_
-                         : *::chaos_data::SymbolL2OrderState_SymbolOrderStat::internal_default_instance();
+  return p != NULL ? *p : *reinterpret_cast<const ::chaos_data::SymbolL2OrderState_SymbolOrderStat*>(
+      &::chaos_data::_SymbolL2OrderState_SymbolOrderStat_default_instance_);
 }
 ::chaos_data::SymbolL2OrderState_SymbolOrderStat* SymbolL2OrderState::mutable_order_state() {
   set_has_order_state();

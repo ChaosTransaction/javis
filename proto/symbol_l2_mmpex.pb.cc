@@ -18,7 +18,10 @@
 // @@protoc_insertion_point(includes)
 
 namespace chaos_data {
-class SymbolL2MMPEXDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolL2MMPEX> {
+class SymbolL2MMPEXDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolL2MMPEX>
+     _instance;
 } _SymbolL2MMPEX_default_instance_;
 
 namespace protobuf_symbol_5fl2_5fmmpex_2eproto {
@@ -31,20 +34,20 @@ namespace {
 }  // namespace
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
-    const TableStruct::entries[] = {
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
 };
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
-    const TableStruct::aux[] = {
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ::google::protobuf::internal::AuxillaryParseTableField(),
 };
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
-    TableStruct::schema[] = {
-  { NULL, NULL, 0, -1, -1, false },
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
 };
 
-const ::google::protobuf::uint32 TableStruct::offsets[] = {
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolL2MMPEX, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolL2MMPEX, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -69,8 +72,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   ~0u,
   ~0u,
 };
-
-static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 14, sizeof(SymbolL2MMPEX)},
 };
 
@@ -100,26 +102,22 @@ void protobuf_RegisterTypes(const ::std::string&) {
 }
 
 }  // namespace
-
-void TableStruct::Shutdown() {
-  _SymbolL2MMPEX_default_instance_.Shutdown();
-  delete file_level_metadata[0].reflection;
-}
-
 void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::internal::InitProtobufDefaults();
-  _SymbolL2MMPEX_default_instance_.DefaultConstruct();
-}
+  _SymbolL2MMPEX_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolL2MMPEX_default_instance_);}
 
 void InitDefaults() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
+namespace {
 void AddDescriptorsImpl() {
   InitDefaults();
-  static const char descriptor[] = {
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\025symbol_l2_mmpex.proto\022\nchaos_data\"\301\001\n\r"
       "SymbolL2MMPEX\022\014\n\004time\030\001 \001(\r\022\025\n\ravg_buy_p"
       "rice\030\002 \001(\r\022\023\n\013all_buy_vol\030\003 \001(\004\022\026\n\016avg_s"
@@ -131,14 +129,14 @@ void AddDescriptorsImpl() {
       descriptor, 231);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "symbol_l2_mmpex.proto", &protobuf_RegisterTypes);
-  ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
 }
+} // anonymous namespace
 
 void AddDescriptors() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
+// Force AddDescriptors() to be called at dynamic initialization time.
 struct StaticDescriptorInitializer {
   StaticDescriptorInitializer() {
     AddDescriptors();
@@ -226,11 +224,16 @@ SymbolL2MMPEX* SymbolL2MMPEX::New(::google::protobuf::Arena* arena) const {
 
 void SymbolL2MMPEX::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolL2MMPEX)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
   buy_price_.Clear();
   buy_vol_.Clear();
   sell_price_.Clear();
   sell_vol_.Clear();
-  if (_has_bits_[0 / 32] & 31u) {
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 31u) {
     ::memset(&time_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&avg_sell_price_) -
         reinterpret_cast<char*>(&time_)) + sizeof(avg_sell_price_));
@@ -252,7 +255,7 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
       // optional uint32 time = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           set_has_time();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -266,7 +269,7 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
       // optional uint32 avg_buy_price = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u)) {
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
           set_has_avg_buy_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -280,7 +283,7 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
       // optional uint64 all_buy_vol = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u)) {
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
           set_has_all_buy_vol();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -294,7 +297,7 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
       // optional uint32 avg_sell_price = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u)) {
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
           set_has_avg_sell_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -308,7 +311,7 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
       // optional uint64 all_sell_vol = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u)) {
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
           set_has_all_sell_vol();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -322,12 +325,13 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
       // repeated uint32 buy_price = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u)) {
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 48u, input, this->mutable_buy_price())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(50u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_buy_price())));
@@ -340,12 +344,13 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
       // repeated uint32 buy_vol = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u)) {
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 56u, input, this->mutable_buy_vol())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(58u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_buy_vol())));
@@ -358,12 +363,13 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
       // repeated uint32 sell_price = 8;
       case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u)) {
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 64u, input, this->mutable_sell_price())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(66u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_sell_price())));
@@ -376,12 +382,13 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
       // repeated uint32 sell_vol = 9;
       case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(72u)) {
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 72u, input, this->mutable_sell_vol())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(74u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_sell_vol())));
@@ -393,13 +400,11 @@ bool SymbolL2MMPEX::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -471,13 +476,14 @@ void SymbolL2MMPEX::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolL2MMPEX)
 }
 
 ::google::protobuf::uint8* SymbolL2MMPEX::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolL2MMPEX)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -526,7 +532,7 @@ void SymbolL2MMPEX::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolL2MMPEX)
   return target;
@@ -539,7 +545,7 @@ size_t SymbolL2MMPEX::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   // repeated uint32 buy_price = 6;
   {
@@ -691,18 +697,19 @@ void SymbolL2MMPEX::Swap(SymbolL2MMPEX* other) {
   InternalSwap(other);
 }
 void SymbolL2MMPEX::InternalSwap(SymbolL2MMPEX* other) {
+  using std::swap;
   buy_price_.InternalSwap(&other->buy_price_);
   buy_vol_.InternalSwap(&other->buy_vol_);
   sell_price_.InternalSwap(&other->sell_price_);
   sell_vol_.InternalSwap(&other->sell_vol_);
-  std::swap(time_, other->time_);
-  std::swap(avg_buy_price_, other->avg_buy_price_);
-  std::swap(all_buy_vol_, other->all_buy_vol_);
-  std::swap(all_sell_vol_, other->all_sell_vol_);
-  std::swap(avg_sell_price_, other->avg_sell_price_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(time_, other->time_);
+  swap(avg_buy_price_, other->avg_buy_price_);
+  swap(all_buy_vol_, other->all_buy_vol_);
+  swap(all_sell_vol_, other->all_sell_vol_);
+  swap(avg_sell_price_, other->avg_sell_price_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolL2MMPEX::GetMetadata() const {

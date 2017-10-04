@@ -18,7 +18,10 @@
 // @@protoc_insertion_point(includes)
 
 namespace chaos_data {
-class SymbolHisMatuYldDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolHisMatuYld> {
+class SymbolHisMatuYldDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolHisMatuYld>
+     _instance;
 } _SymbolHisMatuYld_default_instance_;
 
 namespace protobuf_symbol_5fhis_5fmatu_5fyld_2eproto {
@@ -31,20 +34,20 @@ namespace {
 }  // namespace
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
-    const TableStruct::entries[] = {
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
 };
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
-    const TableStruct::aux[] = {
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ::google::protobuf::internal::AuxillaryParseTableField(),
 };
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
-    TableStruct::schema[] = {
-  { NULL, NULL, 0, -1, -1, false },
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
 };
 
-const ::google::protobuf::uint32 TableStruct::offsets[] = {
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolHisMatuYld, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolHisMatuYld, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -55,8 +58,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   0,
   1,
 };
-
-static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 7, sizeof(SymbolHisMatuYld)},
 };
 
@@ -86,26 +88,22 @@ void protobuf_RegisterTypes(const ::std::string&) {
 }
 
 }  // namespace
-
-void TableStruct::Shutdown() {
-  _SymbolHisMatuYld_default_instance_.Shutdown();
-  delete file_level_metadata[0].reflection;
-}
-
 void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::internal::InitProtobufDefaults();
-  _SymbolHisMatuYld_default_instance_.DefaultConstruct();
-}
+  _SymbolHisMatuYld_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolHisMatuYld_default_instance_);}
 
 void InitDefaults() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
+namespace {
 void AddDescriptorsImpl() {
   InitDefaults();
-  static const char descriptor[] = {
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\031symbol_his_matu_yld.proto\022\nchaos_data\""
       "/\n\020SymbolHisMatuYld\022\014\n\004time\030\001 \001(\r\022\r\n\005val"
       "ue\030\002 \001(\002"
@@ -114,14 +112,14 @@ void AddDescriptorsImpl() {
       descriptor, 88);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "symbol_his_matu_yld.proto", &protobuf_RegisterTypes);
-  ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
 }
+} // anonymous namespace
 
 void AddDescriptors() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
+// Force AddDescriptors() to be called at dynamic initialization time.
 struct StaticDescriptorInitializer {
   StaticDescriptorInitializer() {
     AddDescriptors();
@@ -198,7 +196,12 @@ SymbolHisMatuYld* SymbolHisMatuYld::New(::google::protobuf::Arena* arena) const 
 
 void SymbolHisMatuYld::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolHisMatuYld)
-  if (_has_bits_[0 / 32] & 3u) {
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 3u) {
     ::memset(&time_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&value_) -
         reinterpret_cast<char*>(&time_)) + sizeof(value_));
@@ -220,7 +223,7 @@ bool SymbolHisMatuYld::MergePartialFromCodedStream(
       // optional uint32 time = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           set_has_time();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -234,7 +237,7 @@ bool SymbolHisMatuYld::MergePartialFromCodedStream(
       // optional float value = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(21u)) {
+            static_cast< ::google::protobuf::uint8>(21u /* 21 & 0xFF */)) {
           set_has_value();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -247,13 +250,11 @@ bool SymbolHisMatuYld::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -286,13 +287,14 @@ void SymbolHisMatuYld::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolHisMatuYld)
 }
 
 ::google::protobuf::uint8* SymbolHisMatuYld::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolHisMatuYld)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -310,7 +312,7 @@ void SymbolHisMatuYld::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolHisMatuYld)
   return target;
@@ -323,7 +325,7 @@ size_t SymbolHisMatuYld::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 3u) {
     // optional uint32 time = 1;
@@ -403,11 +405,12 @@ void SymbolHisMatuYld::Swap(SymbolHisMatuYld* other) {
   InternalSwap(other);
 }
 void SymbolHisMatuYld::InternalSwap(SymbolHisMatuYld* other) {
-  std::swap(time_, other->time_);
-  std::swap(value_, other->value_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  using std::swap;
+  swap(time_, other->time_);
+  swap(value_, other->value_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolHisMatuYld::GetMetadata() const {

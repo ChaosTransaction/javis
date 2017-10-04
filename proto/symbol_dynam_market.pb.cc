@@ -18,7 +18,10 @@
 // @@protoc_insertion_point(includes)
 
 namespace chaos_data {
-class SymbolDynamMarketDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolDynamMarket> {
+class SymbolDynamMarketDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolDynamMarket>
+     _instance;
 } _SymbolDynamMarket_default_instance_;
 
 namespace protobuf_symbol_5fdynam_5fmarket_2eproto {
@@ -31,20 +34,20 @@ namespace {
 }  // namespace
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
-    const TableStruct::entries[] = {
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
 };
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
-    const TableStruct::aux[] = {
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ::google::protobuf::internal::AuxillaryParseTableField(),
 };
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
-    TableStruct::schema[] = {
-  { NULL, NULL, 0, -1, -1, false },
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
 };
 
-const ::google::protobuf::uint32 TableStruct::offsets[] = {
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolDynamMarket, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolDynamMarket, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -81,8 +84,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   9,
   10,
 };
-
-static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 20, sizeof(SymbolDynamMarket)},
 };
 
@@ -112,26 +114,22 @@ void protobuf_RegisterTypes(const ::std::string&) {
 }
 
 }  // namespace
-
-void TableStruct::Shutdown() {
-  _SymbolDynamMarket_default_instance_.Shutdown();
-  delete file_level_metadata[0].reflection;
-}
-
 void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::internal::InitProtobufDefaults();
-  _SymbolDynamMarket_default_instance_.DefaultConstruct();
-}
+  _SymbolDynamMarket_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolDynamMarket_default_instance_);}
 
 void InitDefaults() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
+namespace {
 void AddDescriptorsImpl() {
   InitDefaults();
-  static const char descriptor[] = {
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\031symbol_dynam_market.proto\022\nchaos_data\""
       "\265\002\n\021SymbolDynamMarket\022\024\n\014current_time\030\001 "
       "\002(\004\022\022\n\nopen_price\030\002 \002(\r\022\022\n\nhigh_price\030\003 "
@@ -146,14 +144,14 @@ void AddDescriptorsImpl() {
       descriptor, 351);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "symbol_dynam_market.proto", &protobuf_RegisterTypes);
-  ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
 }
+} // anonymous namespace
 
 void AddDescriptors() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
+// Force AddDescriptors() to be called at dynamic initialization time.
 struct StaticDescriptorInitializer {
   StaticDescriptorInitializer() {
     AddDescriptors();
@@ -247,16 +245,21 @@ SymbolDynamMarket* SymbolDynamMarket::New(::google::protobuf::Arena* arena) cons
 
 void SymbolDynamMarket::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolDynamMarket)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
   buy_price_.Clear();
   buy_vol_.Clear();
   sell_price_.Clear();
   sell_vol_.Clear();
-  if (_has_bits_[0 / 32] & 255u) {
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 255u) {
     ::memset(&current_time_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&tick_count_) -
         reinterpret_cast<char*>(&current_time_)) + sizeof(tick_count_));
   }
-  if (_has_bits_[8 / 32] & 1792u) {
+  if (cached_has_bits & 1792u) {
     ::memset(&inner_vol_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&settle_price_) -
         reinterpret_cast<char*>(&inner_vol_)) + sizeof(settle_price_));
@@ -278,7 +281,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint64 current_time = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           set_has_current_time();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -292,7 +295,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint32 open_price = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u)) {
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
           set_has_open_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -306,7 +309,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint32 high_price = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u)) {
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
           set_has_high_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -320,7 +323,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint32 low_price = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u)) {
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
           set_has_low_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -334,7 +337,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint32 new_price = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u)) {
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
           set_has_new_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -348,7 +351,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint32 volume = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u)) {
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
           set_has_volume();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -362,7 +365,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint64 amount = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u)) {
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
           set_has_amount();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -376,7 +379,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint64 inner_vol = 8;
       case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u)) {
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
           set_has_inner_vol();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -390,7 +393,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint32 tick_count = 9;
       case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(72u)) {
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
           set_has_tick_count();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -404,12 +407,13 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // repeated uint32 buy_price = 10;
       case 10: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(80u)) {
+            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 80u, input, this->mutable_buy_price())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(82u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_buy_price())));
@@ -422,12 +426,13 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // repeated uint32 buy_vol = 11;
       case 11: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(88u)) {
+            static_cast< ::google::protobuf::uint8>(88u /* 88 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 88u, input, this->mutable_buy_vol())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(90u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(90u /* 90 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_buy_vol())));
@@ -440,12 +445,13 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // repeated uint32 sell_price = 12;
       case 12: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(96u)) {
+            static_cast< ::google::protobuf::uint8>(96u /* 96 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 96u, input, this->mutable_sell_price())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(98u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(98u /* 98 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_sell_price())));
@@ -458,12 +464,13 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // repeated uint32 sell_vol = 13;
       case 13: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(104u)) {
+            static_cast< ::google::protobuf::uint8>(104u /* 104 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 104u, input, this->mutable_sell_vol())));
-        } else if (static_cast< ::google::protobuf::uint8>(tag) ==
-                   static_cast< ::google::protobuf::uint8>(106u)) {
+        } else if (
+            static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(106u /* 106 & 0xFF */)) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_sell_vol())));
@@ -476,7 +483,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint32 open_interest = 30;
       case 30: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(240u)) {
+            static_cast< ::google::protobuf::uint8>(240u /* 240 & 0xFF */)) {
           set_has_open_interest();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -490,7 +497,7 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
       // required uint32 settle_price = 31;
       case 31: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(248u)) {
+            static_cast< ::google::protobuf::uint8>(248u /* 248 & 0xFF */)) {
           set_has_settle_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -503,13 +510,11 @@ bool SymbolDynamMarket::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -611,13 +616,14 @@ void SymbolDynamMarket::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolDynamMarket)
 }
 
 ::google::protobuf::uint8* SymbolDynamMarket::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolDynamMarket)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -696,7 +702,7 @@ void SymbolDynamMarket::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolDynamMarket)
   return target;
@@ -792,7 +798,7 @@ size_t SymbolDynamMarket::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (((_has_bits_[0] & 0x000007ff) ^ 0x000007ff) == 0) {  // All required fields are present.
     // required uint64 current_time = 1;
@@ -988,24 +994,25 @@ void SymbolDynamMarket::Swap(SymbolDynamMarket* other) {
   InternalSwap(other);
 }
 void SymbolDynamMarket::InternalSwap(SymbolDynamMarket* other) {
+  using std::swap;
   buy_price_.InternalSwap(&other->buy_price_);
   buy_vol_.InternalSwap(&other->buy_vol_);
   sell_price_.InternalSwap(&other->sell_price_);
   sell_vol_.InternalSwap(&other->sell_vol_);
-  std::swap(current_time_, other->current_time_);
-  std::swap(open_price_, other->open_price_);
-  std::swap(high_price_, other->high_price_);
-  std::swap(low_price_, other->low_price_);
-  std::swap(new_price_, other->new_price_);
-  std::swap(amount_, other->amount_);
-  std::swap(volume_, other->volume_);
-  std::swap(tick_count_, other->tick_count_);
-  std::swap(inner_vol_, other->inner_vol_);
-  std::swap(open_interest_, other->open_interest_);
-  std::swap(settle_price_, other->settle_price_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(current_time_, other->current_time_);
+  swap(open_price_, other->open_price_);
+  swap(high_price_, other->high_price_);
+  swap(low_price_, other->low_price_);
+  swap(new_price_, other->new_price_);
+  swap(amount_, other->amount_);
+  swap(volume_, other->volume_);
+  swap(tick_count_, other->tick_count_);
+  swap(inner_vol_, other->inner_vol_);
+  swap(open_interest_, other->open_interest_);
+  swap(settle_price_, other->settle_price_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolDynamMarket::GetMetadata() const {

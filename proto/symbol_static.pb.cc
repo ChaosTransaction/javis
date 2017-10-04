@@ -18,23 +18,50 @@
 // @@protoc_insertion_point(includes)
 
 namespace chaos_data {
-class SymbolStatic_EquityMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_EquityMessage> {
+class SymbolStatic_EquityMessageDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_EquityMessage>
+     _instance;
 } _SymbolStatic_EquityMessage_default_instance_;
-class SymbolStatic_FundMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_FundMessage> {
+class SymbolStatic_FundMessageDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_FundMessage>
+     _instance;
 } _SymbolStatic_FundMessage_default_instance_;
-class SymbolStatic_WarranMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_WarranMessage> {
+class SymbolStatic_WarranMessageDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_WarranMessage>
+     _instance;
 } _SymbolStatic_WarranMessage_default_instance_;
-class SymbolStatic_BoundMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_BoundMessage> {
+class SymbolStatic_BoundMessageDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_BoundMessage>
+     _instance;
 } _SymbolStatic_BoundMessage_default_instance_;
-class SymbolStatic_CNVTMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_CNVTMessage> {
+class SymbolStatic_CNVTMessageDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_CNVTMessage>
+     _instance;
 } _SymbolStatic_CNVTMessage_default_instance_;
-class SymbolStatic_FutureMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_FutureMessage> {
+class SymbolStatic_FutureMessageDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_FutureMessage>
+     _instance;
 } _SymbolStatic_FutureMessage_default_instance_;
-class SymbolStatic_TruestMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_TruestMessage> {
+class SymbolStatic_TruestMessageDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_TruestMessage>
+     _instance;
 } _SymbolStatic_TruestMessage_default_instance_;
-class SymbolStatic_SpecMessageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_SpecMessage> {
+class SymbolStatic_SpecMessageDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic_SpecMessage>
+     _instance;
 } _SymbolStatic_SpecMessage_default_instance_;
-class SymbolStaticDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic> {
+class SymbolStaticDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SymbolStatic>
+     _instance;
 } _SymbolStatic_default_instance_;
 
 namespace protobuf_symbol_5fstatic_2eproto {
@@ -48,28 +75,28 @@ const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[3];
 }  // namespace
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
-    const TableStruct::entries[] = {
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
 };
 
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
-    const TableStruct::aux[] = {
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ::google::protobuf::internal::AuxillaryParseTableField(),
 };
 PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
-    TableStruct::schema[] = {
-  { NULL, NULL, 0, -1, -1, false },
-  { NULL, NULL, 0, -1, -1, false },
-  { NULL, NULL, 0, -1, -1, false },
-  { NULL, NULL, 0, -1, -1, false },
-  { NULL, NULL, 0, -1, -1, false },
-  { NULL, NULL, 0, -1, -1, false },
-  { NULL, NULL, 0, -1, -1, false },
-  { NULL, NULL, 0, -1, -1, false },
-  { NULL, NULL, 0, -1, -1, false },
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
 };
 
-const ::google::protobuf::uint32 TableStruct::offsets[] = {
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic_EquityMessage, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic_EquityMessage, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -222,8 +249,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   11,
   2,
 };
-
-static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 12, sizeof(SymbolStatic_EquityMessage)},
   { 19, 27, sizeof(SymbolStatic_FundMessage)},
   { 30, 42, sizeof(SymbolStatic_WarranMessage)},
@@ -269,56 +295,43 @@ void protobuf_RegisterTypes(const ::std::string&) {
 }
 
 }  // namespace
-
-void TableStruct::Shutdown() {
-  _SymbolStatic_EquityMessage_default_instance_.Shutdown();
-  delete file_level_metadata[0].reflection;
-  _SymbolStatic_FundMessage_default_instance_.Shutdown();
-  delete file_level_metadata[1].reflection;
-  _SymbolStatic_WarranMessage_default_instance_.Shutdown();
-  delete file_level_metadata[2].reflection;
-  _SymbolStatic_BoundMessage_default_instance_.Shutdown();
-  delete file_level_metadata[3].reflection;
-  _SymbolStatic_CNVTMessage_default_instance_.Shutdown();
-  delete file_level_metadata[4].reflection;
-  _SymbolStatic_FutureMessage_default_instance_.Shutdown();
-  delete file_level_metadata[5].reflection;
-  _SymbolStatic_TruestMessage_default_instance_.Shutdown();
-  delete file_level_metadata[6].reflection;
-  _SymbolStatic_SpecMessage_default_instance_.Shutdown();
-  delete file_level_metadata[7].reflection;
-  _SymbolStatic_default_instance_.Shutdown();
-  delete file_level_metadata[8].reflection;
-}
-
 void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::internal::InitProtobufDefaults();
-  _SymbolStatic_EquityMessage_default_instance_.DefaultConstruct();
-  _SymbolStatic_FundMessage_default_instance_.DefaultConstruct();
-  _SymbolStatic_WarranMessage_default_instance_.DefaultConstruct();
-  _SymbolStatic_BoundMessage_default_instance_.DefaultConstruct();
-  _SymbolStatic_CNVTMessage_default_instance_.DefaultConstruct();
-  _SymbolStatic_FutureMessage_default_instance_.DefaultConstruct();
-  _SymbolStatic_TruestMessage_default_instance_.DefaultConstruct();
-  _SymbolStatic_SpecMessage_default_instance_.DefaultConstruct();
-  _SymbolStatic_default_instance_.DefaultConstruct();
-  _SymbolStatic_SpecMessage_default_instance_.get_mutable()->equity_ = const_cast< ::chaos_data::SymbolStatic_EquityMessage*>(
+  _SymbolStatic_EquityMessage_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolStatic_EquityMessage_default_instance_);_SymbolStatic_FundMessage_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolStatic_FundMessage_default_instance_);_SymbolStatic_WarranMessage_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolStatic_WarranMessage_default_instance_);_SymbolStatic_BoundMessage_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolStatic_BoundMessage_default_instance_);_SymbolStatic_CNVTMessage_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolStatic_CNVTMessage_default_instance_);_SymbolStatic_FutureMessage_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolStatic_FutureMessage_default_instance_);_SymbolStatic_TruestMessage_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolStatic_TruestMessage_default_instance_);_SymbolStatic_SpecMessage_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolStatic_SpecMessage_default_instance_);_SymbolStatic_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SymbolStatic_default_instance_);_SymbolStatic_SpecMessage_default_instance_._instance.get_mutable()->equity_ = const_cast< ::chaos_data::SymbolStatic_EquityMessage*>(
       ::chaos_data::SymbolStatic_EquityMessage::internal_default_instance());
-  _SymbolStatic_SpecMessage_default_instance_.get_mutable()->fund_ = const_cast< ::chaos_data::SymbolStatic_FundMessage*>(
+  _SymbolStatic_SpecMessage_default_instance_._instance.get_mutable()->fund_ = const_cast< ::chaos_data::SymbolStatic_FundMessage*>(
       ::chaos_data::SymbolStatic_FundMessage::internal_default_instance());
-  _SymbolStatic_SpecMessage_default_instance_.get_mutable()->warran_ = const_cast< ::chaos_data::SymbolStatic_WarranMessage*>(
+  _SymbolStatic_SpecMessage_default_instance_._instance.get_mutable()->warran_ = const_cast< ::chaos_data::SymbolStatic_WarranMessage*>(
       ::chaos_data::SymbolStatic_WarranMessage::internal_default_instance());
-  _SymbolStatic_SpecMessage_default_instance_.get_mutable()->bound_ = const_cast< ::chaos_data::SymbolStatic_BoundMessage*>(
+  _SymbolStatic_SpecMessage_default_instance_._instance.get_mutable()->bound_ = const_cast< ::chaos_data::SymbolStatic_BoundMessage*>(
       ::chaos_data::SymbolStatic_BoundMessage::internal_default_instance());
-  _SymbolStatic_SpecMessage_default_instance_.get_mutable()->cnvt_ = const_cast< ::chaos_data::SymbolStatic_CNVTMessage*>(
+  _SymbolStatic_SpecMessage_default_instance_._instance.get_mutable()->cnvt_ = const_cast< ::chaos_data::SymbolStatic_CNVTMessage*>(
       ::chaos_data::SymbolStatic_CNVTMessage::internal_default_instance());
-  _SymbolStatic_SpecMessage_default_instance_.get_mutable()->future_ = const_cast< ::chaos_data::SymbolStatic_FutureMessage*>(
+  _SymbolStatic_SpecMessage_default_instance_._instance.get_mutable()->future_ = const_cast< ::chaos_data::SymbolStatic_FutureMessage*>(
       ::chaos_data::SymbolStatic_FutureMessage::internal_default_instance());
-  _SymbolStatic_SpecMessage_default_instance_.get_mutable()->truest_ = const_cast< ::chaos_data::SymbolStatic_TruestMessage*>(
+  _SymbolStatic_SpecMessage_default_instance_._instance.get_mutable()->truest_ = const_cast< ::chaos_data::SymbolStatic_TruestMessage*>(
       ::chaos_data::SymbolStatic_TruestMessage::internal_default_instance());
-  _SymbolStatic_default_instance_.get_mutable()->spec_ = const_cast< ::chaos_data::SymbolStatic_SpecMessage*>(
+  _SymbolStatic_default_instance_._instance.get_mutable()->spec_ = const_cast< ::chaos_data::SymbolStatic_SpecMessage*>(
       ::chaos_data::SymbolStatic_SpecMessage::internal_default_instance());
 }
 
@@ -326,9 +339,10 @@ void InitDefaults() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
+namespace {
 void AddDescriptorsImpl() {
   InitDefaults();
-  static const char descriptor[] = {
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\023symbol_static.proto\022\nchaos_data\"\315\017\n\014Sy"
       "mbolStatic\022\016\n\006symbol\030\001 \001(\014\022\014\n\004name\030\002 \001(\014"
       "\0223\n\005ctype\030\003 \001(\0162$.chaos_data.SymbolStati"
@@ -385,14 +399,14 @@ void AddDescriptorsImpl() {
       descriptor, 2033);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "symbol_static.proto", &protobuf_RegisterTypes);
-  ::google::protobuf::internal::OnShutdown(&TableStruct::Shutdown);
 }
+} // anonymous namespace
 
 void AddDescriptors() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
   ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
+// Force AddDescriptors() to be called at dynamic initialization time.
 struct StaticDescriptorInitializer {
   StaticDescriptorInitializer() {
     AddDescriptors();
@@ -591,7 +605,12 @@ SymbolStatic_EquityMessage* SymbolStatic_EquityMessage::New(::google::protobuf::
 
 void SymbolStatic_EquityMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolStatic.EquityMessage)
-  if (_has_bits_[0 / 32] & 127u) {
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 127u) {
     ::memset(&face_value_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&last_tradedate_) -
         reinterpret_cast<char*>(&face_value_)) + sizeof(last_tradedate_));
@@ -613,7 +632,7 @@ bool SymbolStatic_EquityMessage::MergePartialFromCodedStream(
       // optional float face_value = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(13u)) {
+            static_cast< ::google::protobuf::uint8>(13u /* 13 & 0xFF */)) {
           set_has_face_value();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -627,7 +646,7 @@ bool SymbolStatic_EquityMessage::MergePartialFromCodedStream(
       // optional float profit = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(21u)) {
+            static_cast< ::google::protobuf::uint8>(21u /* 21 & 0xFF */)) {
           set_has_profit();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -641,7 +660,7 @@ bool SymbolStatic_EquityMessage::MergePartialFromCodedStream(
       // optional uint32 industry = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u)) {
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
           set_has_industry();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -655,7 +674,7 @@ bool SymbolStatic_EquityMessage::MergePartialFromCodedStream(
       // optional int32 trade_status = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u)) {
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
           set_has_trade_status();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -669,7 +688,7 @@ bool SymbolStatic_EquityMessage::MergePartialFromCodedStream(
       // optional float cash_dividend = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(45u)) {
+            static_cast< ::google::protobuf::uint8>(45u /* 45 & 0xFF */)) {
           set_has_cash_dividend();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -683,7 +702,7 @@ bool SymbolStatic_EquityMessage::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.SYMBOL_SP security_properties = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u)) {
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -703,7 +722,7 @@ bool SymbolStatic_EquityMessage::MergePartialFromCodedStream(
       // optional uint32 last_tradedate = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u)) {
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
           set_has_last_tradedate();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -716,13 +735,11 @@ bool SymbolStatic_EquityMessage::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -781,13 +798,14 @@ void SymbolStatic_EquityMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolStatic.EquityMessage)
 }
 
 ::google::protobuf::uint8* SymbolStatic_EquityMessage::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolStatic.EquityMessage)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -831,7 +849,7 @@ void SymbolStatic_EquityMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolStatic.EquityMessage)
   return target;
@@ -844,7 +862,7 @@ size_t SymbolStatic_EquityMessage::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 127u) {
     // optional float face_value = 1;
@@ -969,16 +987,17 @@ void SymbolStatic_EquityMessage::Swap(SymbolStatic_EquityMessage* other) {
   InternalSwap(other);
 }
 void SymbolStatic_EquityMessage::InternalSwap(SymbolStatic_EquityMessage* other) {
-  std::swap(face_value_, other->face_value_);
-  std::swap(profit_, other->profit_);
-  std::swap(industry_, other->industry_);
-  std::swap(trade_status_, other->trade_status_);
-  std::swap(cash_dividend_, other->cash_dividend_);
-  std::swap(security_properties_, other->security_properties_);
-  std::swap(last_tradedate_, other->last_tradedate_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  using std::swap;
+  swap(face_value_, other->face_value_);
+  swap(profit_, other->profit_);
+  swap(industry_, other->industry_);
+  swap(trade_status_, other->trade_status_);
+  swap(cash_dividend_, other->cash_dividend_);
+  swap(security_properties_, other->security_properties_);
+  swap(last_tradedate_, other->last_tradedate_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolStatic_EquityMessage::GetMetadata() const {
@@ -1228,7 +1247,12 @@ SymbolStatic_FundMessage* SymbolStatic_FundMessage::New(::google::protobuf::Aren
 
 void SymbolStatic_FundMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolStatic.FundMessage)
-  if (_has_bits_[0 / 32] & 7u) {
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 7u) {
     ::memset(&face_value_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&iopv_) -
         reinterpret_cast<char*>(&face_value_)) + sizeof(iopv_));
@@ -1250,7 +1274,7 @@ bool SymbolStatic_FundMessage::MergePartialFromCodedStream(
       // optional float face_value = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(13u)) {
+            static_cast< ::google::protobuf::uint8>(13u /* 13 & 0xFF */)) {
           set_has_face_value();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -1264,7 +1288,7 @@ bool SymbolStatic_FundMessage::MergePartialFromCodedStream(
       // optional float total_issued = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(21u)) {
+            static_cast< ::google::protobuf::uint8>(21u /* 21 & 0xFF */)) {
           set_has_total_issued();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -1278,7 +1302,7 @@ bool SymbolStatic_FundMessage::MergePartialFromCodedStream(
       // optional float iopv = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(29u)) {
+            static_cast< ::google::protobuf::uint8>(29u /* 29 & 0xFF */)) {
           set_has_iopv();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -1291,13 +1315,11 @@ bool SymbolStatic_FundMessage::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -1335,13 +1357,14 @@ void SymbolStatic_FundMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolStatic.FundMessage)
 }
 
 ::google::protobuf::uint8* SymbolStatic_FundMessage::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolStatic.FundMessage)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1364,7 +1387,7 @@ void SymbolStatic_FundMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolStatic.FundMessage)
   return target;
@@ -1377,7 +1400,7 @@ size_t SymbolStatic_FundMessage::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 7u) {
     // optional float face_value = 1;
@@ -1463,12 +1486,13 @@ void SymbolStatic_FundMessage::Swap(SymbolStatic_FundMessage* other) {
   InternalSwap(other);
 }
 void SymbolStatic_FundMessage::InternalSwap(SymbolStatic_FundMessage* other) {
-  std::swap(face_value_, other->face_value_);
-  std::swap(total_issued_, other->total_issued_);
-  std::swap(iopv_, other->iopv_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  using std::swap;
+  swap(face_value_, other->face_value_);
+  swap(total_issued_, other->total_issued_);
+  swap(iopv_, other->iopv_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolStatic_FundMessage::GetMetadata() const {
@@ -1631,11 +1655,16 @@ SymbolStatic_WarranMessage* SymbolStatic_WarranMessage::New(::google::protobuf::
 
 void SymbolStatic_WarranMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolStatic.WarranMessage)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
   if (has_under_line()) {
     GOOGLE_DCHECK(!under_line_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
     (*under_line_.UnsafeRawStringPointer())->clear();
   }
-  if (_has_bits_[0 / 32] & 126u) {
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 126u) {
     ::memset(&style_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&balance_) -
         reinterpret_cast<char*>(&style_)) + sizeof(balance_));
@@ -1657,7 +1686,7 @@ bool SymbolStatic_WarranMessage::MergePartialFromCodedStream(
       // optional int32 style = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           set_has_style();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -1671,7 +1700,7 @@ bool SymbolStatic_WarranMessage::MergePartialFromCodedStream(
       // optional int32 cp = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u)) {
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
           set_has_cp();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -1685,7 +1714,7 @@ bool SymbolStatic_WarranMessage::MergePartialFromCodedStream(
       // optional float cnvt_ratio = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(29u)) {
+            static_cast< ::google::protobuf::uint8>(29u /* 29 & 0xFF */)) {
           set_has_cnvt_ratio();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -1699,7 +1728,7 @@ bool SymbolStatic_WarranMessage::MergePartialFromCodedStream(
       // optional float strike_price = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(37u)) {
+            static_cast< ::google::protobuf::uint8>(37u /* 37 & 0xFF */)) {
           set_has_strike_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -1713,7 +1742,7 @@ bool SymbolStatic_WarranMessage::MergePartialFromCodedStream(
       // optional uint32 maturity_date = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u)) {
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
           set_has_maturity_date();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -1727,7 +1756,7 @@ bool SymbolStatic_WarranMessage::MergePartialFromCodedStream(
       // optional bytes under_line = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(50u)) {
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_under_line()));
         } else {
@@ -1739,7 +1768,7 @@ bool SymbolStatic_WarranMessage::MergePartialFromCodedStream(
       // optional float balance = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(61u)) {
+            static_cast< ::google::protobuf::uint8>(61u /* 61 & 0xFF */)) {
           set_has_balance();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -1752,13 +1781,11 @@ bool SymbolStatic_WarranMessage::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -1817,13 +1844,14 @@ void SymbolStatic_WarranMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolStatic.WarranMessage)
 }
 
 ::google::protobuf::uint8* SymbolStatic_WarranMessage::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolStatic.WarranMessage)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1868,7 +1896,7 @@ void SymbolStatic_WarranMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolStatic.WarranMessage)
   return target;
@@ -1881,7 +1909,7 @@ size_t SymbolStatic_WarranMessage::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 127u) {
     // optional bytes under_line = 6;
@@ -2008,16 +2036,17 @@ void SymbolStatic_WarranMessage::Swap(SymbolStatic_WarranMessage* other) {
   InternalSwap(other);
 }
 void SymbolStatic_WarranMessage::InternalSwap(SymbolStatic_WarranMessage* other) {
+  using std::swap;
   under_line_.Swap(&other->under_line_);
-  std::swap(style_, other->style_);
-  std::swap(cp_, other->cp_);
-  std::swap(cnvt_ratio_, other->cnvt_ratio_);
-  std::swap(strike_price_, other->strike_price_);
-  std::swap(maturity_date_, other->maturity_date_);
-  std::swap(balance_, other->balance_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(style_, other->style_);
+  swap(cp_, other->cp_);
+  swap(cnvt_ratio_, other->cnvt_ratio_);
+  swap(strike_price_, other->strike_price_);
+  swap(maturity_date_, other->maturity_date_);
+  swap(balance_, other->balance_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolStatic_WarranMessage::GetMetadata() const {
@@ -2308,7 +2337,12 @@ SymbolStatic_BoundMessage* SymbolStatic_BoundMessage::New(::google::protobuf::Ar
 
 void SymbolStatic_BoundMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolStatic.BoundMessage)
-  if (_has_bits_[0 / 32] & 63u) {
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 63u) {
     ::memset(&maturity_date_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&accrued_int_) -
         reinterpret_cast<char*>(&maturity_date_)) + sizeof(accrued_int_));
@@ -2330,7 +2364,7 @@ bool SymbolStatic_BoundMessage::MergePartialFromCodedStream(
       // optional uint32 maturity_date = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           set_has_maturity_date();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -2344,7 +2378,7 @@ bool SymbolStatic_BoundMessage::MergePartialFromCodedStream(
       // optional uint32 intaccru_date = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u)) {
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
           set_has_intaccru_date();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -2358,7 +2392,7 @@ bool SymbolStatic_BoundMessage::MergePartialFromCodedStream(
       // optional float isssue_price = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(29u)) {
+            static_cast< ::google::protobuf::uint8>(29u /* 29 & 0xFF */)) {
           set_has_isssue_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2372,7 +2406,7 @@ bool SymbolStatic_BoundMessage::MergePartialFromCodedStream(
       // optional float coupon_rate = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(37u)) {
+            static_cast< ::google::protobuf::uint8>(37u /* 37 & 0xFF */)) {
           set_has_coupon_rate();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2386,7 +2420,7 @@ bool SymbolStatic_BoundMessage::MergePartialFromCodedStream(
       // optional float face_value = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(45u)) {
+            static_cast< ::google::protobuf::uint8>(45u /* 45 & 0xFF */)) {
           set_has_face_value();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2400,7 +2434,7 @@ bool SymbolStatic_BoundMessage::MergePartialFromCodedStream(
       // optional float accrued_int = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(53u)) {
+            static_cast< ::google::protobuf::uint8>(53u /* 53 & 0xFF */)) {
           set_has_accrued_int();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2413,13 +2447,11 @@ bool SymbolStatic_BoundMessage::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -2472,13 +2504,14 @@ void SymbolStatic_BoundMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolStatic.BoundMessage)
 }
 
 ::google::protobuf::uint8* SymbolStatic_BoundMessage::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolStatic.BoundMessage)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -2516,7 +2549,7 @@ void SymbolStatic_BoundMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolStatic.BoundMessage)
   return target;
@@ -2529,7 +2562,7 @@ size_t SymbolStatic_BoundMessage::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 63u) {
     // optional uint32 maturity_date = 1;
@@ -2643,15 +2676,16 @@ void SymbolStatic_BoundMessage::Swap(SymbolStatic_BoundMessage* other) {
   InternalSwap(other);
 }
 void SymbolStatic_BoundMessage::InternalSwap(SymbolStatic_BoundMessage* other) {
-  std::swap(maturity_date_, other->maturity_date_);
-  std::swap(intaccru_date_, other->intaccru_date_);
-  std::swap(isssue_price_, other->isssue_price_);
-  std::swap(coupon_rate_, other->coupon_rate_);
-  std::swap(face_value_, other->face_value_);
-  std::swap(accrued_int_, other->accrued_int_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  using std::swap;
+  swap(maturity_date_, other->maturity_date_);
+  swap(intaccru_date_, other->intaccru_date_);
+  swap(isssue_price_, other->isssue_price_);
+  swap(coupon_rate_, other->coupon_rate_);
+  swap(face_value_, other->face_value_);
+  swap(accrued_int_, other->accrued_int_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolStatic_BoundMessage::GetMetadata() const {
@@ -2886,11 +2920,16 @@ SymbolStatic_CNVTMessage* SymbolStatic_CNVTMessage::New(::google::protobuf::Aren
 
 void SymbolStatic_CNVTMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolStatic.CNVTMessage)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
   if (has_under_line()) {
     GOOGLE_DCHECK(!under_line_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
     (*under_line_.UnsafeRawStringPointer())->clear();
   }
-  if (_has_bits_[0 / 32] & 126u) {
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 126u) {
     ::memset(&style_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&accrued_int_) -
         reinterpret_cast<char*>(&style_)) + sizeof(accrued_int_));
@@ -2912,7 +2951,7 @@ bool SymbolStatic_CNVTMessage::MergePartialFromCodedStream(
       // optional int32 style = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           set_has_style();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2926,7 +2965,7 @@ bool SymbolStatic_CNVTMessage::MergePartialFromCodedStream(
       // optional int32 cp = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u)) {
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
           set_has_cp();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2940,7 +2979,7 @@ bool SymbolStatic_CNVTMessage::MergePartialFromCodedStream(
       // optional float cnvt_ratio = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(29u)) {
+            static_cast< ::google::protobuf::uint8>(29u /* 29 & 0xFF */)) {
           set_has_cnvt_ratio();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2954,7 +2993,7 @@ bool SymbolStatic_CNVTMessage::MergePartialFromCodedStream(
       // optional float strike_price = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(37u)) {
+            static_cast< ::google::protobuf::uint8>(37u /* 37 & 0xFF */)) {
           set_has_strike_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -2968,7 +3007,7 @@ bool SymbolStatic_CNVTMessage::MergePartialFromCodedStream(
       // optional uint32 maturity_date = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u)) {
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
           set_has_maturity_date();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -2982,7 +3021,7 @@ bool SymbolStatic_CNVTMessage::MergePartialFromCodedStream(
       // optional bytes under_line = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(50u)) {
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_under_line()));
         } else {
@@ -2994,7 +3033,7 @@ bool SymbolStatic_CNVTMessage::MergePartialFromCodedStream(
       // optional float accrued_int = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(61u)) {
+            static_cast< ::google::protobuf::uint8>(61u /* 61 & 0xFF */)) {
           set_has_accrued_int();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -3007,13 +3046,11 @@ bool SymbolStatic_CNVTMessage::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -3072,13 +3109,14 @@ void SymbolStatic_CNVTMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolStatic.CNVTMessage)
 }
 
 ::google::protobuf::uint8* SymbolStatic_CNVTMessage::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolStatic.CNVTMessage)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -3123,7 +3161,7 @@ void SymbolStatic_CNVTMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolStatic.CNVTMessage)
   return target;
@@ -3136,7 +3174,7 @@ size_t SymbolStatic_CNVTMessage::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 127u) {
     // optional bytes under_line = 6;
@@ -3263,16 +3301,17 @@ void SymbolStatic_CNVTMessage::Swap(SymbolStatic_CNVTMessage* other) {
   InternalSwap(other);
 }
 void SymbolStatic_CNVTMessage::InternalSwap(SymbolStatic_CNVTMessage* other) {
+  using std::swap;
   under_line_.Swap(&other->under_line_);
-  std::swap(style_, other->style_);
-  std::swap(cp_, other->cp_);
-  std::swap(cnvt_ratio_, other->cnvt_ratio_);
-  std::swap(strike_price_, other->strike_price_);
-  std::swap(maturity_date_, other->maturity_date_);
-  std::swap(accrued_int_, other->accrued_int_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(style_, other->style_);
+  swap(cp_, other->cp_);
+  swap(cnvt_ratio_, other->cnvt_ratio_);
+  swap(strike_price_, other->strike_price_);
+  swap(maturity_date_, other->maturity_date_);
+  swap(accrued_int_, other->accrued_int_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolStatic_CNVTMessage::GetMetadata() const {
@@ -3559,7 +3598,12 @@ SymbolStatic_FutureMessage* SymbolStatic_FutureMessage::New(::google::protobuf::
 
 void SymbolStatic_FutureMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolStatic.FutureMessage)
-  if (_has_bits_[0 / 32] & 3u) {
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 3u) {
     ::memset(&last_day_oi_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&last_settle_price_) -
         reinterpret_cast<char*>(&last_day_oi_)) + sizeof(last_settle_price_));
@@ -3581,7 +3625,7 @@ bool SymbolStatic_FutureMessage::MergePartialFromCodedStream(
       // optional uint32 last_day_OI = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           set_has_last_day_oi();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -3595,7 +3639,7 @@ bool SymbolStatic_FutureMessage::MergePartialFromCodedStream(
       // optional float last_settle_price = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(21u)) {
+            static_cast< ::google::protobuf::uint8>(21u /* 21 & 0xFF */)) {
           set_has_last_settle_price();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -3608,13 +3652,11 @@ bool SymbolStatic_FutureMessage::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -3647,13 +3689,14 @@ void SymbolStatic_FutureMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolStatic.FutureMessage)
 }
 
 ::google::protobuf::uint8* SymbolStatic_FutureMessage::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolStatic.FutureMessage)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -3671,7 +3714,7 @@ void SymbolStatic_FutureMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolStatic.FutureMessage)
   return target;
@@ -3684,7 +3727,7 @@ size_t SymbolStatic_FutureMessage::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 3u) {
     // optional uint32 last_day_OI = 1;
@@ -3764,11 +3807,12 @@ void SymbolStatic_FutureMessage::Swap(SymbolStatic_FutureMessage* other) {
   InternalSwap(other);
 }
 void SymbolStatic_FutureMessage::InternalSwap(SymbolStatic_FutureMessage* other) {
-  std::swap(last_day_oi_, other->last_day_oi_);
-  std::swap(last_settle_price_, other->last_settle_price_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  using std::swap;
+  swap(last_day_oi_, other->last_day_oi_);
+  swap(last_settle_price_, other->last_settle_price_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolStatic_FutureMessage::GetMetadata() const {
@@ -3896,7 +3940,12 @@ SymbolStatic_TruestMessage* SymbolStatic_TruestMessage::New(::google::protobuf::
 
 void SymbolStatic_TruestMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolStatic.TruestMessage)
-  if (_has_bits_[0 / 32] & 3u) {
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 3u) {
     ::memset(&asset_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&asset_date_) -
         reinterpret_cast<char*>(&asset_)) + sizeof(asset_date_));
@@ -3918,7 +3967,7 @@ bool SymbolStatic_TruestMessage::MergePartialFromCodedStream(
       // optional float asset = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(29u)) {
+            static_cast< ::google::protobuf::uint8>(29u /* 29 & 0xFF */)) {
           set_has_asset();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
@@ -3932,7 +3981,7 @@ bool SymbolStatic_TruestMessage::MergePartialFromCodedStream(
       // optional uint32 asset_date = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u)) {
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
           set_has_asset_date();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -3945,13 +3994,11 @@ bool SymbolStatic_TruestMessage::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -3984,13 +4031,14 @@ void SymbolStatic_TruestMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolStatic.TruestMessage)
 }
 
 ::google::protobuf::uint8* SymbolStatic_TruestMessage::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolStatic.TruestMessage)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -4008,7 +4056,7 @@ void SymbolStatic_TruestMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolStatic.TruestMessage)
   return target;
@@ -4021,7 +4069,7 @@ size_t SymbolStatic_TruestMessage::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 3u) {
     // optional float asset = 3;
@@ -4101,11 +4149,12 @@ void SymbolStatic_TruestMessage::Swap(SymbolStatic_TruestMessage* other) {
   InternalSwap(other);
 }
 void SymbolStatic_TruestMessage::InternalSwap(SymbolStatic_TruestMessage* other) {
-  std::swap(asset_, other->asset_);
-  std::swap(asset_date_, other->asset_date_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  using std::swap;
+  swap(asset_, other->asset_);
+  swap(asset_date_, other->asset_date_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolStatic_TruestMessage::GetMetadata() const {
@@ -4243,27 +4292,13 @@ SymbolStatic_SpecMessage::~SymbolStatic_SpecMessage() {
 }
 
 void SymbolStatic_SpecMessage::SharedDtor() {
-  if (this != internal_default_instance()) {
-    delete equity_;
-  }
-  if (this != internal_default_instance()) {
-    delete fund_;
-  }
-  if (this != internal_default_instance()) {
-    delete warran_;
-  }
-  if (this != internal_default_instance()) {
-    delete bound_;
-  }
-  if (this != internal_default_instance()) {
-    delete cnvt_;
-  }
-  if (this != internal_default_instance()) {
-    delete future_;
-  }
-  if (this != internal_default_instance()) {
-    delete truest_;
-  }
+  if (this != internal_default_instance()) delete equity_;
+  if (this != internal_default_instance()) delete fund_;
+  if (this != internal_default_instance()) delete warran_;
+  if (this != internal_default_instance()) delete bound_;
+  if (this != internal_default_instance()) delete cnvt_;
+  if (this != internal_default_instance()) delete future_;
+  if (this != internal_default_instance()) delete truest_;
 }
 
 void SymbolStatic_SpecMessage::SetCachedSize(int size) const {
@@ -4291,32 +4326,37 @@ SymbolStatic_SpecMessage* SymbolStatic_SpecMessage::New(::google::protobuf::Aren
 
 void SymbolStatic_SpecMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolStatic.SpecMessage)
-  if (_has_bits_[0 / 32] & 127u) {
-    if (has_equity()) {
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 127u) {
+    if (cached_has_bits & 0x00000001u) {
       GOOGLE_DCHECK(equity_ != NULL);
       equity_->::chaos_data::SymbolStatic_EquityMessage::Clear();
     }
-    if (has_fund()) {
+    if (cached_has_bits & 0x00000002u) {
       GOOGLE_DCHECK(fund_ != NULL);
       fund_->::chaos_data::SymbolStatic_FundMessage::Clear();
     }
-    if (has_warran()) {
+    if (cached_has_bits & 0x00000004u) {
       GOOGLE_DCHECK(warran_ != NULL);
       warran_->::chaos_data::SymbolStatic_WarranMessage::Clear();
     }
-    if (has_bound()) {
+    if (cached_has_bits & 0x00000008u) {
       GOOGLE_DCHECK(bound_ != NULL);
       bound_->::chaos_data::SymbolStatic_BoundMessage::Clear();
     }
-    if (has_cnvt()) {
+    if (cached_has_bits & 0x00000010u) {
       GOOGLE_DCHECK(cnvt_ != NULL);
       cnvt_->::chaos_data::SymbolStatic_CNVTMessage::Clear();
     }
-    if (has_future()) {
+    if (cached_has_bits & 0x00000020u) {
       GOOGLE_DCHECK(future_ != NULL);
       future_->::chaos_data::SymbolStatic_FutureMessage::Clear();
     }
-    if (has_truest()) {
+    if (cached_has_bits & 0x00000040u) {
       GOOGLE_DCHECK(truest_ != NULL);
       truest_->::chaos_data::SymbolStatic_TruestMessage::Clear();
     }
@@ -4338,7 +4378,7 @@ bool SymbolStatic_SpecMessage::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.EquityMessage equity = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(10u)) {
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_equity()));
         } else {
@@ -4350,7 +4390,7 @@ bool SymbolStatic_SpecMessage::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.FundMessage fund = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u)) {
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_fund()));
         } else {
@@ -4362,7 +4402,7 @@ bool SymbolStatic_SpecMessage::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.WarranMessage warran = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(26u)) {
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_warran()));
         } else {
@@ -4374,7 +4414,7 @@ bool SymbolStatic_SpecMessage::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.BoundMessage bound = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(34u)) {
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_bound()));
         } else {
@@ -4386,7 +4426,7 @@ bool SymbolStatic_SpecMessage::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.CNVTMessage cnvt = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(42u)) {
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_cnvt()));
         } else {
@@ -4398,7 +4438,7 @@ bool SymbolStatic_SpecMessage::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.FutureMessage future = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(50u)) {
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_future()));
         } else {
@@ -4410,7 +4450,7 @@ bool SymbolStatic_SpecMessage::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.TruestMessage truest = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(58u)) {
+            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_truest()));
         } else {
@@ -4421,13 +4461,11 @@ bool SymbolStatic_SpecMessage::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -4492,13 +4530,14 @@ void SymbolStatic_SpecMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolStatic.SpecMessage)
 }
 
 ::google::protobuf::uint8* SymbolStatic_SpecMessage::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolStatic.SpecMessage)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -4555,7 +4594,7 @@ void SymbolStatic_SpecMessage::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolStatic.SpecMessage)
   return target;
@@ -4568,7 +4607,7 @@ size_t SymbolStatic_SpecMessage::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 127u) {
     // optional .chaos_data.SymbolStatic.EquityMessage equity = 1;
@@ -4699,16 +4738,17 @@ void SymbolStatic_SpecMessage::Swap(SymbolStatic_SpecMessage* other) {
   InternalSwap(other);
 }
 void SymbolStatic_SpecMessage::InternalSwap(SymbolStatic_SpecMessage* other) {
-  std::swap(equity_, other->equity_);
-  std::swap(fund_, other->fund_);
-  std::swap(warran_, other->warran_);
-  std::swap(bound_, other->bound_);
-  std::swap(cnvt_, other->cnvt_);
-  std::swap(future_, other->future_);
-  std::swap(truest_, other->truest_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  using std::swap;
+  swap(equity_, other->equity_);
+  swap(fund_, other->fund_);
+  swap(warran_, other->warran_);
+  swap(bound_, other->bound_);
+  swap(cnvt_, other->cnvt_);
+  swap(future_, other->future_);
+  swap(truest_, other->truest_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolStatic_SpecMessage::GetMetadata() const {
@@ -4734,9 +4774,10 @@ void SymbolStatic_SpecMessage::clear_equity() {
   clear_has_equity();
 }
 const ::chaos_data::SymbolStatic_EquityMessage& SymbolStatic_SpecMessage::equity() const {
+  const ::chaos_data::SymbolStatic_EquityMessage* p = equity_;
   // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.SpecMessage.equity)
-  return equity_ != NULL ? *equity_
-                         : *::chaos_data::SymbolStatic_EquityMessage::internal_default_instance();
+  return p != NULL ? *p : *reinterpret_cast<const ::chaos_data::SymbolStatic_EquityMessage*>(
+      &::chaos_data::_SymbolStatic_EquityMessage_default_instance_);
 }
 ::chaos_data::SymbolStatic_EquityMessage* SymbolStatic_SpecMessage::mutable_equity() {
   set_has_equity();
@@ -4779,9 +4820,10 @@ void SymbolStatic_SpecMessage::clear_fund() {
   clear_has_fund();
 }
 const ::chaos_data::SymbolStatic_FundMessage& SymbolStatic_SpecMessage::fund() const {
+  const ::chaos_data::SymbolStatic_FundMessage* p = fund_;
   // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.SpecMessage.fund)
-  return fund_ != NULL ? *fund_
-                         : *::chaos_data::SymbolStatic_FundMessage::internal_default_instance();
+  return p != NULL ? *p : *reinterpret_cast<const ::chaos_data::SymbolStatic_FundMessage*>(
+      &::chaos_data::_SymbolStatic_FundMessage_default_instance_);
 }
 ::chaos_data::SymbolStatic_FundMessage* SymbolStatic_SpecMessage::mutable_fund() {
   set_has_fund();
@@ -4824,9 +4866,10 @@ void SymbolStatic_SpecMessage::clear_warran() {
   clear_has_warran();
 }
 const ::chaos_data::SymbolStatic_WarranMessage& SymbolStatic_SpecMessage::warran() const {
+  const ::chaos_data::SymbolStatic_WarranMessage* p = warran_;
   // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.SpecMessage.warran)
-  return warran_ != NULL ? *warran_
-                         : *::chaos_data::SymbolStatic_WarranMessage::internal_default_instance();
+  return p != NULL ? *p : *reinterpret_cast<const ::chaos_data::SymbolStatic_WarranMessage*>(
+      &::chaos_data::_SymbolStatic_WarranMessage_default_instance_);
 }
 ::chaos_data::SymbolStatic_WarranMessage* SymbolStatic_SpecMessage::mutable_warran() {
   set_has_warran();
@@ -4869,9 +4912,10 @@ void SymbolStatic_SpecMessage::clear_bound() {
   clear_has_bound();
 }
 const ::chaos_data::SymbolStatic_BoundMessage& SymbolStatic_SpecMessage::bound() const {
+  const ::chaos_data::SymbolStatic_BoundMessage* p = bound_;
   // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.SpecMessage.bound)
-  return bound_ != NULL ? *bound_
-                         : *::chaos_data::SymbolStatic_BoundMessage::internal_default_instance();
+  return p != NULL ? *p : *reinterpret_cast<const ::chaos_data::SymbolStatic_BoundMessage*>(
+      &::chaos_data::_SymbolStatic_BoundMessage_default_instance_);
 }
 ::chaos_data::SymbolStatic_BoundMessage* SymbolStatic_SpecMessage::mutable_bound() {
   set_has_bound();
@@ -4914,9 +4958,10 @@ void SymbolStatic_SpecMessage::clear_cnvt() {
   clear_has_cnvt();
 }
 const ::chaos_data::SymbolStatic_CNVTMessage& SymbolStatic_SpecMessage::cnvt() const {
+  const ::chaos_data::SymbolStatic_CNVTMessage* p = cnvt_;
   // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.SpecMessage.cnvt)
-  return cnvt_ != NULL ? *cnvt_
-                         : *::chaos_data::SymbolStatic_CNVTMessage::internal_default_instance();
+  return p != NULL ? *p : *reinterpret_cast<const ::chaos_data::SymbolStatic_CNVTMessage*>(
+      &::chaos_data::_SymbolStatic_CNVTMessage_default_instance_);
 }
 ::chaos_data::SymbolStatic_CNVTMessage* SymbolStatic_SpecMessage::mutable_cnvt() {
   set_has_cnvt();
@@ -4959,9 +5004,10 @@ void SymbolStatic_SpecMessage::clear_future() {
   clear_has_future();
 }
 const ::chaos_data::SymbolStatic_FutureMessage& SymbolStatic_SpecMessage::future() const {
+  const ::chaos_data::SymbolStatic_FutureMessage* p = future_;
   // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.SpecMessage.future)
-  return future_ != NULL ? *future_
-                         : *::chaos_data::SymbolStatic_FutureMessage::internal_default_instance();
+  return p != NULL ? *p : *reinterpret_cast<const ::chaos_data::SymbolStatic_FutureMessage*>(
+      &::chaos_data::_SymbolStatic_FutureMessage_default_instance_);
 }
 ::chaos_data::SymbolStatic_FutureMessage* SymbolStatic_SpecMessage::mutable_future() {
   set_has_future();
@@ -5004,9 +5050,10 @@ void SymbolStatic_SpecMessage::clear_truest() {
   clear_has_truest();
 }
 const ::chaos_data::SymbolStatic_TruestMessage& SymbolStatic_SpecMessage::truest() const {
+  const ::chaos_data::SymbolStatic_TruestMessage* p = truest_;
   // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.SpecMessage.truest)
-  return truest_ != NULL ? *truest_
-                         : *::chaos_data::SymbolStatic_TruestMessage::internal_default_instance();
+  return p != NULL ? *p : *reinterpret_cast<const ::chaos_data::SymbolStatic_TruestMessage*>(
+      &::chaos_data::_SymbolStatic_TruestMessage_default_instance_);
 }
 ::chaos_data::SymbolStatic_TruestMessage* SymbolStatic_SpecMessage::mutable_truest() {
   set_has_truest();
@@ -5103,9 +5150,7 @@ SymbolStatic::~SymbolStatic() {
 void SymbolStatic::SharedDtor() {
   symbol_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (this != internal_default_instance()) {
-    delete spec_;
-  }
+  if (this != internal_default_instance()) delete spec_;
 }
 
 void SymbolStatic::SetCachedSize(int size) const {
@@ -5133,26 +5178,31 @@ SymbolStatic* SymbolStatic::New(::google::protobuf::Arena* arena) const {
 
 void SymbolStatic::Clear() {
 // @@protoc_insertion_point(message_clear_start:chaos_data.SymbolStatic)
-  if (_has_bits_[0 / 32] & 7u) {
-    if (has_symbol()) {
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 7u) {
+    if (cached_has_bits & 0x00000001u) {
       GOOGLE_DCHECK(!symbol_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*symbol_.UnsafeRawStringPointer())->clear();
     }
-    if (has_name()) {
+    if (cached_has_bits & 0x00000002u) {
       GOOGLE_DCHECK(!name_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*name_.UnsafeRawStringPointer())->clear();
     }
-    if (has_spec()) {
+    if (cached_has_bits & 0x00000004u) {
       GOOGLE_DCHECK(spec_ != NULL);
       spec_->::chaos_data::SymbolStatic_SpecMessage::Clear();
     }
   }
-  if (_has_bits_[0 / 32] & 248u) {
+  if (cached_has_bits & 248u) {
     ::memset(&ctype_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&float_issued_) -
         reinterpret_cast<char*>(&ctype_)) + sizeof(float_issued_));
   }
-  if (_has_bits_[8 / 32] & 3840u) {
+  if (cached_has_bits & 3840u) {
     ::memset(&total_issued_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&dec_stop_) -
         reinterpret_cast<char*>(&total_issued_)) + sizeof(dec_stop_));
@@ -5174,7 +5224,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional bytes symbol = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(10u)) {
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_symbol()));
         } else {
@@ -5186,7 +5236,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional bytes name = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u)) {
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_name()));
         } else {
@@ -5198,7 +5248,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.SYMBOL_TYPE ctype = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u)) {
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -5218,7 +5268,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.SYMBOL_SUBTYPE csub_type = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u)) {
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -5238,7 +5288,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional uint32 price_digit = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u)) {
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
           set_has_price_digit();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -5252,7 +5302,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional int32 vol_unit = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u)) {
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
           set_has_vol_unit();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -5266,7 +5316,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional int64 float_issued = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u)) {
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
           set_has_float_issued();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -5280,7 +5330,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional int64 total_issued = 8;
       case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u)) {
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
           set_has_total_issued();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -5294,7 +5344,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional uint32 last_close = 9;
       case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(72u)) {
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
           set_has_last_close();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -5308,7 +5358,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional uint32 adv_stop = 10;
       case 10: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(80u)) {
+            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
           set_has_adv_stop();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -5322,7 +5372,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional uint32 dec_stop = 11;
       case 11: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(88u)) {
+            static_cast< ::google::protobuf::uint8>(88u /* 88 & 0xFF */)) {
           set_has_dec_stop();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -5336,7 +5386,7 @@ bool SymbolStatic::MergePartialFromCodedStream(
       // optional .chaos_data.SymbolStatic.SpecMessage spec = 12;
       case 12: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(98u)) {
+            static_cast< ::google::protobuf::uint8>(98u /* 98 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_spec()));
         } else {
@@ -5347,13 +5397,11 @@ bool SymbolStatic::MergePartialFromCodedStream(
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -5441,13 +5489,14 @@ void SymbolStatic::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
+        _internal_metadata_.unknown_fields(), output);
   }
   // @@protoc_insertion_point(serialize_end:chaos_data.SymbolStatic)
 }
 
 ::google::protobuf::uint8* SymbolStatic::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:chaos_data.SymbolStatic)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -5523,7 +5572,7 @@ void SymbolStatic::SerializeWithCachedSizes(
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
+        _internal_metadata_.unknown_fields(), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:chaos_data.SymbolStatic)
   return target;
@@ -5536,7 +5585,7 @@ size_t SymbolStatic::ByteSizeLong() const {
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
+        _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 255u) {
     // optional bytes symbol = 1;
@@ -5723,21 +5772,22 @@ void SymbolStatic::Swap(SymbolStatic* other) {
   InternalSwap(other);
 }
 void SymbolStatic::InternalSwap(SymbolStatic* other) {
+  using std::swap;
   symbol_.Swap(&other->symbol_);
   name_.Swap(&other->name_);
-  std::swap(spec_, other->spec_);
-  std::swap(ctype_, other->ctype_);
-  std::swap(csub_type_, other->csub_type_);
-  std::swap(price_digit_, other->price_digit_);
-  std::swap(vol_unit_, other->vol_unit_);
-  std::swap(float_issued_, other->float_issued_);
-  std::swap(total_issued_, other->total_issued_);
-  std::swap(last_close_, other->last_close_);
-  std::swap(adv_stop_, other->adv_stop_);
-  std::swap(dec_stop_, other->dec_stop_);
-  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(spec_, other->spec_);
+  swap(ctype_, other->ctype_);
+  swap(csub_type_, other->csub_type_);
+  swap(price_digit_, other->price_digit_);
+  swap(vol_unit_, other->vol_unit_);
+  swap(float_issued_, other->float_issued_);
+  swap(total_issued_, other->total_issued_);
+  swap(last_close_, other->last_close_);
+  swap(adv_stop_, other->adv_stop_);
+  swap(dec_stop_, other->dec_stop_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SymbolStatic::GetMetadata() const {
@@ -6107,9 +6157,10 @@ void SymbolStatic::clear_spec() {
   clear_has_spec();
 }
 const ::chaos_data::SymbolStatic_SpecMessage& SymbolStatic::spec() const {
+  const ::chaos_data::SymbolStatic_SpecMessage* p = spec_;
   // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.spec)
-  return spec_ != NULL ? *spec_
-                         : *::chaos_data::SymbolStatic_SpecMessage::internal_default_instance();
+  return p != NULL ? *p : *reinterpret_cast<const ::chaos_data::SymbolStatic_SpecMessage*>(
+      &::chaos_data::_SymbolStatic_SpecMessage_default_instance_);
 }
 ::chaos_data::SymbolStatic_SpecMessage* SymbolStatic::mutable_spec() {
   set_has_spec();
