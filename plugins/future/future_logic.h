@@ -7,7 +7,6 @@
 #include "basic/basictypes.h"
 #include "core/common.h"
 
-
 namespace future_logic {
 
 class Futurelogic {
@@ -24,7 +23,7 @@ class Futurelogic {
   bool OnFutureConnect(struct server *srv, const int socket);
 
   bool OnFutureMessage(struct server *srv, const int socket, const void *msg,
-                      const int len);
+                       const int len);
 
   bool OnFutureClose(struct server *srv, const int socket);
 

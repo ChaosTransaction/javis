@@ -15,8 +15,8 @@ struct futureplugin {
 
 static void *OnFutureStart(struct server* srv) {
   signal(SIGPIPE, SIG_IGN);
-  struct futureplugin *future =
-      (struct futureplugin *)calloc(1, sizeof(struct futureplugin));
+  struct futureplugin *future = (struct futureplugin *) calloc(
+      1, sizeof(struct futureplugin));
   future->id = "future";
   future->name = "future";
   future->version = "1.0.0";
@@ -33,15 +33,15 @@ static handler_t OnFutureShutdown(struct server *srv, void *pd) {
 }
 
 static handler_t OnFutureConnect(struct server *srv, int fd, void *data,
-                                     int len) {
+                                 int len) {
   future_logic::Futurelogic::GetInstance()->OnFutureConnect(srv, fd);
   return HANDLER_GO_ON;
 }
 
 static handler_t OnFutureMessage(struct server *srv, int fd, void *data,
-                                     int len) {
+                                 int len) {
   bool r = future_logic::Futurelogic::GetInstance()->OnFutureMessage(srv, fd,
-                                                                    data, len);
+                                                                     data, len);
   if (r)
     return HANDLER_GO_ON;
   else
@@ -59,8 +59,8 @@ static handler_t OnUnknow(struct server *srv, int fd, void *data, int len) {
 
 static handler_t OnBroadcastConnect(struct server *srv, int fd, void *data,
                                     int len) {
-  future_logic::Futurelogic::GetInstance()->OnBroadcastConnect(
-      srv, fd, data, len);
+  future_logic::Futurelogic::GetInstance()->OnBroadcastConnect(srv, fd, data,
+                                                               len);
   return HANDLER_GO_ON;
 }
 
@@ -72,8 +72,8 @@ static handler_t OnBroadcastClose(struct server *srv, int fd) {
 static handler_t OnBroadcastMessage(struct server *srv, int fd, void *data,
                                     int len) {
   //LOG_ERROR("===============================onbroadcastmessage");
-  future_logic::Futurelogic::GetInstance()->OnBroadcastMessage(
-      srv, fd, data, len);
+  future_logic::Futurelogic::GetInstance()->OnBroadcastMessage(srv, fd, data,
+                                                               len);
   return HANDLER_GO_ON;
 }
 
@@ -83,8 +83,7 @@ static handler_t OnIniTimer(struct server *srv) {
 }
 
 static handler_t OnTimeOut(struct server *srv, char *id, int opcode, int time) {
-  future_logic::Futurelogic::GetInstance()->OnTimeout(srv, id, opcode,
-                                                              time);
+  future_logic::Futurelogic::GetInstance()->OnTimeout(srv, id, opcode, time);
   return HANDLER_GO_ON;
 }
 

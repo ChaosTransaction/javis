@@ -26,12 +26,12 @@ namespace base {
 //   irb(main):011:0> Time.at(-11644473600).getutc()
 //   => Mon Jan 01 00:00:00 UTC 1601
 static const int64 kWindowsEpochDeltaSeconds = GG_INT64_C(11644473600);
-static const int64 kWindowsEpochDeltaMilliseconds =
-    kWindowsEpochDeltaSeconds * Time::kMillisecondsPerSecond;
+static const int64 kWindowsEpochDeltaMilliseconds = kWindowsEpochDeltaSeconds
+    * Time::kMillisecondsPerSecond;
 
 // static
-const int64 Time::kWindowsEpochDeltaMicroseconds =
-    kWindowsEpochDeltaSeconds * Time::kMicrosecondsPerSecond;
+const int64 Time::kWindowsEpochDeltaMicroseconds = kWindowsEpochDeltaSeconds
+    * Time::kMicrosecondsPerSecond;
 
 // Some functions in time.cc use time_t directly, so we provide an offset
 // to convert from time_t (Unix epoch) and internal (Windows epoch).
@@ -48,8 +48,9 @@ Time Time::PastTime(int day) {
   // Combine seconds and microseconds in a 64-bit field containing microseconds
   // since the epoch.  That's enough for nearly 600 centuries.  Adjust from
   // Unix (1970) to Windows (1601) epoch.
-  return Time((tv.tv_sec * kMicrosecondsPerSecond + tv.tv_usec) +
-      kWindowsEpochDeltaMicroseconds - (kMicrosecondsPerDay *day));
+  return Time(
+      (tv.tv_sec * kMicrosecondsPerSecond + tv.tv_usec)
+          + kWindowsEpochDeltaMicroseconds - (kMicrosecondsPerDay * day));
 }
 // static
 Time Time::Now() {
@@ -61,8 +62,9 @@ Time Time::Now() {
   // Combine seconds and microseconds in a 64-bit field containing microseconds
   // since the epoch.  That's enough for nearly 600 centuries.  Adjust from
   // Unix (1970) to Windows (1601) epoch.
-  return Time((tv.tv_sec * kMicrosecondsPerSecond + tv.tv_usec) +
-      kWindowsEpochDeltaMicroseconds);
+  return Time(
+      (tv.tv_sec * kMicrosecondsPerSecond + tv.tv_usec)
+          + kWindowsEpochDeltaMicroseconds);
 }
 
 // static
@@ -74,17 +76,17 @@ Time Time::NowFromSystemTime() {
 // static
 Time Time::FromExploded(bool is_local, const Exploded& exploded) {
   struct tm timestruct;
-  timestruct.tm_sec    = exploded.second;
-  timestruct.tm_min    = exploded.minute;
-  timestruct.tm_hour   = exploded.hour;
-  timestruct.tm_mday   = exploded.day_of_month;
-  timestruct.tm_mon    = exploded.month - 1;
-  timestruct.tm_year   = exploded.year - 1900;
-  timestruct.tm_wday   = exploded.day_of_week;  // mktime/timegm ignore this
-  timestruct.tm_yday   = 0;     // mktime/timegm ignore this
-  timestruct.tm_isdst  = -1;    // attempt to figure it out
+  timestruct.tm_sec = exploded.second;
+  timestruct.tm_min = exploded.minute;
+  timestruct.tm_hour = exploded.hour;
+  timestruct.tm_mday = exploded.day_of_month;
+  timestruct.tm_mon = exploded.month - 1;
+  timestruct.tm_year = exploded.year - 1900;
+  timestruct.tm_wday = exploded.day_of_week;  // mktime/timegm ignore this
+  timestruct.tm_yday = 0;     // mktime/timegm ignore this
+  timestruct.tm_isdst = -1;    // attempt to figure it out
   timestruct.tm_gmtoff = 0;     // not a POSIX field, so mktime/timegm ignore
-  timestruct.tm_zone   = NULL;  // not a POSIX field, so mktime/timegm ignore
+  timestruct.tm_zone = NULL;  // not a POSIX field, so mktime/timegm ignore
 
   time_t seconds;
   if (is_local)
@@ -97,8 +99,7 @@ Time Time::FromExploded(bool is_local, const Exploded& exploded) {
   // return is the best that can be done here.  It's not ideal, but it's better
   // than failing here or ignoring the overflow case and treating each time
   // overflow as one second prior to the epoch.
-  if (seconds == -1 &&
-      (exploded.year < 1969 || exploded.year > 1970)) {
+  if (seconds == -1 && (exploded.year < 1969 || exploded.year > 1970)) {
     // If exploded.year is 1969 or 1970, take -1 as correct, with the
     // time indicating 1 second prior to the epoch.  (1970 is allowed to handle
     // time zone and DST offsets.)  Otherwise, return the most future or past
@@ -114,28 +115,28 @@ Time Time::FromExploded(bool is_local, const Exploded& exploded) {
     // 999ms to avoid the time being less than any other possible value that
     // this function can return.
     if (exploded.year < 1969) {
-      milliseconds = std::numeric_limits<time_t>::min() *
-                     kMillisecondsPerSecond;
+      milliseconds = std::numeric_limits < time_t
+          > ::min() * kMillisecondsPerSecond;
     } else {
-      milliseconds = (std::numeric_limits<time_t>::max() *
-                      kMillisecondsPerSecond) +
-                     kMillisecondsPerSecond - 1;
+      milliseconds = (std::numeric_limits < time_t
+          > ::max() * kMillisecondsPerSecond) + kMillisecondsPerSecond - 1;
     }
   } else {
     milliseconds = seconds * kMillisecondsPerSecond + exploded.millisecond;
   }
 
   // Adjust from Unix (1970) to Windows (1601) epoch.
-  return Time((milliseconds * kMicrosecondsPerMillisecond) +
-      kWindowsEpochDeltaMicroseconds);
+  return Time(
+      (milliseconds * kMicrosecondsPerMillisecond)
+          + kWindowsEpochDeltaMicroseconds);
 }
 
 void Time::Explode(bool is_local, Exploded* exploded) const {
   // Time stores times with microsecond resolution, but Exploded only carries
   // millisecond resolution, so begin by being lossy.  Adjust from Windows
   // epoch (1601) to Unix epoch (1970);
-  int64 milliseconds = (us_ - kWindowsEpochDeltaMicroseconds) /
-      kMicrosecondsPerMillisecond;
+  int64 milliseconds = (us_ - kWindowsEpochDeltaMicroseconds)
+      / kMicrosecondsPerMillisecond;
   time_t seconds = milliseconds / kMillisecondsPerSecond;
 
   struct tm timestruct;
@@ -144,14 +145,14 @@ void Time::Explode(bool is_local, Exploded* exploded) const {
   else
     gmtime_r(&seconds, &timestruct);
 
-  exploded->year         = timestruct.tm_year + 1900;
-  exploded->month        = timestruct.tm_mon + 1;
-  exploded->day_of_week  = timestruct.tm_wday;
+  exploded->year = timestruct.tm_year + 1900;
+  exploded->month = timestruct.tm_mon + 1;
+  exploded->day_of_week = timestruct.tm_wday;
   exploded->day_of_month = timestruct.tm_mday;
-  exploded->hour         = timestruct.tm_hour;
-  exploded->minute       = timestruct.tm_min;
-  exploded->second       = timestruct.tm_sec;
-  exploded->millisecond  = milliseconds % kMillisecondsPerSecond;
+  exploded->hour = timestruct.tm_hour;
+  exploded->minute = timestruct.tm_min;
+  exploded->second = timestruct.tm_sec;
+  exploded->millisecond = milliseconds % kMillisecondsPerSecond;
 }
 
 // Time -----------------------------------------------------------------------
@@ -160,15 +161,14 @@ void Time::Explode(bool is_local, Exploded* exploded) const {
 Time Time::FromStringFormat(const char* time_string,
                             const char* format_string) {
   struct tm stm;
-  memset(&stm,0,sizeof(struct tm));
-  sscanf(time_string, format_string,
-         &stm.tm_year, &stm.tm_mon, &stm.tm_mday,
+  memset(&stm, 0, sizeof(struct tm));
+  sscanf(time_string, format_string, &stm.tm_year, &stm.tm_mon, &stm.tm_mday,
          &stm.tm_hour, &stm.tm_min, &stm.tm_sec);
   stm.tm_year -= 1900;
   stm.tm_mon--;
-  return Time((mktime(&stm) * kMicrosecondsPerSecond) + kTimeTToMicrosecondsOffset);
+  return Time(
+      (mktime(&stm) * kMicrosecondsPerSecond) + kTimeTToMicrosecondsOffset);
 }
-
 
 // static
 Time Time::FromTimeT(time_t tt) {
@@ -185,16 +185,16 @@ time_t Time::ToTimeT() const {
 
 // static
 Time Time::FromDoubleT(double dt) {
-  return Time(static_cast<int64>((dt *
-                                  static_cast<double>(kMicrosecondsPerSecond)) +
-                                 kTimeTToMicrosecondsOffset));
+  return Time(
+      static_cast<int64>((dt * static_cast<double>(kMicrosecondsPerSecond))
+          + kTimeTToMicrosecondsOffset));
 }
 
 double Time::ToDoubleT() const {
   if (us_ == 0)
     return 0;  // Preserve 0 so we can tell it doesn't exist.
-  return (static_cast<double>(us_ - kTimeTToMicrosecondsOffset) /
-          static_cast<double>(kMicrosecondsPerSecond));
+  return (static_cast<double>(us_ - kTimeTToMicrosecondsOffset)
+      / static_cast<double>(kMicrosecondsPerSecond));
 }
 
 Time Time::LocalMidnight() const {
@@ -211,17 +211,16 @@ Time Time::LocalMidnight() const {
 bool Time::FromString(const wchar_t* time_string, Time* parsed_time) {
   //DCHECK((time_string != NULL) && (parsed_time != NULL));
   /*std::string ascii_time_string = SysWideToUTF8(time_string);
-  if (ascii_time_string.length() == 0)
-    return false;
-  PRTime result_time = 0;
-  PRStatus result = PR_ParseTimeString(ascii_time_string.c_str(), PR_FALSE,
-                                       &result_time);
-  if (PR_SUCCESS != result)
-    return false;
-  result_time += kTimeTToMicrosecondsOffset;
-  *parsed_time = Time(result_time);*/
+   if (ascii_time_string.length() == 0)
+   return false;
+   PRTime result_time = 0;
+   PRStatus result = PR_ParseTimeString(ascii_time_string.c_str(), PR_FALSE,
+   &result_time);
+   if (PR_SUCCESS != result)
+   return false;
+   result_time += kTimeTToMicrosecondsOffset;
+   *parsed_time = Time(result_time);*/
   return true;
 }
-
 
 }  // namespace base

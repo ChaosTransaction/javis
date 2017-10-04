@@ -63,54 +63,55 @@ bool FutureManager::OnFetchTick(const int socket, const std::string& sec,
 
   DAYPOS_MAP start_day_pos_map;
   DAYPOS_MAP end_day_pos_map;
-  r = GetCompareTimeTickPos<SYMBOL_MAP,SYMBOL_MAP::iterator,const std::string,DAYPOS_MAP>
-    (future_cache_->zc_future_,future_cache_->zc_future_,
-        symbol, symbol, start_day_pos_map, end_day_pos_map);
-
+  r = GetCompareTimeTickPos<SYMBOL_MAP, SYMBOL_MAP::iterator, const std::string,
+      DAYPOS_MAP>(future_cache_->zc_future_, future_cache_->zc_future_, symbol,
+                  symbol, start_day_pos_map, end_day_pos_map);
 
   HOURPOS_MAP start_hour_pos_map;
   HOURPOS_MAP end_hour_pos_map;
-  r = GetCompareTimeTickPos<DAYPOS_MAP,DAYPOS_MAP::iterator,const int32, HOURPOS_MAP>
-    (start_day_pos_map,end_day_pos_map,time_frame.start_full_day(),
-    time_frame.end_full_day(),start_hour_pos_map, end_hour_pos_map);
-  
-  
-  
+  r = GetCompareTimeTickPos<DAYPOS_MAP, DAYPOS_MAP::iterator, const int32,
+      HOURPOS_MAP>(start_day_pos_map, end_day_pos_map,
+                   time_frame.start_full_day(), time_frame.end_full_day(),
+                   start_hour_pos_map, end_hour_pos_map);
+
   MINUTEPOS_MAP start_minute_pos_map;
   MINUTEPOS_MAP end_minute_pos_map;
-  r = GetCompareTimeTickPos<HOURPOS_MAP,HOURPOS_MAP::iterator,const int32, MINUTEPOS_MAP>
-    (start_hour_pos_map,end_hour_pos_map,time_frame.start_hour(),
-    time_frame.end_hour(),start_minute_pos_map, end_minute_pos_map);
- 
+  r = GetCompareTimeTickPos<HOURPOS_MAP, HOURPOS_MAP::iterator, const int32,
+      MINUTEPOS_MAP>(start_hour_pos_map, end_hour_pos_map,
+                     time_frame.start_hour(), time_frame.end_hour(),
+                     start_minute_pos_map, end_minute_pos_map);
 
-
-  r = GetCompareTimeTickPos<MINUTEPOS_MAP,MINUTEPOS_MAP::iterator,const int32, future_infos::TickTimePos>
-    (start_minute_pos_map,end_minute_pos_map,time_frame.start_minute(),
-    time_frame.end_minute(),start_time_pos, end_time_pos);
+  r = GetCompareTimeTickPos<MINUTEPOS_MAP, MINUTEPOS_MAP::iterator, const int32,
+      future_infos::TickTimePos>(start_minute_pos_map, end_minute_pos_map,
+                                 time_frame.start_minute(),
+                                 time_frame.end_minute(), start_time_pos,
+                                 end_time_pos);
   return true;
 }
 
-
-template <typename MapType, typename MapITType, typename KeyType, typename ValType>
+template<typename MapType, typename MapITType, typename KeyType,
+    typename ValType>
 bool FutureManager::GetCompareTimeTickPos(MapType& ss_start_map,
-    MapType& se_end_map,KeyType& start_key, KeyType& end_key,
-    ValType& start_val, ValType& end_val) {
-  bool r = base::MapGet<MapType,MapITType,KeyType,ValType>
-      (ss_start_map,start_key,start_val);
-  if(!r){ //读取本地信息
+                                          MapType& se_end_map,
+                                          KeyType& start_key, KeyType& end_key,
+                                          ValType& start_val,
+                                          ValType& end_val) {
+  bool r = base::MapGet<MapType, MapITType, KeyType, ValType>(ss_start_map,
+                                                              start_key,
+                                                              start_val);
+  if (!r) {  //读取本地信息
     return true;
   }
 
-  if(start_key == end_key){
+  if (start_key == end_key) {
     end_val = start_val;
-  }else{
-    r = base::MapGet<MapType, MapITType, KeyType, ValType>
-      (se_end_map,end_key,end_val);
+  } else {
+    r = base::MapGet<MapType, MapITType, KeyType, ValType>(se_end_map, end_key,
+                                                           end_val);
   }
   return r;
   //return true;
 }
-
 
 }
 
