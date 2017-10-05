@@ -110,7 +110,10 @@ future_infos.o : ./future_infos.cc ./future_infos.h
 symbol_static.pb.o : ./../../proto/symbol_static.pb.cc ./../../proto/symbol_static.pb.h 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../proto/symbol_static.pb.cc
 
-$(PLUGIN) : future_engine.o future_init.o future_logic.o future_logic.o\
+time.o : $(USER_DIR)/logic/time.cc $(USER_DIR)/logic/time.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/logic/time.cc $(INCLUDE_PATHS)
+
+$(PLUGIN) : future_engine.o future_init.o future_logic.o future_logic.o time.o\
 		symbol_static.pb.o\
 	$(LIB_DIR)/mylib/base/lib/mybase.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LINK_PATHS) -liconv -lprotobuf -lpthread -lexpat -lrt -ldl \
