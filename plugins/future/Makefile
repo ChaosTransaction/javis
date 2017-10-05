@@ -104,13 +104,13 @@ future_logic.o : ./future_logic.cc ./future_logic.h
 future_infos.o : ./future_infos.cc ./future_infos.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_infos.cc $(INCLUDE_PATHS)
 
-
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_infos.cc $(INCLUDE_PATHS)
+future_file.o : ./future_file.cc ./future_file.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_file.cc $(INCLUDE_PATHS)
 
 symbol_static.pb.o : ./../../proto/symbol_static.pb.cc ./../../proto/symbol_static.pb.h 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../proto/symbol_static.pb.cc
 
-$(PLUGIN) : future_engine.o future_init.o future_logic.o future_logic.o\
+$(PLUGIN) : future_engine.o future_init.o future_logic.o future_logic.o future_file.o\
 		symbol_static.pb.o\
 	$(LIB_DIR)/mylib/base/lib/mybase.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LINK_PATHS) -liconv -lprotobuf -lpthread -lexpat -lrt -ldl \

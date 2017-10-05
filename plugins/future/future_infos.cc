@@ -41,8 +41,9 @@ TickTimePos::TickTimePos() {
   data_ = new Data();
 }
 
-TickTimePos::TickTimePos(const int32 start_pos, const int32 end_pos) {
-  data_ = new Data(start_pos, end_pos);
+TickTimePos::TickTimePos(const int64 t_time, const int32 start_pos,
+                         const int32 end_pos) {
+  data_ = new Data(t_time, start_pos, end_pos);
 }
 
 TickTimePos& TickTimePos::operator =(const TickTimePos& tit_pos) {
