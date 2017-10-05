@@ -5,10 +5,11 @@
 #define FUTURE_FUTURE_ENGINE_H_
 
 #include "future_infos.h"
+#include "future_file.h"
 #include "thread/base_thread_handler.h"
 #include "thread/base_thread_lock.h"
-
 #include "proto/symbol_dynam_market.pb.h"
+#include "proto/symbol_pos_index.pb.h"
 #include <map>
 
 namespace future_logic {
@@ -56,6 +57,8 @@ class FutureManager {
   bool GetCompareTimeTickPos(MapType& ss_start_map, MapType& se_end_map,
                              KeyType& start_key, KeyType& end_key,
                              ValType& start_val, ValType& end_val);
+
+  bool LoadLocalIndexPosInfo();
  private:
   void Init();
   void Deinit();

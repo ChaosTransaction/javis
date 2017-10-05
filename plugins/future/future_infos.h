@@ -99,7 +99,7 @@ class TickTimePos {
  public:
   TickTimePos();
   TickTimePos(const TickTimePos& tit_pos);
-  TickTimePos(const int32 start_pos, const int32 end_pos);
+  TickTimePos(const int64 t_time, const int32 start_pos, const int32 end_pos);
 
   TickTimePos& operator =(const TickTimePos& tit_pos);
 
@@ -116,13 +116,15 @@ class TickTimePos {
           refcount_(1) {
     }
 
-    Data(const int64 start_pos, const int64 end_pos)
-        : start_pos_(1),
-          end_pos_(1),
+    Data(const int64 t_time, const int64 start_pos, const int64 end_pos)
+        : tt_time_(t_time),
+          start_pos_(start_pos),
+          end_pos_(end_pos),
           refcount_(1) {
     }
 
    public:
+    const int64 tt_time_;
     const int32 start_pos_;
     const int32 end_pos_;
     void AddRef() {

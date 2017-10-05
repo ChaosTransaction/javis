@@ -113,5 +113,35 @@ bool FutureManager::GetCompareTimeTickPos(MapType& ss_start_map,
   //return true;
 }
 
+bool FutureManager::LoadLocalIndexPosInfo(const std::string& sec,
+                                          const std::string& data_type,
+                                          const std::string& shuffix,
+                                          const std::string& symbol,
+                                          const int32 year, const int32 month,
+                                          const int32 day) {
+  std::string content;
+  bool r = FutureFile::ReadFile(sec, data_type, shuffix, symbol, year, month,
+                                day, &content);
+  if (!r)
+    return r;
+
+  //遍历读取位置信息
+  const char* raw_data = content.c_str();
+  const size_t raw_data_length = content.length();
+  char* data = NULL;
+  size_t pos = 0;
+  while (pos < raw_data_length) {
+    int16 packet_length = *(int16*) (raw_data + pos);
+    std::string packet;
+    packet.assgin(raw_data + pos + sizeof(int16),
+                  packet_length - sizeof(sizeof(int16)));
+    pos += packet_length;
+    chaos_data::SymbolPosIndex last_pos_index;
+    last_pos_index.ParseFromString(packet);
+  }
+
+  return r;
+}
+
 }
 

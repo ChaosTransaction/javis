@@ -1,0 +1,5 @@
+package chaos_data; message SymbolPosIndex {
+    required uint64 time_index = 1;//时间分钟 
+    required uint32 start_pos = 2; //开始位置
+    required uint32 end_pos = 3;  //结束位置
+}

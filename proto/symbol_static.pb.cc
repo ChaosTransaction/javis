@@ -228,6 +228,9 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, ctype_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, csub_type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, market_mtk_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, market_date_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, his_count_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, price_digit_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, vol_unit_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, float_issued_),
@@ -238,16 +241,19 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SymbolStatic, spec_),
   0,
   1,
-  3,
   4,
   5,
+  2,
   6,
   7,
   8,
   9,
   10,
   11,
-  2,
+  12,
+  13,
+  14,
+  3,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 12, sizeof(SymbolStatic_EquityMessage)},
@@ -258,7 +264,7 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTR
   { 85, 92, sizeof(SymbolStatic_FutureMessage)},
   { 94, 101, sizeof(SymbolStatic_TruestMessage)},
   { 103, 115, sizeof(SymbolStatic_SpecMessage)},
-  { 122, 139, sizeof(SymbolStatic)},
+  { 122, 142, sizeof(SymbolStatic)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -343,60 +349,62 @@ namespace {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\023symbol_static.proto\022\nchaos_data\"\315\017\n\014Sy"
+      "\n\023symbol_static.proto\022\nchaos_data\"\211\020\n\014Sy"
       "mbolStatic\022\016\n\006symbol\030\001 \001(\014\022\014\n\004name\030\002 \001(\014"
       "\0223\n\005ctype\030\003 \001(\0162$.chaos_data.SymbolStati"
       "c.SYMBOL_TYPE\022:\n\tcsub_type\030\004 \001(\0162\'.chaos"
-      "_data.SymbolStatic.SYMBOL_SUBTYPE\022\023\n\013pri"
-      "ce_digit\030\005 \001(\r\022\020\n\010vol_unit\030\006 \001(\005\022\024\n\014floa"
-      "t_issued\030\007 \001(\003\022\024\n\014total_issued\030\010 \001(\003\022\022\n\n"
-      "last_close\030\t \001(\r\022\020\n\010adv_stop\030\n \001(\r\022\020\n\010de"
-      "c_stop\030\013 \001(\r\0222\n\004spec\030\014 \001(\0132$.chaos_data."
-      "SymbolStatic.SpecMessage\032\313\001\n\rEquityMessa"
-      "ge\022\022\n\nface_value\030\001 \001(\002\022\016\n\006profit\030\002 \001(\002\022\020"
-      "\n\010industry\030\003 \001(\r\022\024\n\014trade_status\030\004 \001(\005\022\025"
-      "\n\rcash_dividend\030\005 \001(\002\022\?\n\023security_proper"
-      "ties\030\006 \001(\0162\".chaos_data.SymbolStatic.SYM"
-      "BOL_SP\022\026\n\016last_tradedate\030\007 \001(\r\032E\n\013FundMe"
-      "ssage\022\022\n\nface_value\030\001 \001(\002\022\024\n\014total_issue"
-      "d\030\002 \001(\002\022\014\n\004iopv\030\003 \001(\002\032\220\001\n\rWarranMessage\022"
-      "\r\n\005style\030\001 \001(\005\022\n\n\002cp\030\002 \001(\005\022\022\n\ncnvt_ratio"
-      "\030\003 \001(\002\022\024\n\014strike_price\030\004 \001(\002\022\025\n\rmaturity"
-      "_date\030\005 \001(\r\022\022\n\nunder_line\030\006 \001(\014\022\017\n\007balan"
-      "ce\030\007 \001(\002\032\220\001\n\014BoundMessage\022\025\n\rmaturity_da"
-      "te\030\001 \001(\r\022\025\n\rintaccru_date\030\002 \001(\r\022\024\n\014isssu"
-      "e_price\030\003 \001(\002\022\023\n\013coupon_rate\030\004 \001(\002\022\022\n\nfa"
-      "ce_value\030\005 \001(\002\022\023\n\013accrued_int\030\006 \001(\002\032\222\001\n\013"
-      "CNVTMessage\022\r\n\005style\030\001 \001(\005\022\n\n\002cp\030\002 \001(\005\022\022"
-      "\n\ncnvt_ratio\030\003 \001(\002\022\024\n\014strike_price\030\004 \001(\002"
-      "\022\025\n\rmaturity_date\030\005 \001(\r\022\022\n\nunder_line\030\006 "
-      "\001(\014\022\023\n\013accrued_int\030\007 \001(\002\032\?\n\rFutureMessag"
-      "e\022\023\n\013last_day_OI\030\001 \001(\r\022\031\n\021last_settle_pr"
-      "ice\030\002 \001(\002\0322\n\rTruestMessage\022\r\n\005asset\030\003 \001("
-      "\002\022\022\n\nasset_date\030\004 \001(\r\032\213\003\n\013SpecMessage\0226\n"
-      "\006equity\030\001 \001(\0132&.chaos_data.SymbolStatic."
-      "EquityMessage\0222\n\004fund\030\002 \001(\0132$.chaos_data"
-      ".SymbolStatic.FundMessage\0226\n\006warran\030\003 \001("
-      "\0132&.chaos_data.SymbolStatic.WarranMessag"
-      "e\0224\n\005bound\030\004 \001(\0132%.chaos_data.SymbolStat"
-      "ic.BoundMessage\0222\n\004cnvt\030\005 \001(\0132$.chaos_da"
-      "ta.SymbolStatic.CNVTMessage\0226\n\006future\030\006 "
-      "\001(\0132&.chaos_data.SymbolStatic.FutureMess"
-      "age\0226\n\006truest\030\007 \001(\0132&.chaos_data.SymbolS"
-      "tatic.TruestMessage\"\320\001\n\013SYMBOL_TYPE\022\t\n\005I"
-      "NDEX\020\000\022\t\n\005STOCK\020\001\022\010\n\004FUND\020\002\022\010\n\004BOND\020\003\022\017\n"
-      "\013OTHER_STOCK\020\004\022\n\n\006OPTION\020\005\022\014\n\010EXCHANGE\020\006"
-      "\022\n\n\006FUTURE\020\007\022\013\n\007FTR_IDX\020\010\022\007\n\003RGZ\020\t\022\007\n\003ET"
-      "F\020\n\022\007\n\003LOF\020\013\022\014\n\010COV_BOND\020\014\022\t\n\005TRUST\020\r\022\013\n"
-      "\007WARRANT\020\016\022\010\n\004REPO\020\017\022\010\n\004COMM\020\020\"_\n\016SYMBOL"
-      "_SUBTYPE\022\013\n\007NILTYPE\020\000\022\n\n\006ASHARE\020A\022\n\n\006BSH"
-      "ARE\020B\022\014\n\010GOV_BOND\020G\022\014\n\010ENT_BOND\020O\022\014\n\010FIN"
-      "_BOND\020F\"h\n\tSYMBOL_SP\022\n\n\006NULLSP\020\000\022\007\n\003NSP\020"
-      "N\022\007\n\003SSP\020S\022\007\n\003PSP\020P\022\007\n\003TSP\020T\022\007\n\003LSP\020L\022\007\n"
-      "\003OSP\020O\022\007\n\003FSP\020F\022\007\n\003ESP\020E\022\007\n\003ZSP\020Z"
+      "_data.SymbolStatic.SYMBOL_SUBTYPE\022\022\n\nmar"
+      "ket_mtk\030\005 \001(\014\022\023\n\013market_date\030\006 \001(\r\022\021\n\thi"
+      "s_count\030\007 \001(\r\022\023\n\013price_digit\030\010 \001(\r\022\020\n\010vo"
+      "l_unit\030\t \001(\005\022\024\n\014float_issued\030\n \001(\003\022\024\n\014to"
+      "tal_issued\030\013 \001(\003\022\022\n\nlast_close\030\014 \001(\r\022\020\n\010"
+      "adv_stop\030\r \001(\r\022\020\n\010dec_stop\030\016 \001(\r\0222\n\004spec"
+      "\030\017 \001(\0132$.chaos_data.SymbolStatic.SpecMes"
+      "sage\032\313\001\n\rEquityMessage\022\022\n\nface_value\030\001 \001"
+      "(\002\022\016\n\006profit\030\002 \001(\002\022\020\n\010industry\030\003 \001(\r\022\024\n\014"
+      "trade_status\030\004 \001(\005\022\025\n\rcash_dividend\030\005 \001("
+      "\002\022\?\n\023security_properties\030\006 \001(\0162\".chaos_d"
+      "ata.SymbolStatic.SYMBOL_SP\022\026\n\016last_trade"
+      "date\030\007 \001(\r\032E\n\013FundMessage\022\022\n\nface_value\030"
+      "\001 \001(\002\022\024\n\014total_issued\030\002 \001(\002\022\014\n\004iopv\030\003 \001("
+      "\002\032\220\001\n\rWarranMessage\022\r\n\005style\030\001 \001(\005\022\n\n\002cp"
+      "\030\002 \001(\005\022\022\n\ncnvt_ratio\030\003 \001(\002\022\024\n\014strike_pri"
+      "ce\030\004 \001(\002\022\025\n\rmaturity_date\030\005 \001(\r\022\022\n\nunder"
+      "_line\030\006 \001(\014\022\017\n\007balance\030\007 \001(\002\032\220\001\n\014BoundMe"
+      "ssage\022\025\n\rmaturity_date\030\001 \001(\r\022\025\n\rintaccru"
+      "_date\030\002 \001(\r\022\024\n\014isssue_price\030\003 \001(\002\022\023\n\013cou"
+      "pon_rate\030\004 \001(\002\022\022\n\nface_value\030\005 \001(\002\022\023\n\013ac"
+      "crued_int\030\006 \001(\002\032\222\001\n\013CNVTMessage\022\r\n\005style"
+      "\030\001 \001(\005\022\n\n\002cp\030\002 \001(\005\022\022\n\ncnvt_ratio\030\003 \001(\002\022\024"
+      "\n\014strike_price\030\004 \001(\002\022\025\n\rmaturity_date\030\005 "
+      "\001(\r\022\022\n\nunder_line\030\006 \001(\014\022\023\n\013accrued_int\030\007"
+      " \001(\002\032\?\n\rFutureMessage\022\023\n\013last_day_OI\030\001 \001"
+      "(\r\022\031\n\021last_settle_price\030\002 \001(\002\0322\n\rTruestM"
+      "essage\022\r\n\005asset\030\003 \001(\002\022\022\n\nasset_date\030\004 \001("
+      "\r\032\213\003\n\013SpecMessage\0226\n\006equity\030\001 \001(\0132&.chao"
+      "s_data.SymbolStatic.EquityMessage\0222\n\004fun"
+      "d\030\002 \001(\0132$.chaos_data.SymbolStatic.FundMe"
+      "ssage\0226\n\006warran\030\003 \001(\0132&.chaos_data.Symbo"
+      "lStatic.WarranMessage\0224\n\005bound\030\004 \001(\0132%.c"
+      "haos_data.SymbolStatic.BoundMessage\0222\n\004c"
+      "nvt\030\005 \001(\0132$.chaos_data.SymbolStatic.CNVT"
+      "Message\0226\n\006future\030\006 \001(\0132&.chaos_data.Sym"
+      "bolStatic.FutureMessage\0226\n\006truest\030\007 \001(\0132"
+      "&.chaos_data.SymbolStatic.TruestMessage\""
+      "\320\001\n\013SYMBOL_TYPE\022\t\n\005INDEX\020\000\022\t\n\005STOCK\020\001\022\010\n"
+      "\004FUND\020\002\022\010\n\004BOND\020\003\022\017\n\013OTHER_STOCK\020\004\022\n\n\006OP"
+      "TION\020\005\022\014\n\010EXCHANGE\020\006\022\n\n\006FUTURE\020\007\022\013\n\007FTR_"
+      "IDX\020\010\022\007\n\003RGZ\020\t\022\007\n\003ETF\020\n\022\007\n\003LOF\020\013\022\014\n\010COV_"
+      "BOND\020\014\022\t\n\005TRUST\020\r\022\013\n\007WARRANT\020\016\022\010\n\004REPO\020\017"
+      "\022\010\n\004COMM\020\020\"_\n\016SYMBOL_SUBTYPE\022\013\n\007NILTYPE\020"
+      "\000\022\n\n\006ASHARE\020A\022\n\n\006BSHARE\020B\022\014\n\010GOV_BOND\020G\022"
+      "\014\n\010ENT_BOND\020O\022\014\n\010FIN_BOND\020F\"h\n\tSYMBOL_SP"
+      "\022\n\n\006NULLSP\020\000\022\007\n\003NSP\020N\022\007\n\003SSP\020S\022\007\n\003PSP\020P\022"
+      "\007\n\003TSP\020T\022\007\n\003LSP\020L\022\007\n\003OSP\020O\022\007\n\003FSP\020F\022\007\n\003E"
+      "SP\020E\022\007\n\003ZSP\020Z"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2033);
+      descriptor, 2093);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "symbol_static.proto", &protobuf_RegisterTypes);
 }
@@ -5090,6 +5098,9 @@ const int SymbolStatic::kSymbolFieldNumber;
 const int SymbolStatic::kNameFieldNumber;
 const int SymbolStatic::kCtypeFieldNumber;
 const int SymbolStatic::kCsubTypeFieldNumber;
+const int SymbolStatic::kMarketMtkFieldNumber;
+const int SymbolStatic::kMarketDateFieldNumber;
+const int SymbolStatic::kHisCountFieldNumber;
 const int SymbolStatic::kPriceDigitFieldNumber;
 const int SymbolStatic::kVolUnitFieldNumber;
 const int SymbolStatic::kFloatIssuedFieldNumber;
@@ -5122,6 +5133,10 @@ SymbolStatic::SymbolStatic(const SymbolStatic& from)
   if (from.has_name()) {
     name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
+  market_mtk_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_market_mtk()) {
+    market_mtk_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.market_mtk_);
+  }
   if (from.has_spec()) {
     spec_ = new ::chaos_data::SymbolStatic_SpecMessage(*from.spec_);
   } else {
@@ -5137,6 +5152,7 @@ void SymbolStatic::SharedCtor() {
   _cached_size_ = 0;
   symbol_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  market_mtk_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&spec_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&dec_stop_) -
       reinterpret_cast<char*>(&spec_)) + sizeof(dec_stop_));
@@ -5150,6 +5166,7 @@ SymbolStatic::~SymbolStatic() {
 void SymbolStatic::SharedDtor() {
   symbol_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  market_mtk_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete spec_;
 }
 
@@ -5183,7 +5200,7 @@ void SymbolStatic::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 7u) {
+  if (cached_has_bits & 15u) {
     if (cached_has_bits & 0x00000001u) {
       GOOGLE_DCHECK(!symbol_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*symbol_.UnsafeRawStringPointer())->clear();
@@ -5193,19 +5210,23 @@ void SymbolStatic::Clear() {
       (*name_.UnsafeRawStringPointer())->clear();
     }
     if (cached_has_bits & 0x00000004u) {
+      GOOGLE_DCHECK(!market_mtk_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+      (*market_mtk_.UnsafeRawStringPointer())->clear();
+    }
+    if (cached_has_bits & 0x00000008u) {
       GOOGLE_DCHECK(spec_ != NULL);
       spec_->::chaos_data::SymbolStatic_SpecMessage::Clear();
     }
   }
-  if (cached_has_bits & 248u) {
+  if (cached_has_bits & 240u) {
     ::memset(&ctype_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&float_issued_) -
-        reinterpret_cast<char*>(&ctype_)) + sizeof(float_issued_));
+        reinterpret_cast<char*>(&his_count_) -
+        reinterpret_cast<char*>(&ctype_)) + sizeof(his_count_));
   }
-  if (cached_has_bits & 3840u) {
-    ::memset(&total_issued_, 0, static_cast<size_t>(
+  if (cached_has_bits & 32512u) {
+    ::memset(&price_digit_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&dec_stop_) -
-        reinterpret_cast<char*>(&total_issued_)) + sizeof(dec_stop_));
+        reinterpret_cast<char*>(&price_digit_)) + sizeof(dec_stop_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -5285,10 +5306,50 @@ bool SymbolStatic::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 price_digit = 5;
+      // optional bytes market_mtk = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_market_mtk()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional uint32 market_date = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+          set_has_market_date();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &market_date_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional uint32 his_count = 7;
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+          set_has_his_count();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &his_count_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional uint32 price_digit = 8;
+      case 8: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
           set_has_price_digit();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -5299,10 +5360,10 @@ bool SymbolStatic::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 vol_unit = 6;
-      case 6: {
+      // optional int32 vol_unit = 9;
+      case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
           set_has_vol_unit();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -5313,10 +5374,10 @@ bool SymbolStatic::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int64 float_issued = 7;
-      case 7: {
+      // optional int64 float_issued = 10;
+      case 10: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
           set_has_float_issued();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -5327,10 +5388,10 @@ bool SymbolStatic::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int64 total_issued = 8;
-      case 8: {
+      // optional int64 total_issued = 11;
+      case 11: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(88u /* 88 & 0xFF */)) {
           set_has_total_issued();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
@@ -5341,10 +5402,10 @@ bool SymbolStatic::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 last_close = 9;
-      case 9: {
+      // optional uint32 last_close = 12;
+      case 12: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(96u /* 96 & 0xFF */)) {
           set_has_last_close();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -5355,10 +5416,10 @@ bool SymbolStatic::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 adv_stop = 10;
-      case 10: {
+      // optional uint32 adv_stop = 13;
+      case 13: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(104u /* 104 & 0xFF */)) {
           set_has_adv_stop();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -5369,10 +5430,10 @@ bool SymbolStatic::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 dec_stop = 11;
-      case 11: {
+      // optional uint32 dec_stop = 14;
+      case 14: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(88u /* 88 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(112u /* 112 & 0xFF */)) {
           set_has_dec_stop();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -5383,10 +5444,10 @@ bool SymbolStatic::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .chaos_data.SymbolStatic.SpecMessage spec = 12;
-      case 12: {
+      // optional .chaos_data.SymbolStatic.SpecMessage spec = 15;
+      case 15: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(98u /* 98 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(122u /* 122 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_spec()));
         } else {
@@ -5435,56 +5496,72 @@ void SymbolStatic::SerializeWithCachedSizes(
   }
 
   // optional .chaos_data.SymbolStatic.SYMBOL_TYPE ctype = 3;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       3, this->ctype(), output);
   }
 
   // optional .chaos_data.SymbolStatic.SYMBOL_SUBTYPE csub_type = 4;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       4, this->csub_type(), output);
   }
 
-  // optional uint32 price_digit = 5;
-  if (cached_has_bits & 0x00000020u) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->price_digit(), output);
-  }
-
-  // optional int32 vol_unit = 6;
-  if (cached_has_bits & 0x00000040u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->vol_unit(), output);
-  }
-
-  // optional int64 float_issued = 7;
-  if (cached_has_bits & 0x00000080u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(7, this->float_issued(), output);
-  }
-
-  // optional int64 total_issued = 8;
-  if (cached_has_bits & 0x00000100u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(8, this->total_issued(), output);
-  }
-
-  // optional uint32 last_close = 9;
-  if (cached_has_bits & 0x00000200u) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->last_close(), output);
-  }
-
-  // optional uint32 adv_stop = 10;
-  if (cached_has_bits & 0x00000400u) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->adv_stop(), output);
-  }
-
-  // optional uint32 dec_stop = 11;
-  if (cached_has_bits & 0x00000800u) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->dec_stop(), output);
-  }
-
-  // optional .chaos_data.SymbolStatic.SpecMessage spec = 12;
+  // optional bytes market_mtk = 5;
   if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      5, this->market_mtk(), output);
+  }
+
+  // optional uint32 market_date = 6;
+  if (cached_has_bits & 0x00000040u) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->market_date(), output);
+  }
+
+  // optional uint32 his_count = 7;
+  if (cached_has_bits & 0x00000080u) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->his_count(), output);
+  }
+
+  // optional uint32 price_digit = 8;
+  if (cached_has_bits & 0x00000100u) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->price_digit(), output);
+  }
+
+  // optional int32 vol_unit = 9;
+  if (cached_has_bits & 0x00000200u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->vol_unit(), output);
+  }
+
+  // optional int64 float_issued = 10;
+  if (cached_has_bits & 0x00000400u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(10, this->float_issued(), output);
+  }
+
+  // optional int64 total_issued = 11;
+  if (cached_has_bits & 0x00000800u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(11, this->total_issued(), output);
+  }
+
+  // optional uint32 last_close = 12;
+  if (cached_has_bits & 0x00001000u) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(12, this->last_close(), output);
+  }
+
+  // optional uint32 adv_stop = 13;
+  if (cached_has_bits & 0x00002000u) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(13, this->adv_stop(), output);
+  }
+
+  // optional uint32 dec_stop = 14;
+  if (cached_has_bits & 0x00004000u) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(14, this->dec_stop(), output);
+  }
+
+  // optional .chaos_data.SymbolStatic.SpecMessage spec = 15;
+  if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      12, *this->spec_, output);
+      15, *this->spec_, output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -5517,57 +5594,74 @@ void SymbolStatic::SerializeWithCachedSizes(
   }
 
   // optional .chaos_data.SymbolStatic.SYMBOL_TYPE ctype = 3;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       3, this->ctype(), target);
   }
 
   // optional .chaos_data.SymbolStatic.SYMBOL_SUBTYPE csub_type = 4;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       4, this->csub_type(), target);
   }
 
-  // optional uint32 price_digit = 5;
-  if (cached_has_bits & 0x00000020u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->price_digit(), target);
-  }
-
-  // optional int32 vol_unit = 6;
-  if (cached_has_bits & 0x00000040u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->vol_unit(), target);
-  }
-
-  // optional int64 float_issued = 7;
-  if (cached_has_bits & 0x00000080u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(7, this->float_issued(), target);
-  }
-
-  // optional int64 total_issued = 8;
-  if (cached_has_bits & 0x00000100u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(8, this->total_issued(), target);
-  }
-
-  // optional uint32 last_close = 9;
-  if (cached_has_bits & 0x00000200u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(9, this->last_close(), target);
-  }
-
-  // optional uint32 adv_stop = 10;
-  if (cached_has_bits & 0x00000400u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(10, this->adv_stop(), target);
-  }
-
-  // optional uint32 dec_stop = 11;
-  if (cached_has_bits & 0x00000800u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(11, this->dec_stop(), target);
-  }
-
-  // optional .chaos_data.SymbolStatic.SpecMessage spec = 12;
+  // optional bytes market_mtk = 5;
   if (cached_has_bits & 0x00000004u) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        5, this->market_mtk(), target);
+  }
+
+  // optional uint32 market_date = 6;
+  if (cached_has_bits & 0x00000040u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->market_date(), target);
+  }
+
+  // optional uint32 his_count = 7;
+  if (cached_has_bits & 0x00000080u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->his_count(), target);
+  }
+
+  // optional uint32 price_digit = 8;
+  if (cached_has_bits & 0x00000100u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->price_digit(), target);
+  }
+
+  // optional int32 vol_unit = 9;
+  if (cached_has_bits & 0x00000200u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->vol_unit(), target);
+  }
+
+  // optional int64 float_issued = 10;
+  if (cached_has_bits & 0x00000400u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(10, this->float_issued(), target);
+  }
+
+  // optional int64 total_issued = 11;
+  if (cached_has_bits & 0x00000800u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(11, this->total_issued(), target);
+  }
+
+  // optional uint32 last_close = 12;
+  if (cached_has_bits & 0x00001000u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(12, this->last_close(), target);
+  }
+
+  // optional uint32 adv_stop = 13;
+  if (cached_has_bits & 0x00002000u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(13, this->adv_stop(), target);
+  }
+
+  // optional uint32 dec_stop = 14;
+  if (cached_has_bits & 0x00004000u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(14, this->dec_stop(), target);
+  }
+
+  // optional .chaos_data.SymbolStatic.SpecMessage spec = 15;
+  if (cached_has_bits & 0x00000008u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        12, *this->spec_, deterministic, target);
+        15, *this->spec_, deterministic, target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -5602,7 +5696,14 @@ size_t SymbolStatic::ByteSizeLong() const {
           this->name());
     }
 
-    // optional .chaos_data.SymbolStatic.SpecMessage spec = 12;
+    // optional bytes market_mtk = 5;
+    if (has_market_mtk()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->market_mtk());
+    }
+
+    // optional .chaos_data.SymbolStatic.SpecMessage spec = 15;
     if (has_spec()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -5621,51 +5722,65 @@ size_t SymbolStatic::ByteSizeLong() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->csub_type());
     }
 
-    // optional uint32 price_digit = 5;
+    // optional uint32 market_date = 6;
+    if (has_market_date()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->market_date());
+    }
+
+    // optional uint32 his_count = 7;
+    if (has_his_count()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->his_count());
+    }
+
+  }
+  if (_has_bits_[8 / 32] & 32512u) {
+    // optional uint32 price_digit = 8;
     if (has_price_digit()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->price_digit());
     }
 
-    // optional int32 vol_unit = 6;
+    // optional int32 vol_unit = 9;
     if (has_vol_unit()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->vol_unit());
     }
 
-    // optional int64 float_issued = 7;
+    // optional int64 float_issued = 10;
     if (has_float_issued()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->float_issued());
     }
 
-  }
-  if (_has_bits_[8 / 32] & 3840u) {
-    // optional int64 total_issued = 8;
+    // optional int64 total_issued = 11;
     if (has_total_issued()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int64Size(
           this->total_issued());
     }
 
-    // optional uint32 last_close = 9;
+    // optional uint32 last_close = 12;
     if (has_last_close()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->last_close());
     }
 
-    // optional uint32 adv_stop = 10;
+    // optional uint32 adv_stop = 13;
     if (has_adv_stop()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->adv_stop());
     }
 
-    // optional uint32 dec_stop = 11;
+    // optional uint32 dec_stop = 14;
     if (has_dec_stop()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -5713,36 +5828,46 @@ void SymbolStatic::MergeFrom(const SymbolStatic& from) {
       name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
     }
     if (cached_has_bits & 0x00000004u) {
-      mutable_spec()->::chaos_data::SymbolStatic_SpecMessage::MergeFrom(from.spec());
+      set_has_market_mtk();
+      market_mtk_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.market_mtk_);
     }
     if (cached_has_bits & 0x00000008u) {
-      ctype_ = from.ctype_;
+      mutable_spec()->::chaos_data::SymbolStatic_SpecMessage::MergeFrom(from.spec());
     }
     if (cached_has_bits & 0x00000010u) {
-      csub_type_ = from.csub_type_;
+      ctype_ = from.ctype_;
     }
     if (cached_has_bits & 0x00000020u) {
-      price_digit_ = from.price_digit_;
+      csub_type_ = from.csub_type_;
     }
     if (cached_has_bits & 0x00000040u) {
-      vol_unit_ = from.vol_unit_;
+      market_date_ = from.market_date_;
     }
     if (cached_has_bits & 0x00000080u) {
-      float_issued_ = from.float_issued_;
+      his_count_ = from.his_count_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
-  if (cached_has_bits & 3840u) {
+  if (cached_has_bits & 32512u) {
     if (cached_has_bits & 0x00000100u) {
-      total_issued_ = from.total_issued_;
+      price_digit_ = from.price_digit_;
     }
     if (cached_has_bits & 0x00000200u) {
-      last_close_ = from.last_close_;
+      vol_unit_ = from.vol_unit_;
     }
     if (cached_has_bits & 0x00000400u) {
-      adv_stop_ = from.adv_stop_;
+      float_issued_ = from.float_issued_;
     }
     if (cached_has_bits & 0x00000800u) {
+      total_issued_ = from.total_issued_;
+    }
+    if (cached_has_bits & 0x00001000u) {
+      last_close_ = from.last_close_;
+    }
+    if (cached_has_bits & 0x00002000u) {
+      adv_stop_ = from.adv_stop_;
+    }
+    if (cached_has_bits & 0x00004000u) {
       dec_stop_ = from.dec_stop_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -5775,9 +5900,12 @@ void SymbolStatic::InternalSwap(SymbolStatic* other) {
   using std::swap;
   symbol_.Swap(&other->symbol_);
   name_.Swap(&other->name_);
+  market_mtk_.Swap(&other->market_mtk_);
   swap(spec_, other->spec_);
   swap(ctype_, other->ctype_);
   swap(csub_type_, other->csub_type_);
+  swap(market_date_, other->market_date_);
+  swap(his_count_, other->his_count_);
   swap(price_digit_, other->price_digit_);
   swap(vol_unit_, other->vol_unit_);
   swap(float_issued_, other->float_issued_);
@@ -5926,13 +6054,13 @@ void SymbolStatic::set_allocated_name(::std::string* name) {
 
 // optional .chaos_data.SymbolStatic.SYMBOL_TYPE ctype = 3;
 bool SymbolStatic::has_ctype() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 void SymbolStatic::set_has_ctype() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
 }
 void SymbolStatic::clear_has_ctype() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 void SymbolStatic::clear_ctype() {
   ctype_ = 0;
@@ -5951,13 +6079,13 @@ void SymbolStatic::set_ctype(::chaos_data::SymbolStatic_SYMBOL_TYPE value) {
 
 // optional .chaos_data.SymbolStatic.SYMBOL_SUBTYPE csub_type = 4;
 bool SymbolStatic::has_csub_type() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 void SymbolStatic::set_has_csub_type() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
 }
 void SymbolStatic::clear_has_csub_type() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 void SymbolStatic::clear_csub_type() {
   csub_type_ = 0;
@@ -5974,15 +6102,126 @@ void SymbolStatic::set_csub_type(::chaos_data::SymbolStatic_SYMBOL_SUBTYPE value
   // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.csub_type)
 }
 
-// optional uint32 price_digit = 5;
+// optional bytes market_mtk = 5;
+bool SymbolStatic::has_market_mtk() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void SymbolStatic::set_has_market_mtk() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void SymbolStatic::clear_has_market_mtk() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void SymbolStatic::clear_market_mtk() {
+  market_mtk_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_market_mtk();
+}
+const ::std::string& SymbolStatic::market_mtk() const {
+  // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.market_mtk)
+  return market_mtk_.GetNoArena();
+}
+void SymbolStatic::set_market_mtk(const ::std::string& value) {
+  set_has_market_mtk();
+  market_mtk_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.market_mtk)
+}
+#if LANG_CXX11
+void SymbolStatic::set_market_mtk(::std::string&& value) {
+  set_has_market_mtk();
+  market_mtk_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:chaos_data.SymbolStatic.market_mtk)
+}
+#endif
+void SymbolStatic::set_market_mtk(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_market_mtk();
+  market_mtk_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:chaos_data.SymbolStatic.market_mtk)
+}
+void SymbolStatic::set_market_mtk(const void* value, size_t size) {
+  set_has_market_mtk();
+  market_mtk_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:chaos_data.SymbolStatic.market_mtk)
+}
+::std::string* SymbolStatic::mutable_market_mtk() {
+  set_has_market_mtk();
+  // @@protoc_insertion_point(field_mutable:chaos_data.SymbolStatic.market_mtk)
+  return market_mtk_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+::std::string* SymbolStatic::release_market_mtk() {
+  // @@protoc_insertion_point(field_release:chaos_data.SymbolStatic.market_mtk)
+  clear_has_market_mtk();
+  return market_mtk_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void SymbolStatic::set_allocated_market_mtk(::std::string* market_mtk) {
+  if (market_mtk != NULL) {
+    set_has_market_mtk();
+  } else {
+    clear_has_market_mtk();
+  }
+  market_mtk_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), market_mtk);
+  // @@protoc_insertion_point(field_set_allocated:chaos_data.SymbolStatic.market_mtk)
+}
+
+// optional uint32 market_date = 6;
+bool SymbolStatic::has_market_date() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void SymbolStatic::set_has_market_date() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void SymbolStatic::clear_has_market_date() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void SymbolStatic::clear_market_date() {
+  market_date_ = 0u;
+  clear_has_market_date();
+}
+::google::protobuf::uint32 SymbolStatic::market_date() const {
+  // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.market_date)
+  return market_date_;
+}
+void SymbolStatic::set_market_date(::google::protobuf::uint32 value) {
+  set_has_market_date();
+  market_date_ = value;
+  // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.market_date)
+}
+
+// optional uint32 his_count = 7;
+bool SymbolStatic::has_his_count() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+void SymbolStatic::set_has_his_count() {
+  _has_bits_[0] |= 0x00000080u;
+}
+void SymbolStatic::clear_has_his_count() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+void SymbolStatic::clear_his_count() {
+  his_count_ = 0u;
+  clear_has_his_count();
+}
+::google::protobuf::uint32 SymbolStatic::his_count() const {
+  // @@protoc_insertion_point(field_get:chaos_data.SymbolStatic.his_count)
+  return his_count_;
+}
+void SymbolStatic::set_his_count(::google::protobuf::uint32 value) {
+  set_has_his_count();
+  his_count_ = value;
+  // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.his_count)
+}
+
+// optional uint32 price_digit = 8;
 bool SymbolStatic::has_price_digit() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 void SymbolStatic::set_has_price_digit() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000100u;
 }
 void SymbolStatic::clear_has_price_digit() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 void SymbolStatic::clear_price_digit() {
   price_digit_ = 0u;
@@ -5998,15 +6237,15 @@ void SymbolStatic::set_price_digit(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.price_digit)
 }
 
-// optional int32 vol_unit = 6;
+// optional int32 vol_unit = 9;
 bool SymbolStatic::has_vol_unit() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000200u) != 0;
 }
 void SymbolStatic::set_has_vol_unit() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000200u;
 }
 void SymbolStatic::clear_has_vol_unit() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 void SymbolStatic::clear_vol_unit() {
   vol_unit_ = 0;
@@ -6022,15 +6261,15 @@ void SymbolStatic::set_vol_unit(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.vol_unit)
 }
 
-// optional int64 float_issued = 7;
+// optional int64 float_issued = 10;
 bool SymbolStatic::has_float_issued() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000400u) != 0;
 }
 void SymbolStatic::set_has_float_issued() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000400u;
 }
 void SymbolStatic::clear_has_float_issued() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 void SymbolStatic::clear_float_issued() {
   float_issued_ = GOOGLE_LONGLONG(0);
@@ -6046,15 +6285,15 @@ void SymbolStatic::set_float_issued(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.float_issued)
 }
 
-// optional int64 total_issued = 8;
+// optional int64 total_issued = 11;
 bool SymbolStatic::has_total_issued() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000800u) != 0;
 }
 void SymbolStatic::set_has_total_issued() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000800u;
 }
 void SymbolStatic::clear_has_total_issued() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000800u;
 }
 void SymbolStatic::clear_total_issued() {
   total_issued_ = GOOGLE_LONGLONG(0);
@@ -6070,15 +6309,15 @@ void SymbolStatic::set_total_issued(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.total_issued)
 }
 
-// optional uint32 last_close = 9;
+// optional uint32 last_close = 12;
 bool SymbolStatic::has_last_close() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
+  return (_has_bits_[0] & 0x00001000u) != 0;
 }
 void SymbolStatic::set_has_last_close() {
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00001000u;
 }
 void SymbolStatic::clear_has_last_close() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00001000u;
 }
 void SymbolStatic::clear_last_close() {
   last_close_ = 0u;
@@ -6094,15 +6333,15 @@ void SymbolStatic::set_last_close(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.last_close)
 }
 
-// optional uint32 adv_stop = 10;
+// optional uint32 adv_stop = 13;
 bool SymbolStatic::has_adv_stop() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
+  return (_has_bits_[0] & 0x00002000u) != 0;
 }
 void SymbolStatic::set_has_adv_stop() {
-  _has_bits_[0] |= 0x00000400u;
+  _has_bits_[0] |= 0x00002000u;
 }
 void SymbolStatic::clear_has_adv_stop() {
-  _has_bits_[0] &= ~0x00000400u;
+  _has_bits_[0] &= ~0x00002000u;
 }
 void SymbolStatic::clear_adv_stop() {
   adv_stop_ = 0u;
@@ -6118,15 +6357,15 @@ void SymbolStatic::set_adv_stop(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.adv_stop)
 }
 
-// optional uint32 dec_stop = 11;
+// optional uint32 dec_stop = 14;
 bool SymbolStatic::has_dec_stop() const {
-  return (_has_bits_[0] & 0x00000800u) != 0;
+  return (_has_bits_[0] & 0x00004000u) != 0;
 }
 void SymbolStatic::set_has_dec_stop() {
-  _has_bits_[0] |= 0x00000800u;
+  _has_bits_[0] |= 0x00004000u;
 }
 void SymbolStatic::clear_has_dec_stop() {
-  _has_bits_[0] &= ~0x00000800u;
+  _has_bits_[0] &= ~0x00004000u;
 }
 void SymbolStatic::clear_dec_stop() {
   dec_stop_ = 0u;
@@ -6142,15 +6381,15 @@ void SymbolStatic::set_dec_stop(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:chaos_data.SymbolStatic.dec_stop)
 }
 
-// optional .chaos_data.SymbolStatic.SpecMessage spec = 12;
+// optional .chaos_data.SymbolStatic.SpecMessage spec = 15;
 bool SymbolStatic::has_spec() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 void SymbolStatic::set_has_spec() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 void SymbolStatic::clear_has_spec() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 void SymbolStatic::clear_spec() {
   if (spec_ != NULL) spec_->::chaos_data::SymbolStatic_SpecMessage::Clear();
