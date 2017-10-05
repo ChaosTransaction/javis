@@ -45,14 +45,16 @@ package chaos_data; message SymbolStatic {
 	optional bytes         		name = 2; //标的名称
 	optional SYMBOL_TYPE   		ctype = 3;//TYPE
 	optional SYMBOL_SUBTYPE 		csub_type = 4; //SYMBOL_SUBTYPE
-	optional uint32        		price_digit = 5; //价格最小分辨率，非常重要，每一个DWORD类型的价格都要除以10^m_nPriceDigit才是真正的价格
-	optional int32         		vol_unit = 6; //成交量单位，每一成交量单位表示多少股
-	optional int64  				float_issued = 7;//流通股本
-	optional int64  				total_issued = 8;//总股本
-	optional uint32 				last_close = 9; //昨收
-	optional uint32 				adv_stop = 10; //涨停
-	optional uint32 				dec_stop = 11; //跌停
-	
+    optional bytes              market_mtk = 5;//交易所
+    optional uint32             market_date = 6;//日期
+    optional uint32             his_count = 7;//数据个数
+	optional uint32        		price_digit = 8; //价格最小分辨率，非常重要，每一个DWORD类型的价格都要除以10^m_nPriceDigit才是真正的价格
+	optional int32         		vol_unit = 9; //成交量单位，每一成交量单位表示多少股
+	optional int64  				float_issued = 10;//流通股本
+	optional int64  				total_issued = 11;//总股本
+	optional uint32 				last_close = 12; //昨收
+	optional uint32 				adv_stop = 13; //涨停
+	optional uint32 				dec_stop = 14; //跌停	
 	message  EquityMessage { //股票	(STOCK,OTHER_STOCK)
 		optional float       face_value = 1; //面值
 		optional float       profit = 2; //每股收益
@@ -118,7 +120,7 @@ package chaos_data; message SymbolStatic {
     		optional TruestMessage truest = 7;
     }
 
-    optional SpecMessage spec = 12;
+    optional SpecMessage spec = 15;
 	
 }
 
