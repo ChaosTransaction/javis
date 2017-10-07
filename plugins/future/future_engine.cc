@@ -247,7 +247,7 @@ void FutureManager::SetIndexPos(SYMBOL_MAP& symbol_map,
                                 const HIS_DATA_TYPE type_key,
                                 DAYPOS_MAP& day_map, const int32 day_key,
                                 HOURPOS_MAP& hour_map,
-                                const const int32 hour_key,
+                                const int32 hour_key,
                                 MINUTEPOS_MAP& minute_map) {
   hour_map[hour_key] = minute_map;
   day_map[day_key] = hour_map;
