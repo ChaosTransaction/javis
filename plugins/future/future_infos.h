@@ -10,7 +10,77 @@
 #include <string>
 
 #define ALIVE_TIME 3600
+
+enum HIS_DATA_TYPE {
+  _STATIC_DATA = 0,     //  静态数据
+  _DYNA_DATA,           //  动态行情数据
+  _L2_MMPEX,            //  level2扩展买卖盘
+  _L2_REPORT,           //  level2逐笔成交
+  _L2_ORDER_STAT,         //  委托队列
+  _IOPV,              //  动态净值估值
+  _MATU_YLD,            //  债券到期收益率
+  HIS_DATA_TYPE_COUNT,      //  历史数据类型总数
+  HIS_DATA_TYPE_UNKNOWN     //  未知历史数据类型
+};
+
+extern const char* s_stk_type[];
 namespace future_infos {
+
+class TimeUnit {
+ public:
+  TimeUnit(const TimeUnit& time_unit);
+  TimeUnit(const std::string& start_time);
+
+  TimeUnit& operator =(const TimeUnit& time_unit);
+
+  ~TimeUnit() {
+    if (data_ != NULL) {
+      data_->Release();
+    }
+  }
+
+  int32 full_day() const {
+    return 10000 * data_->time_explod_.year + 100 * data_->time_explod_.month
+        + data_->time_explod_.day_of_month;
+  }
+
+  base::Time::Exploded& exploded() const {
+    return data_->time_explod_;
+  }
+
+  class Data {
+   public:
+    Data()
+        : refcount_(1) {
+      base::Time empty_time;
+      empty_time.LocalExplode(&time_explod_);
+    }
+
+    Data(const std::string& str_time)
+        : refcount_(1) {
+      //2015-07-10 10:10:10
+      const char* format = "%d-%d-%d %d:%d:%d";
+      base::Time s_time = base::Time::FromStringFormat(str_time.c_str(),
+                                                       format);
+      s_time.LocalExplode(&time_explod_);
+    }
+
+   public:
+    base::Time::Exploded time_explod_;
+    void AddRef() {
+      __sync_fetch_and_add(&refcount_, 1);
+    }
+
+    void Release() {
+      __sync_fetch_and_sub(&refcount_, 1);
+      if (!refcount_)
+        delete this;
+    }
+   private:
+    int refcount_;
+  };
+  Data* data_;
+};
 
 class TimeFrame {
  public:
@@ -26,60 +96,44 @@ class TimeFrame {
   }
 
   int32 start_full_day() const {
-    return 10000 * data_->start_time_.year + 100 * data_->start_time_.month
-        + data_->start_time_.day_of_month;
+    return data_->start_time_->full_day();
   }
 
   int32 end_full_day() const {
-    return 10000 * data_->end_time_.year + 100 * data_->end_time_.month
-        + data_->end_time_.day_of_month;
+    return data_->end_time_->full_day();
   }
 
-  int32 start_hour() const {
-    return data_->start_time_.hour;
-  }
-  int32 end_hour() const {
-    return data_->end_time_.hour;
+  base::Time::Exploded& start_exploded() const {
+    return data_->start_time_->exploded();
   }
 
-  int32 start_minute() const {
-    return data_->start_time_.minute;
-  }
-  int32 end_minute() const {
-    return data_->end_time_.minute;
+  base::Time::Exploded& end_exploded() const {
+    return data_->end_time_->exploded();
   }
 
-  int32 start_second() const {
-    return data_->start_time_.second;
+  TimeUnit* start_time() const {
+    return data_->start_time_;
   }
-  int32 end_second() const {
-    return data_->end_time_.second;
+
+  TimeUnit* end_time() const {
+    return data_->end_time_;
   }
 
   class Data {
    public:
-    Data()
-        : refcount_(1) {
-      base::Time empty_time;
-      empty_time.LocalExplode(&start_time_);
-      empty_time.LocalExplode(&end_time_);
-    }
-
     Data(const std::string& str_start_time, const std::string& str_end_time)
         : refcount_(1) {
-      //2015-07-10 10:10:10
-      const char* format = "%d-%d-%d %d:%d:%d";
-      base::Time s_time = base::Time::FromStringFormat(str_start_time.c_str(),
-                                                       format);
-      base::Time e_time = base::Time::FromStringFormat(str_end_time.c_str(),
-                                                       format);
-      s_time.LocalExplode(&start_time_);
-      e_time.LocalExplode(&end_time_);
+      start_time_ = new TimeUnit(str_start_time);
+      end_time_ = new TimeUnit(str_end_time);
+    }
+    ~Data(){
+      if(start_time_){delete start_time_; start_time_ = NULL;}
+      if(end_time_){delete end_time_; end_time_ = NULL;}
     }
 
    public:
-    base::Time::Exploded start_time_;
-    base::Time::Exploded end_time_;
+    TimeUnit* start_time_;
+    TimeUnit* end_time_;
     void AddRef() {
       __sync_fetch_and_add(&refcount_, 1);
     }
@@ -94,6 +148,8 @@ class TimeFrame {
   };
   Data* data_;
 };
+
+
 
 class TickTimePos {
  public:

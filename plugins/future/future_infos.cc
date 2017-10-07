@@ -3,6 +3,9 @@
 
 #include "future_infos.h"
 
+const char* s_stk_type[HIS_DATA_TYPE_COUNT] = { "STATIC", "DYNA",
+    "L2_MMPEX", "L2_REPORT", "L2_ORDER_STAT", "HIS_IOPV", "MatuYld" };
+
 namespace future_infos {
 
 TimeFrame::TimeFrame(const std::string& start_time,

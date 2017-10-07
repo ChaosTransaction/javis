@@ -17,8 +17,16 @@ namespace future_logic {
 typedef std::map<int32, future_infos::TickTimePos> MINUTEPOS_MAP;  //每分钟行情的位置 /key:分钟
 typedef std::map<int32, MINUTEPOS_MAP> HOURPOS_MAP;  //每小时行情位置 /key:小时
 typedef std::map<int32, HOURPOS_MAP> DAYPOS_MAP;  //每天行情位置 //key:天20150608
-typedef std::map<std::string, DAYPOS_MAP> SYMBOL_MAP;  //合约行情 //key:合约代码
+typedef std::map<HIS_DATA_TYPE, DAYPOS_MAP> DATETYPE_MAP;  //数据类型 参照 g_his_data_type_en
+typedef std::map<std::string, DATETYPE_MAP> SYMBOL_MAP;  //合约行情 //key:合约代码
 //typedef std::map<std::string, SYMBOL_MAP> MKT_MAP;//交易所行情 //交易所编号
+
+enum LOADERROR {
+  BOTH_NOT_EXITS = -3,
+  START_NOT_EXITS = -2,
+  END_NOT_EXITS = -1,
+  LOAD_SUCCESS = 0
+};
 
 class FutureCache {
  public:
@@ -48,23 +56,41 @@ class FutureManager {
   FutureManager();
   virtual ~FutureManager();
  protected:
-  bool OnFetchTick(const int socket, const std::string& sec,
-                   const std::string& symbol, const std::string& field,
-                   const std::string& start_time, const std::string& end_time);
+  bool OnFetchIndexPos(const int socket, const std::string& sec,
+                       const std::string& symbol,
+                       const HIS_DATA_TYPE& data_type,
+                       const std::string& start_time,
+                       const std::string& end_time);
 
  private:
   template<typename MapType, typename MapITType, typename KeyType,
       typename ValType>
-  bool GetCompareTimeTickPos(MapType& ss_start_map, MapType& se_end_map,
-                             KeyType& start_key, KeyType& end_key,
-                             ValType& start_val, ValType& end_val);
+  LOADERROR GetCompareTimeTickPos(MapType& ss_start_map, MapType& se_end_map,
+                                  KeyType& start_key, KeyType& end_key,
+                                  ValType& start_val, ValType& end_val);
 
-  bool LoadLocalIndexPosInfo(const std::string& sec,
-                            const std::string& data_type,
-                            const std::string& shuffix,
-                            const std::string& symbol,
-                            const int32 year,const int32 month,
-                            const int32 day);
+  bool OnLoadIndex(future_infos::TimeUnit& time_unit, const std::string& sec,
+                   const std::string& symbol, const HIS_DATA_TYPE& data_type,
+                   SYMBOL_MAP& symbol_map, DATETYPE_MAP& type_map,
+                   DAYPOS_MAP& day_map, HOURPOS_MAP& hour_map,
+                   MINUTEPOS_MAP& minute_map);
+
+  bool OnLoadLoaclPos(const std::string& sec, const std::string& symbol,
+                      const HIS_DATA_TYPE& data_type, const int32 year,
+                      const int32 month, const int32 day,
+                      MINUTEPOS_MAP& min_pos_map);
+
+  bool SetIndexPos(SYMBOL_MAP& symbol_map, const std::string& symbol_key,
+                   DATETYPE_MAP& type_map, const HIS_DATA_TYPE type_key,
+                   DAYPOS_MAP& day_map, const int32 day_key,
+                   HOURPOS_MAP& hour_map, const const int32 hour_key,
+                   MINUTEPOS_MAP& minute_map);
+
+  /*bool LoadLocalIndexPosInfo(const std::string& sec,
+   const std::string& data_type,
+   const std::string& shuffix,
+   const std::string& symbol, const int32 year,
+   const int32 month, const int32 day);*/
  private:
   void Init();
   void Deinit();
