@@ -6,6 +6,9 @@
 const char* s_stk_type[HIS_DATA_TYPE_COUNT] = { "STATIC", "DYNA",
     "L2_MMPEX", "L2_REPORT", "L2_ORDER_STAT", "HIS_IOPV", "MatuYld" };
 
+const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT] = { ".stc", ".dya", ".l2mx",
+    ".l2rt", ".l2ost", ".iopv", ".mad" };
+
 namespace future_infos {
 
 TimeFrame::TimeFrame(const std::string& start_time,

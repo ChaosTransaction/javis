@@ -95,7 +95,7 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
 
   {
     base_logic::RLockGd lk(future_lock_->zc_future_lock_);
-    load_erron = GetCompareTimeTickPos<SYMBOL_MAP, SYMBOL_MAP::iterator,
+    load_erron = GetCompareTimeTickPos<DATETYPE_MAP, DATETYPE_MAP::iterator,
         HIS_DATA_TYPE, DAYPOS_MAP>(start_type_pos_map, end_type_pos_map,
                                    data_type, data_type, start_day_pos_map,
                                    end_day_pos_map);
@@ -137,7 +137,6 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
                                     start_minute_pos_map, end_minute_pos_map);
   }
 
-
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
     OnLoadIndex(time_frame.start_time(), "ZC", symbol, data_type,
                 future_cache_->zc_future_, start_type_pos_map,
@@ -146,7 +145,6 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
     OnLoadIndex(time_frame.end_time(), "ZC", symbol, data_type,
                 future_cache_->zc_future_, end_type_pos_map, end_day_pos_map,
                 end_hour_pos_map, end_minute_pos_map);
-
 
   {
     base_logic::RLockGd lk(future_lock_->zc_future_lock_);
@@ -216,8 +214,9 @@ bool FutureManager::OnLoadLoaclPos(const std::string& sec,
                                    const int32 day,
                                    MINUTEPOS_MAP& min_pos_map) {
   std::string content;
-  bool r = FutureFile::ReadFile(sec, data_type, shuffix, symbol, year, month,
-                                day, &content);
+  bool r = FutureFile::ReadFile(sec, s_stk_type[data_type],
+                                g_his_data_suffix[data_type], symbol, year,
+                                month, day, &content);
   if (!r)
     return r;
 
@@ -246,8 +245,7 @@ void FutureManager::SetIndexPos(SYMBOL_MAP& symbol_map,
                                 DATETYPE_MAP& type_map,
                                 const HIS_DATA_TYPE type_key,
                                 DAYPOS_MAP& day_map, const int32 day_key,
-                                HOURPOS_MAP& hour_map,
-                                const int32 hour_key,
+                                HOURPOS_MAP& hour_map, const int32 hour_key,
                                 MINUTEPOS_MAP& minute_map) {
   hour_map[hour_key] = minute_map;
   day_map[day_key] = hour_map;

@@ -24,6 +24,7 @@ enum HIS_DATA_TYPE {
 };
 
 extern const char* s_stk_type[];
+extern const char* g_his_data_suffix[];
 namespace future_infos {
 
 class TimeUnit {
