@@ -32,6 +32,15 @@ bool Futurelogic::Init() {
   FutureEngine::GetSchdulerManager();
   FutureEngine::GetFutureEngine();
 
+  int socket = 0;
+  std::string sec = "ZC";
+  std::string symbol = "WT001";
+  HIS_DATA_TYPE data_type = _DYNA_DATA;
+  std::string start_time = "2009-12-2 10:20:22";
+  std::string end_time = "2009-12-2 10:22:21";
+
+  FutureEngine::GetSchdulerManager()->OnFetchIndexPos(socket,
+          sec,symbol,data_type,start_time,end_time);
   /*std::string sec = "ZC";
   std::string data_type = "INDEXPOS";
   std::string shuffix = ".ipos";

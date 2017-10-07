@@ -11,6 +11,30 @@ const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT] = { ".stc", ".dya", ".l2mx",
 
 namespace future_infos {
 
+TimeUnit::TimeUnit(const std::string& str_time) {
+  data_ = new Data(str_time);
+}
+
+TimeUnit::TimeUnit(const TimeUnit& time_unit)
+    : data_(time_unit.data_) {
+  if (data_ != NULL) {
+    data_->AddRef();
+  }
+}
+
+TimeUnit& TimeUnit::operator =(const TimeUnit& time_unit) {
+  if (time_unit.data_ != NULL) {
+    time_unit.data_->AddRef();
+  }
+
+  if (data_ != NULL) {
+    data_->Release();
+  }
+
+  data_ = time_unit.data_;
+  return (*this);
+}
+
 TimeFrame::TimeFrame(const std::string& start_time,
                      const std::string& end_time) {
   data_ = new Data(start_time, end_time);
@@ -85,7 +109,7 @@ StaticDataInfo& StaticDataInfo::operator =(const StaticDataInfo& static_data) {
 
 StaticDataInfo::StaticDataInfo(const std::string& out_data) {
   data_ = new Data();
-  bool r = data_->symbol_static_.ParseFromString(out_data);
+  bool r = /*data_->symbol_static_.ParseFromString(out_data)*/false;
   if (r)
     data_->alive_time_ = time(NULL) + ALIVE_TIME;  //解析成功方可赋于生命周期
 }

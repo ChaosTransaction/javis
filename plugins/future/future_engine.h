@@ -69,7 +69,7 @@ class FutureManager {
                                   KeyType& start_key, KeyType& end_key,
                                   ValType& start_val, ValType& end_val);
 
-  bool OnLoadIndex(future_infos::TimeUnit* time_unit, const std::string& sec,
+  void OnLoadIndex(future_infos::TimeUnit* time_unit, const std::string& sec,
                    const std::string& symbol, const HIS_DATA_TYPE& data_type,
                    SYMBOL_MAP& symbol_map, DATETYPE_MAP& type_map,
                    DAYPOS_MAP& day_map, HOURPOS_MAP& hour_map,
@@ -80,7 +80,7 @@ class FutureManager {
                       const int32 month, const int32 day,
                       MINUTEPOS_MAP& min_pos_map);
 
-  bool SetIndexPos(SYMBOL_MAP& symbol_map, const std::string& symbol_key,
+  void SetIndexPos(SYMBOL_MAP& symbol_map, const std::string& symbol_key,
                    DATETYPE_MAP& type_map, const HIS_DATA_TYPE type_key,
                    DAYPOS_MAP& day_map, const int32 day_key,
                    HOURPOS_MAP& hour_map, const int32 hour_key,

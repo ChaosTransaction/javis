@@ -23,14 +23,14 @@ enum HIS_DATA_TYPE {
   HIS_DATA_TYPE_UNKNOWN     //  未知历史数据类型
 };
 
-extern const char* s_stk_type[];
-extern const char* g_his_data_suffix[];
+extern const char* s_stk_type[HIS_DATA_TYPE_COUNT];
+extern const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT];
 namespace future_infos {
 
 class TimeUnit {
  public:
   TimeUnit(const TimeUnit& time_unit);
-  TimeUnit(const std::string& start_time);
+  TimeUnit(const std::string& str_time);
 
   TimeUnit& operator =(const TimeUnit& time_unit);
 

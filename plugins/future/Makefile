@@ -116,7 +116,7 @@ symbol_pos_index.pb.o : ./../../proto/symbol_pos_index.pb.cc  ./../../proto/symb
 time.o : ./../../pub/logic/time.cc ./../../pub/logic/time.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../pub/logic/time.cc $(INCLUDE_PATHS)
 	
-$(PLUGIN) : future_engine.o future_init.o future_logic.o future_logic.o future_file.o time.o\
+$(PLUGIN) : future_engine.o future_init.o future_logic.o future_infos.o future_logic.o future_file.o time.o\
 		symbol_static.pb.o symbol_pos_index.pb.o\
 	$(LIB_DIR)/mylib/base/lib/mybase.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LINK_PATHS) -liconv -lprotobuf -lpthread -lexpat -lrt -ldl \

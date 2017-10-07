@@ -37,7 +37,7 @@ bool FutureFile::ReadFile(const std::string& sec, const std::string& data_type,
                            const int32 month, const int32 day,
                            std::string* content) {
 
-  const std::string dir = "/home/t/ftr_idx/" + sec 
+  const std::string dir = "/home/t/future/" + sec 
         + "/" 
         + symbol
         + "/"

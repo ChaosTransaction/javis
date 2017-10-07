@@ -96,7 +96,7 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
   {
     base_logic::RLockGd lk(future_lock_->zc_future_lock_);
     load_erron = GetCompareTimeTickPos<DATETYPE_MAP, DATETYPE_MAP::iterator,
-        HIS_DATA_TYPE, DAYPOS_MAP>(start_type_pos_map, end_type_pos_map,
+        const HIS_DATA_TYPE, DAYPOS_MAP>(start_type_pos_map, end_type_pos_map,
                                    data_type, data_type, start_day_pos_map,
                                    end_day_pos_map);
   }
@@ -157,7 +157,7 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
   return true;
 }
 
-void FutureManager::OnLoadIndex(future_infos::TimeUnit& time_unit,
+void FutureManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
                                 const std::string& sec,
                                 const std::string& symbol,
                                 const HIS_DATA_TYPE& data_type,
@@ -165,12 +165,12 @@ void FutureManager::OnLoadIndex(future_infos::TimeUnit& time_unit,
                                 DAYPOS_MAP& day_map, HOURPOS_MAP& hour_map,
                                 MINUTEPOS_MAP& minute_map) {
 
-  OnLoadLoaclPos(symbol, symbol, data_type, time_unit.exploded().year,
-                 time_unit.exploded().month, time_unit.exploded().day_of_month,
+  OnLoadLoaclPos(sec, symbol, data_type, time_unit->exploded().year,
+                 time_unit->exploded().month, time_unit->exploded().day_of_month,
                  minute_map);
 
   SetIndexPos(symbol_map, symbol, type_map, data_type, day_map,
-              time_unit.full_day(), hour_map, time_unit.exploded().hour,
+              time_unit->full_day(), hour_map, time_unit->exploded().hour,
               minute_map);
 }
 
@@ -215,7 +215,7 @@ bool FutureManager::OnLoadLoaclPos(const std::string& sec,
                                    MINUTEPOS_MAP& min_pos_map) {
   std::string content;
   bool r = FutureFile::ReadFile(sec, s_stk_type[data_type],
-                                g_his_data_suffix[data_type], symbol, year,
+                                ".ipos", symbol, year,
                                 month, day, &content);
   if (!r)
     return r;
