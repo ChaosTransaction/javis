@@ -32,6 +32,15 @@ bool Futurelogic::Init() {
   FutureEngine::GetSchdulerManager();
   FutureEngine::GetFutureEngine();
 
+  std::string sec = "ZC";
+  std::string data_type = "INDEXPOS";
+  std::string shuffix = ".ipos";
+  std::string symbol = "WT0000";
+  int32 year = 2009;
+  int32 month = 12;
+  int32 day = 2;
+  FutureEngine::GetSchdulerManager()->LoadLocalIndexPosInfo(sec, data_type,
+          shuffix, symbol, year, month, day);
   return true;
 }
 

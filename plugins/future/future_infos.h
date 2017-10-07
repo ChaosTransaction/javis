@@ -111,7 +111,8 @@ class TickTimePos {
   class Data {
    public:
     Data()
-        : start_pos_(0),
+        : tt_time_(0),
+          start_pos_(0),
           end_pos_(0),
           refcount_(1) {
     }

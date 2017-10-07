@@ -43,6 +43,7 @@ class FutureLock {
 
 class FutureManager {
   friend class FutureEngine;
+  friend class Futurelogic;
  protected:
   FutureManager();
   virtual ~FutureManager();
@@ -58,7 +59,12 @@ class FutureManager {
                              KeyType& start_key, KeyType& end_key,
                              ValType& start_val, ValType& end_val);
 
-  bool LoadLocalIndexPosInfo();
+  bool LoadLocalIndexPosInfo(const std::string& sec,
+                            const std::string& data_type,
+                            const std::string& shuffix,
+                            const std::string& symbol,
+                            const int32 year,const int32 month,
+                            const int32 day);
  private:
   void Init();
   void Deinit();

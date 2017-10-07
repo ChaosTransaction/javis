@@ -21,11 +21,11 @@ class FutureFile {
   static bool ReadFile(const std::string& sec, const std::string& data_type,
                 const std::string& shuffix, const std::string& symbol,
                 const int32 year, const int32 month, const int32 day,
-                std::string& content);
+                std::string* content);
  private:
 
   static bool ReadFile(const std::string& dir, const std::string& file,
-                       std::string& content);
+                       std::string* content);
 };
 
 }

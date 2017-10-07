@@ -3,50 +3,64 @@
 
 #include "file/file_util.h"
 #include "file/file_path.h"
+#include "basic/basic_util.h"
 #include "future_file.h"
 
 namespace future_logic {
 
-FutureData::FutureData() {
+FutureFile::FutureFile() {
 
 }
 
-FutureData::~FutureData() {
+FutureFile::~FutureFile() {
 
 }
 
-bool FutureData::ReadStaticFile(const std::string& sec,
+bool FutureFile::ReadStaticFile(const std::string& sec,
                                 const std::string& symbol, const int32 year,
                                 const int32 month, const int32 day) {
-  std::string dir = "/home/data/pb/future/" + sec + "/static/"
-      + std::string(year) + "/" + std::string(month) + "/";
+  std::string dir = "/home/data/pb/ftr_idx/" + sec + "/static/"
+        + base::BasicUtil::StringUtil::Int64ToString(year) 
+        + "/" 
+        + base::BasicUtil::StringUtil::Int64ToString(month) + "/";
 
-  std::string file_name = sec + "_" + symbol + "_" + std::string(year)
-      + std::string(month) + std::string(day) + ".stc.chspb";
+    std::string file_name = sec + "_" + symbol + "_" + base::BasicUtil::StringUtil::Int64ToString(year)
+        + base::BasicUtil::StringUtil::Int64ToString(month) 
+        + base::BasicUtil::StringUtil::Int64ToString(day) + ".stc.chspb";
 
   return true;
 }
 
-bool FutureData::ReadFile(const std::string& sec, const std::string& data_type,
+bool FutureFile::ReadFile(const std::string& sec, const std::string& data_type,
                            const std::string& shuffix,
                            const std::string& symbol, const int32 year,
-                           const int32 month, const int32 day) {
+                           const int32 month, const int32 day,
+                           std::string* content) {
 
-  const std::string dir = "/home/data/pb/future/" + sec + data_type
-      + std::string(year) + "/" + std::string(month) + "/";
+  const std::string dir = "/home/t/ftr_idx/" + sec 
+        + "/" 
+        + symbol
+        + "/"
+        +  data_type
+        + "/"
+        + base::BasicUtil::StringUtil::Int64ToString(year) 
+        + "/" 
+        + base::BasicUtil::StringUtil::Int64ToString(month) + "/";
 
-  const std::string file_name = sec + "_" + symbol + "_" + std::string(year)
-      + std::string(month) + std::string(day) + shuffix + ".chspb";
+  const std::string file_name = sec + "_" + symbol + "_" 
+        + base::BasicUtil::StringUtil::Int64ToString(year)
+        + base::BasicUtil::StringUtil::Int64ToString(month) 
+        + base::BasicUtil::StringUtil::Int64ToString(day) + shuffix + ".chspb";
 
-  ReadFile(dir, file_name);
+  ReadFile(dir, file_name, content);
   return true;
 }
 
-bool FutureData::ReadFile(const std::string& dir, const std::string& file,
-                          std::string& content) {
+bool FutureFile::ReadFile(const std::string& dir, const std::string& file,
+                          std::string* content) {
   std::string full_dir_file = dir + "/" + file;
   file::FilePath file_path(full_dir_file);
-  bool r = file::ReadFileToString(file_path, &content);
+  bool r = file::ReadFileToString(file_path, content);
   if (!r)
     return false;
   return true;

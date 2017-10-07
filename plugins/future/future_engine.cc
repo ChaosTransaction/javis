@@ -1,6 +1,7 @@
 //  Copyright (c) 2017-2018 The Javis Authors. All rights reserved.
 //  Created on: 2017年9月30日 Author: kerry
 #include "future_engine.h"
+#include "logic/logic_comm.h"
 #include "basic/template.h"
 namespace future_logic {
 
@@ -128,16 +129,22 @@ bool FutureManager::LoadLocalIndexPosInfo(const std::string& sec,
   //遍历读取位置信息
   const char* raw_data = content.c_str();
   const size_t raw_data_length = content.length();
-  char* data = NULL;
   size_t pos = 0;
   while (pos < raw_data_length) {
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
-    packet.assgin(raw_data + pos + sizeof(int16),
-                  packet_length - sizeof(sizeof(int16)));
+    packet.assign(raw_data + pos + sizeof(int16),
+                  packet_length - sizeof(int16));
     pos += packet_length;
     chaos_data::SymbolPosIndex last_pos_index;
     last_pos_index.ParseFromString(packet);
+    struct tm tm;
+      time_t  tick = last_pos_index.time_index();
+char s[100];
+tm = *localtime(&tick);
+    strftime(s, sizeof(s), "%Y-%m-%d %H:%M:%S", &tm);
+    LOG_MSG2("time:%s, start_pos:%d, end_post:%d",
+               s,last_pos_index.start_pos(),last_pos_index.end_pos());
   }
 
   return r;
