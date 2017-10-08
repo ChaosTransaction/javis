@@ -5,7 +5,10 @@
 #define FUTURE_STATIC_ENGINE_H_
 
 #include "future_infos.h"
+#include "thread/base_thread_handler.h"
+#include "thread/base_thread_lock.h"
 #include <map>
+#include <list>
 namespace future_logic {
 
 typedef std::map<int32, future_infos::StaticInfo> STATIC_MAP;  //完整日期 20150112
@@ -32,6 +35,8 @@ class StaticLock {
 };
 
 class StaticManager {
+ friend class StaticEngine;
+ friend class Futurelogic;
  protected:
   StaticManager();
   virtual ~StaticManager();
@@ -43,21 +48,21 @@ class StaticManager {
                          future_infos::TickTimePos& end_time_pos,
                          std::list<future_infos::StaticInfo>& static_list);
 
-  bool OnGetStaticInfo(const std::string& symbol,
-                       const std::string& sec,
+  bool OnGetStaticInfo(const std::string& sec,
+                       const std::string& symbol,
                        SYMBOL_STATIC_MAP& symbol_map,
                        struct threadrw_t* lock, const STK_TYPE& stk_type,
                        future_infos::TickTimePos& start_time_pos,
                        future_infos::TickTimePos& end_time_pos,
-                       std::list<future_infos::StaticInfo>& static_list,
                        std::list<future_infos::StaticInfo>& static_list);
 
-  void GetStaticInfo(STATIC_MAP& static_map,
+   void GetStaticInfo(STATIC_MAP& static_map,
                      const std::string& symbol,
                      const std::string& sec,
                      const STK_TYPE& stk_type,
                      struct threadrw_t* lock,
-                     std::list<future_infos::TimeUnit>& time_unit_list);
+                      std::list<future_infos::TimeUnit>& time_list,
+                    std::list<future_infos::StaticInfo>& static_list);
  private:
   void Init();
   void Deinit();
@@ -83,13 +88,13 @@ class StaticEngine {
  protected:
   static StaticManager* GetSchdulerManager() {
     if (schduler_mgr_ == NULL)
-      schduler_mgr_ = new IndexManager();
+      schduler_mgr_ = new StaticManager();
     return schduler_mgr_;
   }
 
   static StaticEngine* GetIndexEngine() {
     if (schduler_engine_ == NULL)
-      schduler_engine_ = new IndexEngine();
+      schduler_engine_ = new StaticEngine();
     return schduler_engine_;
   }
 

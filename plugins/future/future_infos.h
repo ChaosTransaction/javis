@@ -51,6 +51,7 @@ namespace future_infos {
 
 class StaticInfo {
  public:
+  StaticInfo();
   StaticInfo(const StaticInfo& static_info);
   StaticInfo(const std::string& str);
 
@@ -74,7 +75,7 @@ class StaticInfo {
     }
 
    public:
-    const chaos_data::SymbolStatic static_info;
+    chaos_data::SymbolStatic static_info;
     void AddRef() {
       __sync_fetch_and_add(&refcount_, 1);
     }

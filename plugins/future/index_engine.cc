@@ -88,7 +88,7 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
                                    future_infos::TickTimePos& start_time_pos,
                                    future_infos::TickTimePos& end_time_pos) {
   future_infos::TimeFrame time_frame(start_time, end_time);
-  bool r = false;
+  //bool r = false;
   /*future_infos::TickTimePos start_time_pos;
    future_infos::TickTimePos end_time_pos;*/
 

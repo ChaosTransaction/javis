@@ -2,6 +2,7 @@
 //  Created on: 2017年10月8日 Author: kerry
 
 #include "static_engine.h"
+#include "future_file.h"
 #include "logic/logic_comm.h"
 #include "basic/template.h"
 
@@ -26,14 +27,14 @@ void StaticManager::Init() {
 
 }
 
-void IndexManager::Deinit() {
-  if (index_cache_) {
-    delete index_cache_;
-    index_cache_ = NULL;
+void StaticManager::Deinit() {
+  if (static_cache_) {
+    delete static_cache_;
+    static_cache_ = NULL;
   }
-  if (index_lock_) {
-    delete index_lock_;
-    index_lock_ = NULL;
+  if (static_lock_) {
+    delete static_lock_;
+    static_lock_ = NULL;
   }
 }
 
@@ -63,20 +64,20 @@ bool StaticManager::OnFetchStaticInfo(
 
   bool r = false;
   if (sec == "CZCE") {
-    OnGetStaticInfo(symbol, sec, static_cache_->zc_future_,
-                    static_lock_->zc_future_lock_, start_time_pos, stk_type,
+   r =  OnGetStaticInfo(sec, symbol, static_cache_->zc_future_,
+                    static_lock_->zc_future_lock_, stk_type, start_time_pos,
                     end_time_pos, static_list);
   } else if (sec == "DCE") {
-    OnGetStaticInfo(symbol, sec, static_cache_->dc_future_,
-                    static_lock_->zc_future_lock_, start_time_pos, stk_type,
+    r = OnGetStaticInfo(sec, symbol, static_cache_->dc_future_,
+                    static_lock_->zc_future_lock_, stk_type, start_time_pos,
                     end_time_pos, static_list);
   } else if (sec == "SHFE") {
-    OnGetStaticInfo(symbol, sec, static_cache_->sc_future_,
-                    static_lock_->zc_future_lock_, start_time_pos, stk_type,
+    r = OnGetStaticInfo(sec, symbol, static_cache_->sc_future_,
+                    static_lock_->zc_future_lock_, stk_type, start_time_pos,
                     end_time_pos, static_list);
   }
 
-  return true;
+  return r;
 }
 
 bool StaticManager::OnGetStaticInfo(
@@ -85,29 +86,31 @@ bool StaticManager::OnGetStaticInfo(
     const STK_TYPE& stk_type, future_infos::TickTimePos& start_time_pos,
     future_infos::TickTimePos& end_time_pos,
     std::list<future_infos::StaticInfo>& static_list) {
-
+   
+  bool r = false;
   STATIC_MAP static_map;
   {
     base_logic::RLockGd lk(lock);
-    bool r = base::MapGet<SYMBOL_STATIC_MAP, SYMBOL_STATIC_MAP::iterator,
+    r = base::MapGet<SYMBOL_STATIC_MAP, SYMBOL_STATIC_MAP::iterator,
         const std::string, STATIC_MAP>(symbol_map, symbol, static_map);
   }
+  //if (!r)
+    //    return false;
 
   std::list<future_infos::TimeUnit> time_unit_list;
   int64 start_time = start_time_pos.time_index();
   int64 end_time = end_time_pos.time_index();
-  future_infos::TimeUnit s_time_unit(start_time);
-  time_unit_list.push_back(s_time_unit);
+  //future_infos::TimeUnit s_time_unit(start_time);
+  //time_unit_list.push_back(s_time_unit);
   while (start_time < end_time) {
-    start_time += 60 * 60 * 24;
     future_infos::TimeUnit time_unit(start_time);
     time_unit_list.push_back(time_unit);
+    start_time += 60 * 60 * 24;
   }
 
-  future_infos::TimeUnit e_time_unit(start_time);
-  time_unit_list.push_back(e_time_unit);
-  GetStaticInfo(static_map, symbol, sec, stk_type, lock, time_unit_list,
-                static_list);
+  //future_infos::TimeUnit e_time_unit(start_time);
+  //time_unit_list.push_back(e_time_unit);
+   GetStaticInfo(static_map, symbol, sec, stk_type, lock, time_unit_list,static_list);
   {
     base_logic::WLockGd lk(lock);
     symbol_map[symbol] = static_map;
@@ -118,16 +121,17 @@ bool StaticManager::OnGetStaticInfo(
 void StaticManager::GetStaticInfo(
     STATIC_MAP& static_map, const std::string& symbol, const std::string& sec,
     const STK_TYPE& stk_type, struct threadrw_t* lock,
-    std::list<future_infos::TimeUnit>& time_unit_list,
+    std::list<future_infos::TimeUnit>& time_list,
     std::list<future_infos::StaticInfo>& static_list) {
-  while (time_unit_list.size() > 0) {
-    future_infos::TimeUnit time_unit = time_unit_list.front();
-    time_unit_list.pop_front();
+        bool r = false;
+while (time_list.size() > 0) {
+    future_infos::TimeUnit time_unit = time_list.front();
+    time_list.pop_front();
     future_infos::StaticInfo static_info;
     {
       base_logic::RLockGd lk(lock);
-      bool r =
-          base::MapGet<STATIC_MAP, STATIC_MAP::iterator, int32, STATIC_MAP>(
+      r =
+        base::MapGet<STATIC_MAP, STATIC_MAP::iterator, int32,future_infos::StaticInfo>(
               static_map, time_unit.full_day(), static_info);
     }
 
@@ -136,13 +140,13 @@ void StaticManager::GetStaticInfo(
       bool ret = future_logic::FutureFile::ReadStaticFile(
           sec, symbol, g_stk_type[stk_type], time_unit.exploded().year,
           time_unit.exploded().month, time_unit.exploded().day_of_month,
-          content);
+          &content);
       if (ret) {
-        future_infos::StaticInfo stc_info;
-        stc_info.StaticInfo(content);
+        future_infos::StaticInfo stc_info(content);
         {
           base_logic::WLockGd lk(lock);
           static_map[time_unit.full_day()] = stc_info;
+          static_list.push_back(stc_info);
         }
       }
     }

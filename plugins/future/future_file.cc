@@ -22,7 +22,7 @@ bool FutureFile::ReadStaticFile(const std::string& sec,
                                 const int32 year,
                                 const int32 month, const int32 day,
                                 std::string* content) {
-  std::string dir = "/home/d/" + stk_type + "/" + sec + "/static/"
+  std::string dir = "/home/d/" + stk_type + "/" + sec + "/" + symbol + "/STATIC/"
       + base::BasicUtil::StringUtil::Int64ToString(year) + "/"
       + base::BasicUtil::StringUtil::Int64ToString(month) + "/";
 

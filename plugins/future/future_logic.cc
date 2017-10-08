@@ -42,13 +42,13 @@ bool Futurelogic::Init() {
   int socket = 0;
   std::string sec_symbol = "WT001.CZCE";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
-  std::string start_time = "2009-12-2 10:40:22";
-  std::string end_time = "2009-12-2 10:52:21";
+  std::string start_time = "2009-12-7 10:40:22";
+  std::string end_time = "2009-12-9 10:52:21";
 
   size_t start_pos = sec_symbol.find(".");
   std::string symbol = sec_symbol.substr(0, start_pos);
   std::string sec = sec_symbol.substr(start_pos + 1,
-                                      sec_symbol.length() - sec.length() - 1);
+                                      sec_symbol.length() - symbol.length() - 1);
 
   future_infos::TickTimePos start_time_pos;
   future_infos::TickTimePos end_time_pos;
@@ -56,7 +56,10 @@ bool Futurelogic::Init() {
                                                      start_time, end_time,
                                                      start_time_pos,
                                                      end_time_pos);
-
+ std::list<future_infos::StaticInfo> static_list;
+  StaticEngine::GetSchdulerManager()->OnFetchStaticInfo(
+          sec, symbol, FUTURE, start_time_pos,end_time_pos,static_list
+          );
   /*std::string sec = "ZC";
    std::string data_type = "INDEXPOS";
    std::string shuffix = ".ipos";

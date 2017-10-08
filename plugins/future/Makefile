@@ -89,17 +89,17 @@ clean :
 # function.
 
 
-future_engine.o : ./future_engine.cc ./future_engine.h
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_engine.cc $(INCLUDE_PATHS)
+index_engine.o : ./index_engine.cc ./index_engine.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./index_engine.cc $(INCLUDE_PATHS)
 
+static_engine.o : ./static_engine.cc ./static_engine.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./static_engine.cc $(INCLUDE_PATHS)
 
 future_init.o : ./future_init.cc ./future_init.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_init.cc $(INCLUDE_PATHS)
 
-
 future_logic.o : ./future_logic.cc ./future_logic.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_logic.cc $(INCLUDE_PATHS)
-
 
 future_infos.o : ./future_infos.cc ./future_infos.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_infos.cc $(INCLUDE_PATHS)
@@ -116,7 +116,7 @@ symbol_pos_index.pb.o : ./../../proto/symbol_pos_index.pb.cc  ./../../proto/symb
 time.o : ./../../pub/logic/time.cc ./../../pub/logic/time.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../pub/logic/time.cc $(INCLUDE_PATHS)
 	
-$(PLUGIN) : future_engine.o future_init.o future_logic.o future_infos.o future_logic.o future_file.o time.o\
+$(PLUGIN) : index_engine.o static_engine.o  future_init.o future_logic.o future_infos.o future_logic.o future_file.o time.o\
 		symbol_static.pb.o symbol_pos_index.pb.o\
 	$(LIB_DIR)/mylib/base/lib/mybase.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LINK_PATHS) -liconv -lprotobuf -lpthread -lexpat -lrt -ldl \

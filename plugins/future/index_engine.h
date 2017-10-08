@@ -56,7 +56,8 @@ class IndexManager {
   IndexManager();
   virtual ~IndexManager();
  protected:
-  bool OnFetchIndexPos(const std::string& sec_symbol, //000001.CZCE
+  bool OnFetchIndexPos(const std::string& sec,
+                       const std::string& symbol,
                        const HIS_DATA_TYPE& data_type,
                        const std::string& start_time,
                        const std::string& end_time,

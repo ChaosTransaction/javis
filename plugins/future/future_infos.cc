@@ -19,6 +19,9 @@ const char* g_stk_type[STK_TYPE_COUNT] = { "index", "stock", "fund", "bond",
 
 namespace future_infos {
 
+    StaticInfo::StaticInfo() {
+        data_ = new Data();
+    }
 StaticInfo::StaticInfo(const std::string& str) {
   data_ = new Data(str);
 }
@@ -53,6 +56,10 @@ TimeUnit::TimeUnit(const TimeUnit& time_unit)
     data_->AddRef();
   }
 }
+
+    TimeUnit::TimeUnit(const int64 unix_time){
+        data_ = new Data(unix_time);;    
+    }
 
 TimeUnit& TimeUnit::operator =(const TimeUnit& time_unit) {
   if (time_unit.data_ != NULL) {
