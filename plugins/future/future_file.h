@@ -8,8 +8,8 @@
 #include <string>
 namespace future_logic {
 class FutureFile {
-  friend class FutureManager;
-  friend class FutureEngine;
+  friend class IndexManager;
+  friend class IndexEngine;
  protected:
   FutureFile();
   virtual ~FutureFile();

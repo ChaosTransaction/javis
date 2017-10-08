@@ -59,24 +59,21 @@ bool IndexManager::OnFetchIndexPos(
     const HIS_DATA_TYPE& data_type, const std::string& start_time,
     const std::string& end_time) {
   size_t start_pos = sec_symbol.find(".");
-  std::string sec = sec_symbol.sub_str(0, start_pos);
-  std::string symbol = sec_symbol.sub_str(
+  std::string symbol = sec_symbol.substr(0, start_pos);
+  std::string sec = sec_symbol.substr(
       start_pos + 1, sec_symbol.length() - sec.length() - 1);
-  SYMBOL_MAP& symbol_map;
-  struct threadrw_t* lock = NULL;
+  bool r = false;
   if (sec == "CZCE") {
-    symbol_map = index_cache_->zc_future_;
-    lock = index_lock_->zc_future_lock_;
+    r = OnFetchIndexPos(index_cache_->zc_future_, index_lock_->zc_future_lock_,
+                   sec, symbol, data_type, FUTURE, start_time, end_time);
   } else if (sec == "DCE") {
-    symbol_map = index_cache_->dc_future_;
-    lock = index_lock_->dc_future_lock_;
+    r = OnFetchIndexPos(index_cache_->dc_future_, index_lock_->dc_future_lock_,
+                   sec, symbol, data_type, FUTURE, start_time, end_time);
   } else if (sec == "SHFE") {
-    symbol_map = index_cache_->sc_future_;
-    lock = index_lock_->sc_future_lock_;
+    r = OnFetchIndexPos(index_cache_->sc_future_, index_lock_->sc_future_lock_,
+                   sec, symbol, data_type, FUTURE, start_time, end_time);
   }
-
-  return OnFetchIndexPos(symbol_map, lock, sec, symbol, data_type, FUTURE,
-                         start_time, end_time);
+        return r;
 }
 
 bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
@@ -113,11 +110,11 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type, stk_type,
+    OnLoadIndex(time_frame.start_time(), sec,lock, symbol, data_type, stk_type,
                 symbol_map, start_type_pos_map, start_day_pos_map,
                 start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type, stk_type,
+    OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
                 symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
                 end_minute_pos_map);
 
@@ -130,11 +127,11 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type, stk_type,
+    OnLoadIndex(time_frame.start_time(), sec, lock,symbol, data_type, stk_type,
                 symbol_map, start_type_pos_map, start_day_pos_map,
                 start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type, stk_type,
+    OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
                 symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
                 end_minute_pos_map);
 
@@ -148,11 +145,11 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type, stk_type,
+    OnLoadIndex(time_frame.start_time(), sec,lock, symbol, data_type, stk_type,
                 symbol_map, start_type_pos_map, start_day_pos_map,
                 start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type, stk_type,
+    OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
                 symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
                 end_minute_pos_map);
 
@@ -166,11 +163,11 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type, stk_type,
+    OnLoadIndex(time_frame.start_time(), sec,lock, symbol, data_type, stk_type,
                 symbol_map, start_type_pos_map, start_day_pos_map,
                 start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type, stk_type,
+    OnLoadIndex(time_frame.end_time(), sec, lock,symbol, data_type, stk_type,
                 symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
                 end_minute_pos_map);
 
@@ -283,8 +280,10 @@ bool IndexManager::OnLoadLoaclPos(const std::string& sec,
                                   const int32 month, const int32 day,
                                   MINUTEPOS_MAP& min_pos_map) {
   std::string content;
-  bool r = FutureFile::ReadFile(sec, s_stk_type[stk_type],
-                                s_stk_type[data_type], ".ipos", symbol, year,
+  //std::string str_data_type = std::string(s_stk_type[data_type]);
+  //std::string str_stk_type = std::string(g_stk_type[stk_type]);
+  bool r = FutureFile::ReadFile(sec, s_stk_type[data_type],
+                                g_stk_type[stk_type], ".ipos", symbol, year,
                                 month, day, &content);
   if (!r)
     return r;

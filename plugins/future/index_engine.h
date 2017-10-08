@@ -50,7 +50,7 @@ class IndexLock {
 };
 
 class IndexManager {
-  friend class FutureEngine;
+  friend class IndexEngine;
   friend class Futurelogic;
  protected:
   IndexManager();
@@ -73,8 +73,8 @@ class IndexManager {
                                 future_infos::TickTimePos& start_val,
                                 future_infos::TickTimePos& end_val);
 
-  void OnLoadIndex(future_infos::TimeUnit* time_unit, struct threadrw_t* lock,
-                   const std::string& sec, const std::string& symbol,
+  void OnLoadIndex(future_infos::TimeUnit* time_unit, const std::string& sec, 
+                   struct threadrw_t* lock, const std::string& symbol,
                    const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
                    SYMBOL_MAP& symbol_map, DATETYPE_MAP& type_map,
                    DAYPOS_MAP& day_map, HOURPOS_MAP& hour_map,
