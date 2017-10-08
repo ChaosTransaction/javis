@@ -197,9 +197,10 @@ LOADERROR FutureManager::GetCompareMintuePos(
   if (start_key == end_key) {
     end_val = start_val;
   } else {  //结束时间向后移40分钟
-    while (!r && max_end_unix < end_unix) {
+    r = false;
+    while (!r && max_end_unix > end_unix) {
       r = base::MapGet<MINUTEPOS_MAP, MINUTEPOS_MAP::iterator, int32,
-          future_infos::TickTimePos>(ss_start_map, end_unix, end_val);
+          future_infos::TickTimePos>(se_end_map, end_unix, end_val);
       end_unix += 60;
     }
     if (!r) {
