@@ -48,6 +48,10 @@ class TimeUnit {
   base::Time::Exploded& exploded() const {
     return data_->time_explod_;
   }
+  
+  int32 ToUnixTime() const {
+      return data_->base_time_.ToTimeT();
+  }
 
   class Data {
    public:
@@ -61,13 +65,14 @@ class TimeUnit {
         : refcount_(1) {
       //2015-07-10 10:10:10
       const char* format = "%d-%d-%d %d:%d:%d";
-      base::Time s_time = base::Time::FromStringFormat(str_time.c_str(),
+      base_time_ = base::Time::FromStringFormat(str_time.c_str(),
                                                        format);
-      s_time.LocalExplode(&time_explod_);
+      base_time_.LocalExplode(&time_explod_);
     }
 
    public:
     base::Time::Exploded time_explod_;
+    base::Time base_time_;
     void AddRef() {
       __sync_fetch_and_add(&refcount_, 1);
     }

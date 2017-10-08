@@ -148,10 +148,13 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
 
   {
     base_logic::RLockGd lk(future_lock_->zc_future_lock_);
+    int32 start_unix_time = time_frame.start_time()->ToUnixTime() / 60 * 60;
+    int32 end_unix_time = time_frame.end_time()->ToUnixTime() / 60 * 60;
     load_erron = GetCompareTimeTickPos<MINUTEPOS_MAP, MINUTEPOS_MAP::iterator,
         const int32, future_infos::TickTimePos>(
         start_minute_pos_map, end_minute_pos_map,
-        time_frame.start_exploded().minute, time_frame.end_exploded().minute,
+        start_unix_time, 
+        end_unix_time,
         start_time_pos, end_time_pos);
   }
   return true;

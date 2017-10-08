@@ -36,8 +36,8 @@ bool Futurelogic::Init() {
   std::string sec = "ZC";
   std::string symbol = "WT001";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
-  std::string start_time = "2009-12-2 10:20:22";
-  std::string end_time = "2009-12-2 10:22:21";
+  std::string start_time = "2009-12-2 10:40:22";
+  std::string end_time = "2009-12-2 10:52:21";
 
   FutureEngine::GetSchdulerManager()->OnFetchIndexPos(socket,
           sec,symbol,data_type,start_time,end_time);
