@@ -69,6 +69,12 @@ class FutureManager {
                                   KeyType& start_key, KeyType& end_key,
                                   ValType& start_val, ValType& end_val);
 
+  LOADERROR GetCompareMintuePos(MINUTEPOS_MAP& ss_start_map,
+                                MINUTEPOS_MAP& se_end_map,
+                                const int32& start_key, const int32& end_key,
+                                future_infos::TickTimePos& start_val,
+                                future_infos::TickTimePos& end_val);
+
   void OnLoadIndex(future_infos::TimeUnit* time_unit, const std::string& sec,
                    const std::string& symbol, const HIS_DATA_TYPE& data_type,
                    SYMBOL_MAP& symbol_map, DATETYPE_MAP& type_map,

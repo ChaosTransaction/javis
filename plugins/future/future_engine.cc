@@ -97,8 +97,8 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
     base_logic::RLockGd lk(future_lock_->zc_future_lock_);
     load_erron = GetCompareTimeTickPos<DATETYPE_MAP, DATETYPE_MAP::iterator,
         const HIS_DATA_TYPE, DAYPOS_MAP>(start_type_pos_map, end_type_pos_map,
-                                   data_type, data_type, start_day_pos_map,
-                                   end_day_pos_map);
+                                         data_type, data_type,
+                                         start_day_pos_map, end_day_pos_map);
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
@@ -124,7 +124,7 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
                 future_cache_->zc_future_, start_type_pos_map,
                 start_day_pos_map, start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), "ZC", symbol, data_type,
+    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type,
                 future_cache_->zc_future_, end_type_pos_map, end_day_pos_map,
                 end_hour_pos_map, end_minute_pos_map);
 
@@ -138,11 +138,11 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), "ZC", symbol, data_type,
+    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type,
                 future_cache_->zc_future_, start_type_pos_map,
                 start_day_pos_map, start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), "ZC", symbol, data_type,
+    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type,
                 future_cache_->zc_future_, end_type_pos_map, end_day_pos_map,
                 end_hour_pos_map, end_minute_pos_map);
 
@@ -150,12 +150,9 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
     base_logic::RLockGd lk(future_lock_->zc_future_lock_);
     int32 start_unix_time = time_frame.start_time()->ToUnixTime() / 60 * 60;
     int32 end_unix_time = time_frame.end_time()->ToUnixTime() / 60 * 60;
-    load_erron = GetCompareTimeTickPos<MINUTEPOS_MAP, MINUTEPOS_MAP::iterator,
-        const int32, future_infos::TickTimePos>(
-        start_minute_pos_map, end_minute_pos_map,
-        start_unix_time, 
-        end_unix_time,
-        start_time_pos, end_time_pos);
+    load_erron = GetCompareMintuePos(start_minute_pos_map, end_minute_pos_map,
+                                     start_unix_time, end_unix_time,
+                                     start_time_pos, end_time_pos);
   }
   return true;
 }
@@ -169,12 +166,51 @@ void FutureManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
                                 MINUTEPOS_MAP& minute_map) {
 
   OnLoadLoaclPos(sec, symbol, data_type, time_unit->exploded().year,
-                 time_unit->exploded().month, time_unit->exploded().day_of_month,
-                 minute_map);
+                 time_unit->exploded().month,
+                 time_unit->exploded().day_of_month, minute_map);
 
   SetIndexPos(symbol_map, symbol, type_map, data_type, day_map,
               time_unit->full_day(), hour_map, time_unit->exploded().hour,
               minute_map);
+}
+
+LOADERROR FutureManager::GetCompareMintuePos(
+    MINUTEPOS_MAP& ss_start_map, MINUTEPOS_MAP& se_end_map,
+    const int32& start_key, const int32& end_key,
+    future_infos::TickTimePos& start_val, future_infos::TickTimePos& end_val) {
+  LOADERROR load_error = LOAD_SUCCESS;
+  bool r = false;
+  //开始时间向前移40分钟
+  int32 start_unix = start_key;
+  int32 max_start_unix = start_key - 40 * 60;
+  int32 end_unix = end_key;
+  int32 max_end_unix = end_key + 40 * 60;
+  while (!r && start_unix > max_start_unix) {
+    r = base::MapGet<MINUTEPOS_MAP, MINUTEPOS_MAP::iterator, int32,
+        future_infos::TickTimePos>(ss_start_map, start_unix, start_val);
+    start_unix -= 60;
+  }
+
+  if (!r)
+    load_error = START_NOT_EXITS;
+
+  if (start_key == end_key) {
+    end_val = start_val;
+  } else {  //结束时间向后移40分钟
+    while (!r && max_end_unix < end_unix) {
+      r = base::MapGet<MINUTEPOS_MAP, MINUTEPOS_MAP::iterator, int32,
+          future_infos::TickTimePos>(ss_start_map, end_unix, end_val);
+      end_unix += 60;
+    }
+    if (!r) {
+      if (load_error == START_NOT_EXITS)
+        load_error = BOTH_NOT_EXITS;
+      else
+        load_error = END_NOT_EXITS;
+    }
+  }
+
+  return load_error;
 }
 
 template<typename MapType, typename MapITType, typename KeyType,
@@ -217,9 +253,8 @@ bool FutureManager::OnLoadLoaclPos(const std::string& sec,
                                    const int32 day,
                                    MINUTEPOS_MAP& min_pos_map) {
   std::string content;
-  bool r = FutureFile::ReadFile(sec, s_stk_type[data_type],
-                                ".ipos", symbol, year,
-                                month, day, &content);
+  bool r = FutureFile::ReadFile(sec, s_stk_type[data_type], ".ipos", symbol,
+                                year, month, day, &content);
   if (!r)
     return r;
 
