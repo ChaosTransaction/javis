@@ -19,6 +19,32 @@ const char* g_sec[] = { "SHFE", "DCE", "CZCE", "CFFEX", "CME", "CBOT", "LME",
 
 namespace future_infos {
 
+
+StaticInfo::StaticInfo(const std::string& str) {
+  data_ = new Data(str);
+}
+
+StaticInfo::StaticInfo(const StaticInfo& static_info)
+    : data_(static_info.data_) {
+  if (data_ != NULL) {
+    data_->AddRef();
+  }
+}
+
+StaticInfo& StaticInfo::operator =(const StaticInfo& static_info) {
+  if (static_info.data_ != NULL) {
+    static_info.data_->AddRef();
+  }
+
+  if (data_ != NULL) {
+    data_->Release();
+  }
+
+  data_ = static_info.data_;
+  return (*this);
+}
+
+
 TimeUnit::TimeUnit(const std::string& str_time) {
   data_ = new Data(str_time);
 }

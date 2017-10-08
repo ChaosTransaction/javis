@@ -43,11 +43,53 @@ enum STK_TYPE {
   COMM = 16,          //商品现货
 };
 
-
 extern const char* s_stk_type[HIS_DATA_TYPE_COUNT];
 extern const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT];
 extern const char* s_stk_type[HIS_DATA_TYPE_COUNT];
 namespace future_infos {
+
+class StaticInfo {
+ public:
+  StaticInfo(const StaticInfo& static_info);
+  StaticInfo(const std::string& str);
+
+  StaticInfo& operator =(const StaticInfo& static_info);
+
+  ~StaticInfo() {
+    if (data_ != NULL) {
+      data_->Release();
+    }
+  }
+
+  class Data {
+   public:
+    Data()
+        : refcount_(1) {
+    }
+
+    Data(const std::string& str)
+        : refcount_(1) {
+      static_info.ParseFromString(str);
+    }
+
+   public:
+    const chaos_data::SymbolStatic static_info;
+    void AddRef() {
+      __sync_fetch_and_add(&refcount_, 1);
+    }
+
+    void Release() {
+      __sync_fetch_and_sub(&refcount_, 1);
+      if (!refcount_)
+        delete this;
+    }
+   private:
+    int refcount_;
+  };
+  Data* data_;
+};
+
+
 
 class TimeUnit {
  public:
@@ -70,9 +112,9 @@ class TimeUnit {
   base::Time::Exploded& exploded() const {
     return data_->time_explod_;
   }
-  
+
   int32 ToUnixTime() const {
-      return data_->base_time_.ToTimeT();
+    return data_->base_time_.ToTimeT();
   }
 
   class Data {
@@ -87,8 +129,7 @@ class TimeUnit {
         : refcount_(1) {
       //2015-07-10 10:10:10
       const char* format = "%d-%d-%d %d:%d:%d";
-      base_time_ = base::Time::FromStringFormat(str_time.c_str(),
-                                                       format);
+      base_time_ = base::Time::FromStringFormat(str_time.c_str(), format);
       base_time_.LocalExplode(&time_explod_);
     }
 
@@ -154,9 +195,15 @@ class TimeFrame {
       start_time_ = new TimeUnit(str_start_time);
       end_time_ = new TimeUnit(str_end_time);
     }
-    ~Data(){
-      if(start_time_){delete start_time_; start_time_ = NULL;}
-      if(end_time_){delete end_time_; end_time_ = NULL;}
+    ~Data() {
+      if (start_time_) {
+        delete start_time_;
+        start_time_ = NULL;
+      }
+      if (end_time_) {
+        delete end_time_;
+        end_time_ = NULL;
+      }
     }
 
    public:
@@ -176,8 +223,6 @@ class TimeFrame {
   };
   Data* data_;
 };
-
-
 
 class TickTimePos {
  public:
