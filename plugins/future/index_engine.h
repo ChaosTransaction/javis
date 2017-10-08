@@ -1,8 +1,8 @@
 //  Copyright (c) 2017-2018 The Javis Authors. All rights reserved.
 //  Created on: 2017年9月30日 Author: kerry
 
-#ifndef FUTURE_FUTURE_ENGINE_H_
-#define FUTURE_FUTURE_ENGINE_H_
+#ifndef FUTURE_INDEX_ENGINE_H_
+#define FUTURE_INDEX_ENGINE_H_
 
 #include "future_infos.h"
 #include "future_file.h"
@@ -28,7 +28,7 @@ enum LOADERROR {
   LOAD_SUCCESS = 0
 };
 
-class FutureCache {
+class IndexCache {
  public:
   SYMBOL_MAP zc_future_;  //郑州期货
   SYMBOL_MAP sc_future_;  //上海期货
@@ -39,7 +39,7 @@ class FutureCache {
 
 };
 
-class FutureLock {
+class IndexLock {
  public:
   struct threadrw_t* zc_future_lock_;
   struct threadrw_t* sc_future_lock_;
@@ -49,19 +49,17 @@ class FutureLock {
   struct threadrw_t* dc_ftr_lock_;
 };
 
-class FutureManager {
+class IndexManager {
   friend class FutureEngine;
   friend class Futurelogic;
  protected:
-  FutureManager();
-  virtual ~FutureManager();
+  IndexManager();
+  virtual ~IndexManager();
  protected:
-  bool OnFetchIndexPos(const int socket, const std::string& sec,
-                       const std::string& symbol,
+  bool OnFetchIndexPos(const std::string& sec_symbol, //000001.CZCE
                        const HIS_DATA_TYPE& data_type,
                        const std::string& start_time,
                        const std::string& end_time);
-
  private:
   template<typename MapType, typename MapITType, typename KeyType,
       typename ValType>
@@ -75,22 +73,29 @@ class FutureManager {
                                 future_infos::TickTimePos& start_val,
                                 future_infos::TickTimePos& end_val);
 
-  void OnLoadIndex(future_infos::TimeUnit* time_unit, const std::string& sec,
-                   const std::string& symbol, const HIS_DATA_TYPE& data_type,
+  void OnLoadIndex(future_infos::TimeUnit* time_unit, struct threadrw_t* lock,
+                   const std::string& sec, const std::string& symbol,
+                   const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
                    SYMBOL_MAP& symbol_map, DATETYPE_MAP& type_map,
                    DAYPOS_MAP& day_map, HOURPOS_MAP& hour_map,
                    MINUTEPOS_MAP& minute_map);
 
   bool OnLoadLoaclPos(const std::string& sec, const std::string& symbol,
-                      const HIS_DATA_TYPE& data_type, const int32 year,
-                      const int32 month, const int32 day,
+                      const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
+                      const int32 year, const int32 month, const int32 day,
                       MINUTEPOS_MAP& min_pos_map);
 
-  void SetIndexPos(SYMBOL_MAP& symbol_map, const std::string& symbol_key,
-                   DATETYPE_MAP& type_map, const HIS_DATA_TYPE type_key,
-                   DAYPOS_MAP& day_map, const int32 day_key,
-                   HOURPOS_MAP& hour_map, const int32 hour_key,
-                   MINUTEPOS_MAP& minute_map);
+  void SetIndexPos(struct threadrw_t* lock, SYMBOL_MAP& symbol_map,
+                   const std::string& symbol_key, DATETYPE_MAP& type_map,
+                   const HIS_DATA_TYPE type_key, DAYPOS_MAP& day_map,
+                   const int32 day_key, HOURPOS_MAP& hour_map,
+                   const int32 hour_key, MINUTEPOS_MAP& minute_map);
+
+  bool OnFetchIndexPos(SYMBOL_MAP& symbol_map, struct threadrw_t* lock,
+                       const std::string& sec, const std::string& symbol,
+                       const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
+                       const std::string& start_time,
+                       const std::string& end_time);
 
   /*bool LoadLocalIndexPosInfo(const std::string& sec,
    const std::string& data_type,
@@ -103,32 +108,32 @@ class FutureManager {
   void InitLock();
   void DeinitLock();
  private:
-  FutureCache* future_cache_;
-  FutureLock* future_lock_;
+  IndexCache* index_cache_;
+  IndexLock* index_lock_;
 };
 
-class FutureEngine {
+class IndexEngine {
   friend class Futurelogic;
  private:
-  static FutureEngine* schduler_engine_;
-  static FutureManager* schduler_mgr_;
+  static IndexEngine* schduler_engine_;
+  static IndexManager* schduler_mgr_;
 
  protected:
-  FutureEngine() {
+  IndexEngine() {
   }
-  virtual ~FutureEngine() {
+  virtual ~IndexEngine() {
   }
 
  protected:
-  static FutureManager* GetSchdulerManager() {
+  static IndexManager* GetSchdulerManager() {
     if (schduler_mgr_ == NULL)
-      schduler_mgr_ = new FutureManager();
+      schduler_mgr_ = new IndexManager();
     return schduler_mgr_;
   }
 
-  static FutureEngine* GetFutureEngine() {
+  static IndexEngine* GetIndexEngine() {
     if (schduler_engine_ == NULL)
-      schduler_engine_ = new FutureEngine();
+      schduler_engine_ = new IndexEngine();
     return schduler_engine_;
   }
 
@@ -139,7 +144,7 @@ class FutureEngine {
     }
   }
 
-  static void FreeFutureEngine() {
+  static void FreeIndexEngine() {
     if (schduler_engine_) {
       delete schduler_engine_;
       schduler_engine_ = NULL;

@@ -23,8 +23,30 @@ enum HIS_DATA_TYPE {
   HIS_DATA_TYPE_UNKNOWN     //  未知历史数据类型
 };
 
+enum STK_TYPE {
+  INDEX = 0,          //指数
+  STOCK = 1,          //股票
+  FUND = 2,           //基金
+  BOND = 3,           //债券
+  OTHER_STOCK = 4,    //其它股票
+  OPTION = 5,         //选择权
+  EXCHANGE = 6,       //外汇
+  FUTURE = 7,         //期货
+  FTR_IDX = 8,        //期指
+  RGZ = 9,            //认购证
+  ETF = 10,           //ETF
+  LOF = 11,           //LOF
+  COV_BOND = 12,      //可转债
+  TRUST = 13,         //信托
+  WARRANT = 14,       //权证
+  REPO = 15,          //回购
+  COMM = 16,          //商品现货
+};
+
+
 extern const char* s_stk_type[HIS_DATA_TYPE_COUNT];
 extern const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT];
+extern const char* s_stk_type[HIS_DATA_TYPE_COUNT];
 namespace future_infos {
 
 class TimeUnit {

@@ -19,6 +19,7 @@ class FutureFile {
                              const int32 day);
 
   static bool ReadFile(const std::string& sec, const std::string& data_type,
+                       const std::string& stk_type,
                 const std::string& shuffix, const std::string& symbol,
                 const int32 year, const int32 month, const int32 day,
                 std::string* content);

@@ -2,8 +2,8 @@
 //  Created on: 2017年9月30日 Author: kerry
 
 #include "future/future_logic.h"
-#include "future/future_engine.h"
 #include "config/config.h"
+#include "index_engine.h"
 
 #define DEFAULT_CONFIG_PATH "./plugins/future/future_config.xml"
 
@@ -33,14 +33,13 @@ bool Futurelogic::Init() {
   FutureEngine::GetFutureEngine();
 
   int socket = 0;
-  std::string sec = "ZC";
-  std::string symbol = "WT001";
+  std::string sec_symbol = "WT001.ZC";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
   std::string start_time = "2009-12-2 10:40:22";
   std::string end_time = "2009-12-2 10:52:21";
+  IndexEngine::GetSchdulerManager()->OnFetchIndexPos(sec_symbol,data_type,
+                                                     start_time,end_time);
 
-  FutureEngine::GetSchdulerManager()->OnFetchIndexPos(socket,
-          sec,symbol,data_type,start_time,end_time);
   /*std::string sec = "ZC";
   std::string data_type = "INDEXPOS";
   std::string shuffix = ".ipos";

@@ -1,62 +1,92 @@
 //  Copyright (c) 2017-2018 The Javis Authors. All rights reserved.
 //  Created on: 2017年9月30日 Author: kerry
-#include "future_engine.h"
 #include "logic/logic_comm.h"
 #include "basic/template.h"
+
+#include "index_engine.h"
 namespace future_logic {
 
-FutureEngine* FutureEngine::schduler_engine_ = NULL;
-FutureManager* FutureEngine::schduler_mgr_ = NULL;
+IndexEngine* IndexEngine::schduler_engine_ = NULL;
+IndexManager* IndexEngine::schduler_mgr_ = NULL;
 
-FutureManager::FutureManager() {
+IndexManager::IndexManager() {
   Init();
   InitLock();
 }
 
-FutureManager::~FutureManager() {
-  Deinit();
+IndexManager::~IndexManager() {
   DeinitLock();
+  Deinit();
+
 }
 
-void FutureManager::Init() {
-  future_cache_ = new FutureCache();
-  future_lock_ = new FutureLock();
+void IndexManager::Init() {
+  index_cache_ = new IndexCache();
+  index_lock_ = new IndexLock();
 }
 
-void FutureManager::Deinit() {
-  if (future_cache_) {
-    delete future_cache_;
-    future_cache_ = NULL;
+void IndexManager::Deinit() {
+  if (index_cache_) {
+    delete index_cache_;
+    index_cache_ = NULL;
   }
-  if (future_lock_) {
-    delete future_lock_;
-    future_lock_ = NULL;
+  if (index_lock_) {
+    delete index_lock_;
+    index_lock_ = NULL;
   }
 }
 
-void FutureManager::InitLock() {
-  InitThreadrw(&future_lock_->zc_future_lock_);
-  InitThreadrw(&future_lock_->sc_future_lock_);
-  InitThreadrw(&future_lock_->dc_future_lock_);
-  InitThreadrw(&future_lock_->zc_ftr_lock_);
-  InitThreadrw(&future_lock_->sc_ftr_lock_);
-  InitThreadrw(&future_lock_->dc_ftr_lock_);
+void IndexManager::InitLock() {
+  InitThreadrw(&index_lock_->zc_future_lock_);
+  InitThreadrw(&index_lock_->sc_future_lock_);
+  InitThreadrw(&index_lock_->dc_future_lock_);
+  InitThreadrw(&index_lock_->zc_ftr_lock_);
+  InitThreadrw(&index_lock_->sc_ftr_lock_);
+  InitThreadrw(&index_lock_->dc_ftr_lock_);
 }
 
-void FutureManager::DeinitLock() {
-  DeinitThreadrw(future_lock_->zc_future_lock_);
-  DeinitThreadrw(future_lock_->sc_future_lock_);
-  DeinitThreadrw(future_lock_->dc_future_lock_);
-  DeinitThreadrw(future_lock_->zc_ftr_lock_);
-  DeinitThreadrw(future_lock_->sc_ftr_lock_);
-  DeinitThreadrw(future_lock_->dc_ftr_lock_);
+void IndexManager::DeinitLock() {
+  DeinitThreadrw(index_lock_->zc_future_lock_);
+  DeinitThreadrw(index_lock_->sc_future_lock_);
+  DeinitThreadrw(index_lock_->dc_future_lock_);
+  DeinitThreadrw(index_lock_->zc_ftr_lock_);
+  DeinitThreadrw(index_lock_->sc_ftr_lock_);
+  DeinitThreadrw(index_lock_->dc_ftr_lock_);
 }
 
-bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
-                                    const std::string& symbol,
-                                    const HIS_DATA_TYPE& data_type,
-                                    const std::string& start_time,
-                                    const std::string& end_time) {
+bool IndexManager::OnFetchIndexPos(
+    const std::string& sec_symbol,  //000001.CZCE
+    const HIS_DATA_TYPE& data_type, const std::string& start_time,
+    const std::string& end_time) {
+  size_t start_pos = sec_symbol.find(".");
+  std::string sec = sec_symbol.sub_str(0, start_pos);
+  std::string symbol = sec_symbol.sub_str(
+      start_pos + 1, sec_symbol.length() - sec.length() - 1);
+  SYMBOL_MAP& symbol_map;
+  struct threadrw_t* lock = NULL;
+  if (sec == "CZCE") {
+    symbol_map = index_cache_->zc_future_;
+    lock = index_lock_->zc_future_lock_;
+  } else if (sec == "DCE") {
+    symbol_map = index_cache_->dc_future_;
+    lock = index_lock_->dc_future_lock_;
+  } else if (sec == "SHFE") {
+    symbol_map = index_cache_->sc_future_;
+    lock = index_lock_->sc_future_lock_;
+  }
+
+  return OnFetchIndexPos(symbol_map, lock, sec, symbol, data_type, FUTURE,
+                         start_time, end_time);
+}
+
+bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
+                                   struct threadrw_t* lock,
+                                   const std::string& sec,
+                                   const std::string& symbol,
+                                   const HIS_DATA_TYPE& data_type,
+                                   const STK_TYPE& stk_type,
+                                   const std::string& start_time,
+                                   const std::string& end_time) {
   future_infos::TimeFrame time_frame(start_time, end_time);
   bool r = false;
   future_infos::TickTimePos start_time_pos;
@@ -76,25 +106,23 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
 
   LOADERROR load_erron;
   {
-    base_logic::RLockGd lk(future_lock_->zc_future_lock_);
+    base_logic::RLockGd lk(lock);
     load_erron = GetCompareTimeTickPos<SYMBOL_MAP, SYMBOL_MAP::iterator,
-        const std::string, DATETYPE_MAP>(future_cache_->zc_future_,
-                                         future_cache_->zc_future_, symbol,
-                                         symbol, start_type_pos_map,
-                                         end_type_pos_map);
+        const std::string, DATETYPE_MAP>(symbol_map, symbol_map, symbol, symbol,
+                                         start_type_pos_map, end_type_pos_map);
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type,
-                future_cache_->zc_future_, start_type_pos_map,
-                start_day_pos_map, start_hour_pos_map, start_minute_pos_map);
+    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type, stk_type,
+                symbol_map, start_type_pos_map, start_day_pos_map,
+                start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type,
-                future_cache_->zc_future_, end_type_pos_map, end_day_pos_map,
-                end_hour_pos_map, end_minute_pos_map);
+    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type, stk_type,
+                symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
+                end_minute_pos_map);
 
   {
-    base_logic::RLockGd lk(future_lock_->zc_future_lock_);
+    base_logic::RLockGd lk(lock);
     load_erron = GetCompareTimeTickPos<DATETYPE_MAP, DATETYPE_MAP::iterator,
         const HIS_DATA_TYPE, DAYPOS_MAP>(start_type_pos_map, end_type_pos_map,
                                          data_type, data_type,
@@ -102,16 +130,16 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type,
-                future_cache_->zc_future_, start_type_pos_map,
-                start_day_pos_map, start_hour_pos_map, start_minute_pos_map);
+    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type, stk_type,
+                symbol_map, start_type_pos_map, start_day_pos_map,
+                start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type,
-                future_cache_->zc_future_, end_type_pos_map, end_day_pos_map,
-                end_hour_pos_map, end_minute_pos_map);
+    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type, stk_type,
+                symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
+                end_minute_pos_map);
 
   {
-    base_logic::RLockGd lk(future_lock_->zc_future_lock_);
+    base_logic::RLockGd lk(lock);
     load_erron = GetCompareTimeTickPos<DAYPOS_MAP, DAYPOS_MAP::iterator,
         const int32, HOURPOS_MAP>(start_day_pos_map, end_day_pos_map,
                                   time_frame.start_full_day(),
@@ -120,16 +148,16 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type,
-                future_cache_->zc_future_, start_type_pos_map,
-                start_day_pos_map, start_hour_pos_map, start_minute_pos_map);
+    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type, stk_type,
+                symbol_map, start_type_pos_map, start_day_pos_map,
+                start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type,
-                future_cache_->zc_future_, end_type_pos_map, end_day_pos_map,
-                end_hour_pos_map, end_minute_pos_map);
+    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type, stk_type,
+                symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
+                end_minute_pos_map);
 
   {
-    base_logic::RLockGd lk(future_lock_->zc_future_lock_);
+    base_logic::RLockGd lk(lock);
     load_erron = GetCompareTimeTickPos<HOURPOS_MAP, HOURPOS_MAP::iterator,
         const int32, MINUTEPOS_MAP>(start_hour_pos_map, end_hour_pos_map,
                                     time_frame.start_exploded().hour,
@@ -138,16 +166,16 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type,
-                future_cache_->zc_future_, start_type_pos_map,
-                start_day_pos_map, start_hour_pos_map, start_minute_pos_map);
+    OnLoadIndex(time_frame.start_time(), sec, symbol, data_type, stk_type,
+                symbol_map, start_type_pos_map, start_day_pos_map,
+                start_hour_pos_map, start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type,
-                future_cache_->zc_future_, end_type_pos_map, end_day_pos_map,
-                end_hour_pos_map, end_minute_pos_map);
+    OnLoadIndex(time_frame.end_time(), sec, symbol, data_type, stk_type,
+                symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
+                end_minute_pos_map);
 
   {
-    base_logic::RLockGd lk(future_lock_->zc_future_lock_);
+    base_logic::RLockGd lk(lock);
     int32 start_unix_time = time_frame.start_time()->ToUnixTime() / 60 * 60;
     int32 end_unix_time = time_frame.end_time()->ToUnixTime() / 60 * 60;
     load_erron = GetCompareMintuePos(start_minute_pos_map, end_minute_pos_map,
@@ -157,24 +185,25 @@ bool FutureManager::OnFetchIndexPos(const int socket, const std::string& sec,
   return true;
 }
 
-void FutureManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
-                                const std::string& sec,
-                                const std::string& symbol,
-                                const HIS_DATA_TYPE& data_type,
-                                SYMBOL_MAP& symbol_map, DATETYPE_MAP& type_map,
-                                DAYPOS_MAP& day_map, HOURPOS_MAP& hour_map,
-                                MINUTEPOS_MAP& minute_map) {
+void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
+                               const std::string& sec, struct threadrw_t* lock,
+                               const std::string& symbol,
+                               const HIS_DATA_TYPE& data_type,
+                               const STK_TYPE& stk_type, SYMBOL_MAP& symbol_map,
+                               DATETYPE_MAP& type_map, DAYPOS_MAP& day_map,
+                               HOURPOS_MAP& hour_map,
+                               MINUTEPOS_MAP& minute_map) {
 
-  OnLoadLoaclPos(sec, symbol, data_type, time_unit->exploded().year,
+  OnLoadLoaclPos(sec, symbol, data_type, stk_type, time_unit->exploded().year,
                  time_unit->exploded().month,
                  time_unit->exploded().day_of_month, minute_map);
 
-  SetIndexPos(symbol_map, symbol, type_map, data_type, day_map,
+  SetIndexPos(lock, symbol_map, symbol, type_map, data_type, day_map,
               time_unit->full_day(), hour_map, time_unit->exploded().hour,
               minute_map);
 }
 
-LOADERROR FutureManager::GetCompareMintuePos(
+LOADERROR IndexManager::GetCompareMintuePos(
     MINUTEPOS_MAP& ss_start_map, MINUTEPOS_MAP& se_end_map,
     const int32& start_key, const int32& end_key,
     future_infos::TickTimePos& start_val, future_infos::TickTimePos& end_val) {
@@ -216,12 +245,12 @@ LOADERROR FutureManager::GetCompareMintuePos(
 
 template<typename MapType, typename MapITType, typename KeyType,
     typename ValType>
-LOADERROR FutureManager::GetCompareTimeTickPos(MapType& ss_start_map,
-                                               MapType& se_end_map,
-                                               KeyType& start_key,
-                                               KeyType& end_key,
-                                               ValType& start_val,
-                                               ValType& end_val) {
+LOADERROR IndexManager::GetCompareTimeTickPos(MapType& ss_start_map,
+                                              MapType& se_end_map,
+                                              KeyType& start_key,
+                                              KeyType& end_key,
+                                              ValType& start_val,
+                                              ValType& end_val) {
 
   LOADERROR load_error = LOAD_SUCCESS;
   bool r = base::MapGet<MapType, MapITType, KeyType, ValType>(ss_start_map,
@@ -247,15 +276,16 @@ LOADERROR FutureManager::GetCompareTimeTickPos(MapType& ss_start_map,
   //return true;
 }
 
-bool FutureManager::OnLoadLoaclPos(const std::string& sec,
-                                   const std::string& symbol,
-                                   const HIS_DATA_TYPE& data_type,
-                                   const int32 year, const int32 month,
-                                   const int32 day,
-                                   MINUTEPOS_MAP& min_pos_map) {
+bool IndexManager::OnLoadLoaclPos(const std::string& sec,
+                                  const std::string& symbol,
+                                  const HIS_DATA_TYPE& data_type,
+                                  const STK_TYPE& stk_type, const int32 year,
+                                  const int32 month, const int32 day,
+                                  MINUTEPOS_MAP& min_pos_map) {
   std::string content;
-  bool r = FutureFile::ReadFile(sec, s_stk_type[data_type], ".ipos", symbol,
-                                year, month, day, &content);
+  bool r = FutureFile::ReadFile(sec, s_stk_type[stk_type],
+                                s_stk_type[data_type], ".ipos", symbol, year,
+                                month, day, &content);
   if (!r)
     return r;
 
@@ -279,20 +309,22 @@ bool FutureManager::OnLoadLoaclPos(const std::string& sec,
   return r;
 }
 
-void FutureManager::SetIndexPos(SYMBOL_MAP& symbol_map,
-                                const std::string& symbol_key,
-                                DATETYPE_MAP& type_map,
-                                const HIS_DATA_TYPE type_key,
-                                DAYPOS_MAP& day_map, const int32 day_key,
-                                HOURPOS_MAP& hour_map, const int32 hour_key,
-                                MINUTEPOS_MAP& minute_map) {
+void IndexManager::SetIndexPos(struct threadrw_t* lock, SYMBOL_MAP& symbol_map,
+                               const std::string& symbol_key,
+                               DATETYPE_MAP& type_map,
+                               const HIS_DATA_TYPE type_key,
+                               DAYPOS_MAP& day_map, const int32 day_key,
+                               HOURPOS_MAP& hour_map, const int32 hour_key,
+                               MINUTEPOS_MAP& minute_map) {
+
+  base_logic::WLockGd lk(lock);
   hour_map[hour_key] = minute_map;
   day_map[day_key] = hour_map;
   type_map[type_key] = day_map;
   symbol_map[symbol_key] = type_map;
 }
 /*
- bool FutureManager::LoadLocalIndexPosInfo(const std::string& sec,
+ bool IndexManager::LoadLocalIndexPosInfo(const std::string& sec,
  const std::string& data_type,
  const std::string& shuffix,
  const std::string& symbol,
