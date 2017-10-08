@@ -17,8 +17,8 @@ Futurelogic::Futurelogic() {
 }
 
 Futurelogic::~Futurelogic() {
-  FutureEngine::FreeFutureEngine();
-  FutureEngine::FreeSchdulerManager();
+  IndexEngine::FreeIndexEngine();
+  IndexEngine::FreeSchdulerManager();
 }
 
 bool Futurelogic::Init() {
@@ -29,11 +29,11 @@ bool Futurelogic::Init() {
     return false;
   r = config->LoadConfig(path);
 
-  FutureEngine::GetSchdulerManager();
-  FutureEngine::GetFutureEngine();
+  IndexEngine::GetSchdulerManager();
+  IndexEngine::GetIndexEngine();
 
   int socket = 0;
-  std::string sec_symbol = "WT001.ZC";
+  std::string sec_symbol = "WT001.CZCE";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
   std::string start_time = "2009-12-2 10:40:22";
   std::string end_time = "2009-12-2 10:52:21";

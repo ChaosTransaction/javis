@@ -41,12 +41,13 @@ enum STK_TYPE {
   WARRANT = 14,       //权证
   REPO = 15,          //回购
   COMM = 16,          //商品现货
+  STK_TYPE_COUNT
 };
 
 
 extern const char* s_stk_type[HIS_DATA_TYPE_COUNT];
 extern const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT];
-extern const char* s_stk_type[HIS_DATA_TYPE_COUNT];
+extern const char* g_stk_type[STK_TYPE_COUNT];
 namespace future_infos {
 
 class TimeUnit {
