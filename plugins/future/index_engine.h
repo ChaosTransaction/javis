@@ -59,7 +59,9 @@ class IndexManager {
   bool OnFetchIndexPos(const std::string& sec_symbol, //000001.CZCE
                        const HIS_DATA_TYPE& data_type,
                        const std::string& start_time,
-                       const std::string& end_time);
+                       const std::string& end_time,
+                       future_infos::TickTimePos& start_time_pos,
+                       future_infos::TickTimePos& end_time_pos);
  private:
   template<typename MapType, typename MapITType, typename KeyType,
       typename ValType>
@@ -95,7 +97,9 @@ class IndexManager {
                        const std::string& sec, const std::string& symbol,
                        const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
                        const std::string& start_time,
-                       const std::string& end_time);
+                       const std::string& end_time,
+                       future_infos::TickTimePos& start_time_pos,
+                       future_infos::TickTimePos& end_time_pos);
 
   /*bool LoadLocalIndexPosInfo(const std::string& sec,
    const std::string& data_type,

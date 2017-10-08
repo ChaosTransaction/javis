@@ -4,6 +4,7 @@
 #include "future/future_logic.h"
 #include "config/config.h"
 #include "index_engine.h"
+#include "static_engine.h"
 
 #define DEFAULT_CONFIG_PATH "./plugins/future/future_config.xml"
 
@@ -19,6 +20,9 @@ Futurelogic::Futurelogic() {
 Futurelogic::~Futurelogic() {
   IndexEngine::FreeIndexEngine();
   IndexEngine::FreeSchdulerManager();
+
+  StaticEngine::FreeIndexEngine();
+  StaticEngine::FreeSchdulerManager();
 }
 
 bool Futurelogic::Init() {
@@ -32,23 +36,36 @@ bool Futurelogic::Init() {
   IndexEngine::GetSchdulerManager();
   IndexEngine::GetIndexEngine();
 
+  StaticEngine::GetSchdulerManager();
+  StaticEngine::GetIndexEngine();
+
   int socket = 0;
   std::string sec_symbol = "WT001.CZCE";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
   std::string start_time = "2009-12-2 10:40:22";
   std::string end_time = "2009-12-2 10:52:21";
-  IndexEngine::GetSchdulerManager()->OnFetchIndexPos(sec_symbol,data_type,
-                                                     start_time,end_time);
+
+  size_t start_pos = sec_symbol.find(".");
+  std::string symbol = sec_symbol.substr(0, start_pos);
+  std::string sec = sec_symbol.substr(start_pos + 1,
+                                      sec_symbol.length() - sec.length() - 1);
+
+  future_infos::TickTimePos start_time_pos;
+  future_infos::TickTimePos end_time_pos;
+  IndexEngine::GetSchdulerManager()->OnFetchIndexPos(sec, symbol, data_type,
+                                                     start_time, end_time,
+                                                     start_time_pos,
+                                                     end_time_pos);
 
   /*std::string sec = "ZC";
-  std::string data_type = "INDEXPOS";
-  std::string shuffix = ".ipos";
-  std::string symbol = "WT0000";
-  int32 year = 2009;
-  int32 month = 12;
-  int32 day = 2;
-  FutureEngine::GetSchdulerManager()->LoadLocalIndexPosInfo(sec, data_type,
-          shuffix, symbol, year, month, day);*/
+   std::string data_type = "INDEXPOS";
+   std::string shuffix = ".ipos";
+   std::string symbol = "WT0000";
+   int32 year = 2009;
+   int32 month = 12;
+   int32 day = 2;
+   FutureEngine::GetSchdulerManager()->LoadLocalIndexPosInfo(sec, data_type,
+   shuffix, symbol, year, month, day);*/
 
   return true;
 }

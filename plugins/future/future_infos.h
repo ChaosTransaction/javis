@@ -90,12 +90,11 @@ class StaticInfo {
   Data* data_;
 };
 
-
-
 class TimeUnit {
  public:
   TimeUnit(const TimeUnit& time_unit);
   TimeUnit(const std::string& str_time);
+  TimeUnit(const int64 unix_time);
 
   TimeUnit& operator =(const TimeUnit& time_unit);
 
@@ -131,6 +130,12 @@ class TimeUnit {
       //2015-07-10 10:10:10
       const char* format = "%d-%d-%d %d:%d:%d";
       base_time_ = base::Time::FromStringFormat(str_time.c_str(), format);
+      base_time_.LocalExplode(&time_explod_);
+    }
+
+    Data(const int64 unix_time)
+        : refcount_(1) {
+      base_time_ = base::Time::FromTimeT(unix_time);
       base_time_.LocalExplode(&time_explod_);
     }
 
@@ -238,6 +243,11 @@ class TickTimePos {
       data_->Release();
     }
   }
+
+  int64 time_index() const {return data_->tt_time_;}
+  int32 start_pos() const {return data_->start_pos_;}
+  int32 end_pos() const {return data_->end_pos_;}
+
   class Data {
    public:
     Data()

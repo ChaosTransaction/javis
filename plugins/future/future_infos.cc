@@ -9,16 +9,15 @@ const char* s_stk_type[HIS_DATA_TYPE_COUNT] = { "STATIC", "DYNA", "L2_MMPEX",
 const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT] = { ".stc", ".dya", ".l2mx",
     ".l2rt", ".l2ost", ".iopv", ".mad" };
 
-const char* g_stk_type[STK_TYPE_COUNT] = { "index", "stock", "fund", "bond", "other_stock",
-    "option", "exchange", "future", "ftr_idx", "RGZ", "ETF", "LOF", "cov_bond",
-    "trust", "warrant", "repo", "comm" };
+const char* g_stk_type[STK_TYPE_COUNT] = { "index", "stock", "fund", "bond",
+    "other_stock", "option", "exchange", "future", "ftr_idx", "RGZ", "ETF",
+    "LOF", "cov_bond", "trust", "warrant", "repo", "comm" };
 /*
-const char* g_sec[16] = { "SHFE", "DCE", "CZCE", "CFFEX", "CME", "CBOT", "LME",
-    "LIFFE", "NYBOT", "ICE", "Eurex", "TOCOM", "SGX", "SICOM", "BMD", "HKEX" };
-*/
+ const char* g_sec[16] = { "SHFE", "DCE", "CZCE", "CFFEX", "CME", "CBOT", "LME",
+ "LIFFE", "NYBOT", "ICE", "Eurex", "TOCOM", "SGX", "SICOM", "BMD", "HKEX" };
+ */
 
 namespace future_infos {
-
 
 StaticInfo::StaticInfo(const std::string& str) {
   data_ = new Data(str);
@@ -43,7 +42,6 @@ StaticInfo& StaticInfo::operator =(const StaticInfo& static_info) {
   data_ = static_info.data_;
   return (*this);
 }
-
 
 TimeUnit::TimeUnit(const std::string& str_time) {
   data_ = new Data(str_time);
@@ -93,6 +91,7 @@ TimeFrame& TimeFrame::operator =(const TimeFrame& time_frame) {
   data_ = time_frame.data_;
   return (*this);
 }
+
 
 TickTimePos::TickTimePos(const TickTimePos& tit_pos)
     : data_(tit_pos.data_) {

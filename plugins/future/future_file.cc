@@ -17,9 +17,12 @@ FutureFile::~FutureFile() {
 }
 
 bool FutureFile::ReadStaticFile(const std::string& sec,
-                                const std::string& symbol, const int32 year,
-                                const int32 month, const int32 day) {
-  std::string dir = "/home/data/pb/ftr_id" + sec + "/static/"
+                                const std::string& symbol,
+                                const std::string& stk_type,
+                                const int32 year,
+                                const int32 month, const int32 day,
+                                std::string* content) {
+  std::string dir = "/home/d/" + stk_type + "/" + sec + "/static/"
       + base::BasicUtil::StringUtil::Int64ToString(year) + "/"
       + base::BasicUtil::StringUtil::Int64ToString(month) + "/";
 
@@ -28,6 +31,7 @@ bool FutureFile::ReadStaticFile(const std::string& sec,
       + base::BasicUtil::StringUtil::Int64ToString(month)
       + base::BasicUtil::StringUtil::Int64ToString(day) + ".stc.chspb";
 
+  ReadFile(dir, file_name, content);
   return true;
 }
 
@@ -37,6 +41,7 @@ bool FutureFile::ReadFile(const std::string& sec, const std::string& data_type,
                           const int32 year, const int32 month, const int32 day,
                           std::string* content) {
 
+  ///home/d/ftr_idx/CZCE/SR0000/STATIC/2010/2
   const std::string dir = "/home/d/" + stk_type + "/" + sec + "/" + symbol
       + "/" + data_type + "/" + base::BasicUtil::StringUtil::Int64ToString(year)
       + "/" + base::BasicUtil::StringUtil::Int64ToString(month) + "/";
