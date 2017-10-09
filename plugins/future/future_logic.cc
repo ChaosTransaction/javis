@@ -42,8 +42,8 @@ bool Futurelogic::Init() {
   int socket = 0;
   std::string sec_symbol = "WT001.CZCE";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
-  std::string start_time = "2009-12-17 10:40:22";
-  std::string end_time = "2009-12-21 10:52:21";
+  std::string start_time = "2009-12-12 13:40:22";
+  std::string end_time = "2009-12-20 10:52:21";
 
   size_t start_pos = sec_symbol.find(".");
   std::string symbol = sec_symbol.substr(0, start_pos);

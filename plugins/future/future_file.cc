@@ -31,8 +31,7 @@ bool FutureFile::ReadStaticFile(const std::string& sec,
       + base::BasicUtil::StringUtil::Int64ToString(month)
       + base::BasicUtil::StringUtil::Int64ToString(day) + ".stc.chspb";
 
-  ReadFile(dir, file_name, content);
-  return true;
+  return ReadFile(dir, file_name, content);
 }
 
 bool FutureFile::ReadFile(const std::string& sec, const std::string& data_type,
@@ -51,8 +50,7 @@ bool FutureFile::ReadFile(const std::string& sec, const std::string& data_type,
       + base::BasicUtil::StringUtil::Int64ToString(month)
       + base::BasicUtil::StringUtil::Int64ToString(day) + shuffix + ".chspb";
 
-  ReadFile(dir, file_name, content);
-  return true;
+  return ReadFile(dir, file_name, content);
 }
 
 bool FutureFile::ReadFile(const std::string& dir, const std::string& file,
