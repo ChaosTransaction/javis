@@ -264,7 +264,7 @@ LOADERROR IndexManager::GetCompareMintuePos(
   return load_error;
 }
 
-LOADERROR GetCompareDayPos(struct threadrw_t* lock, const std::string& sec,
+LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock, const std::string& sec,
                            const std::string& symbol,
                            const HIS_DATA_TYPE& data_type,
                            const STK_TYPE& stk_type,
@@ -293,7 +293,7 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, const std::string& sec,
                              const int64 unix_time,
                              HOURPOS_MAP& start_hour_map) {
   bool r = false;
-  const int64 start_time = unix_time;
+  int64 start_time = unix_time;
   do {
     future_infos::TimeUnit time_unit(start_time);
     {

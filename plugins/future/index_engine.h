@@ -78,6 +78,10 @@ class IndexManager {
                                 future_infos::TickTimePos& end_val);
 
   LOADERROR GetCompareDayPos(struct threadrw_t* lock,
+                            const std::string& sec,
+                            const std::string& symbol,
+                            const HIS_DATA_TYPE& data_type,
+                            const STK_TYPE& stk_type,
                              DAYPOS_MAP& start_day_pos_map,
                              DAYPOS_MAP& end_day_pos_map,
                              future_infos::TimeFrame& time_frame,
