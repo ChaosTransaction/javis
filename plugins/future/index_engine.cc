@@ -279,13 +279,13 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
                                          MINUTEPOS_MAP& end_min_map) {
   LOADERROR load_error = LOAD_SUCCESS;
   bool r = false;
-  r = GetDayPos(sec, symbol, data_type, stk_type, start_day_pos_map,
+  r = GetDayPos(lock,sec, symbol, data_type, stk_type, start_day_pos_map,
                 time_frame.start_time()->ToUnixTime(), start_hour_map,
                 start_min_map);
   if (time_frame.start_full_day() == time_frame.end_full_day()) {
     end_hour_map = start_hour_map;
   } else {
-    r = GetDayPos(sec, symbol, data_type, stk_type, end_day_pos_map,
+    r = GetDayPos(lock, sec, symbol, data_type, stk_type, end_day_pos_map,
                   time_frame.end_time()->ToUnixTime(), end_hour_map,
                   end_min_map);
   }
@@ -312,7 +312,7 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, const std::string& sec,
                          time_unit.exploded().year, time_unit.exploded().month,
                          time_unit.exploded().day_of_month, min_pos_map);
     start_time -= 60 * 60 * 24;
-  } while (r);
+  } while (!r);
   return true;
 }
 
