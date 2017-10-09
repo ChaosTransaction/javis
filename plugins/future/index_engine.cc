@@ -56,9 +56,9 @@ void IndexManager::DeinitLock() {
 
 bool IndexManager::OnFetchIndexPos(
     const std::string& sec,  //000001.CZCE
-    const std::string& symbol,
-    const HIS_DATA_TYPE& data_type, const std::string& start_time,
-    const std::string& end_time, future_infos::TickTimePos& start_time_pos,
+    const std::string& symbol, const HIS_DATA_TYPE& data_type,
+    const std::string& start_time, const std::string& end_time,
+    future_infos::TickTimePos& start_time_pos,
     future_infos::TickTimePos& end_time_pos) {
   bool r = false;
   if (sec == "CZCE") {
@@ -107,9 +107,13 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   LOADERROR load_erron;
   {
     base_logic::RLockGd lk(lock);
-    load_erron = GetCompareTimeTickPos<SYMBOL_MAP, SYMBOL_MAP::iterator,const std::string,
-        const std::string, DATETYPE_MAP>(symbol_map, symbol_map, symbol, symbol,symbol,symbol,
-                                         start_type_pos_map, end_type_pos_map);
+    load_erron = GetCompareTimeTickPos<SYMBOL_MAP, SYMBOL_MAP::iterator,
+        const std::string, const std::string, DATETYPE_MAP>(symbol_map,
+                                                            symbol_map, symbol,
+                                                            symbol, symbol,
+                                                            symbol,
+                                                            start_type_pos_map,
+                                                            end_type_pos_map);
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
@@ -124,9 +128,13 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   {
     base_logic::RLockGd lk(lock);
     load_erron = GetCompareTimeTickPos<DATETYPE_MAP, DATETYPE_MAP::iterator,
-        const HIS_DATA_TYPE, const std::string, DAYPOS_MAP>(start_type_pos_map, end_type_pos_map,
-                                         symbol, symbol, data_type, data_type,
-                                         start_day_pos_map, end_day_pos_map);
+        const HIS_DATA_TYPE, const std::string, DAYPOS_MAP>(start_type_pos_map,
+                                                            end_type_pos_map,
+                                                            symbol, symbol,
+                                                            data_type,
+                                                            data_type,
+                                                            start_day_pos_map,
+                                                            end_day_pos_map);
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
@@ -138,33 +146,44 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
                 symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
                 end_minute_pos_map);
 
-  {
-    base_logic::RLockGd lk(lock);
-    load_erron = GetCompareTimeTickPos<DAYPOS_MAP, DAYPOS_MAP::iterator,
-        const int32, const HIS_DATA_TYPE, HOURPOS_MAP>(start_day_pos_map, end_day_pos_map,
-                                  data_type,data_type,time_frame.start_full_day(),
-                                  time_frame.end_full_day(), start_hour_pos_map,
-                                  end_hour_pos_map);
-  }
+  /*{
+   base_logic::RLockGd lk(lock);
+   load_erron = GetCompareTimeTickPos<DAYPOS_MAP, DAYPOS_MAP::iterator,
+   const int32, const HIS_DATA_TYPE, HOURPOS_MAP>(
+   start_day_pos_map, end_day_pos_map, data_type, data_type,
+   time_frame.start_full_day(), time_frame.end_full_day(),
+   start_hour_pos_map, end_hour_pos_map);
+   }
 
-  if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, lock, symbol, data_type, stk_type,
-                symbol_map, start_type_pos_map, start_day_pos_map,
-                start_hour_pos_map, start_minute_pos_map);
-  else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
-                symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
-                end_minute_pos_map);
+   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
+   OnLoadIndex(time_frame.start_time(), sec, lock, symbol, data_type, stk_type,
+   symbol_map, start_type_pos_map, start_day_pos_map,
+   start_hour_pos_map, start_minute_pos_map);
+   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
+   OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
+   symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
+   end_minute_pos_map);*/
+  GetCompareDayPos(lock, sec, symbol, data_type, stk_type, start_day_pos_map,
+                   end_day_pos_map, time_frame, start_hour_pos_map,
+                   end_hour_pos_map);
+
+  SetIndexPos(lock, symbol_map, symbol, start_type_pos_map, data_type,
+              start_day_pos_map, time_frame.start_full_day(),
+              start_hour_pos_map, time_frame.start_exploded().hour,
+              start_minute_pos_map);
+
+  SetIndexPos(lock, symbol_map, symbol, end_type_pos_map, data_type,
+              end_day_pos_map, time_frame.end_full_day(), end_hour_pos_map,
+              time_frame.end_exploded().hour, end_minute_pos_map);
 
   {
     base_logic::RLockGd lk(lock);
     load_erron = GetCompareTimeTickPos<HOURPOS_MAP, HOURPOS_MAP::iterator,
-        const int32, const int32,MINUTEPOS_MAP>(start_hour_pos_map, end_hour_pos_map,
-                                    time_frame.start_full_day(),
-                                    time_frame.end_full_day(),
-                                    time_frame.start_exploded().hour,
-                                    time_frame.end_exploded().hour,
-                                    start_minute_pos_map, end_minute_pos_map);
+        const int32, const int32, MINUTEPOS_MAP>(
+        start_hour_pos_map, end_hour_pos_map, time_frame.start_full_day(),
+        time_frame.end_full_day(), time_frame.start_exploded().hour,
+        time_frame.end_exploded().hour, start_minute_pos_map,
+        end_minute_pos_map);
   }
 
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
@@ -245,7 +264,54 @@ LOADERROR IndexManager::GetCompareMintuePos(
   return load_error;
 }
 
-template<typename MapType, typename MapITType, typename KeyType,typename LastKeyType,    typename ValType>
+LOADERROR GetCompareDayPos(struct threadrw_t* lock, const std::string& sec,
+                           const std::string& symbol,
+                           const HIS_DATA_TYPE& data_type,
+                           const STK_TYPE& stk_type,
+                           DAYPOS_MAP& start_day_pos_map,
+                           DAYPOS_MAP& end_day_pos_map,
+                           future_infos::TimeFrame& time_frame,
+                           HOURPOS_MAP& start_hour_map,
+                           HOURPOS_MAP& end_hour_map) {
+  LOADERROR load_error = LOAD_SUCCESS;
+  bool r = false;
+  r = GetDayPos(sec, symbol, data_type, stk_type, start_day_pos_map,
+                time_frame.start_time()->ToUnixTime(), start_hour_map);
+  if (time_frame.start_full_day() == time_frame.end_full_day()) {
+    end_hour_map = start_hour_map;
+  } else {
+    r = GetDayPos(sec, symbol, data_type, stk_type, end_day_pos_map,
+                  time_frame.end_time()->ToUnixTime(), end_hour_map);
+  }
+  return load_error;
+}
+
+bool IndexManager::GetDayPos(struct threadrw_t* lock, const std::string& sec,
+                             const std::string& symbol,
+                             const HIS_DATA_TYPE& data_type,
+                             const STK_TYPE& stk_type, DAYPOS_MAP& day_pos_map,
+                             const int64 unix_time,
+                             HOURPOS_MAP& start_hour_map) {
+  bool r = false;
+  const int64 start_time = unix_time;
+  do {
+    future_infos::TimeUnit time_unit(start_time);
+    {
+      base_logic::RLockGd lk(lock);
+      r = base::MapGet<DAYPOS_MAP, DAYPOS_MAP::iterator, const int32,
+          HOURPOS_MAP>(day_pos_map, time_unit.full_day(), start_hour_map);
+    }
+    if (!r)
+      r = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
+                         time_unit.exploded().year, time_unit.exploded().month,
+                         time_unit.exploded().day_of_month, start_hour_map);
+    start_time -= 60 * 60 * 24;
+  } while (r);
+  return true;
+}
+
+template<typename MapType, typename MapITType, typename KeyType,
+    typename LastKeyType, typename ValType>
 LOADERROR IndexManager::GetCompareTimeTickPos(MapType& ss_start_map,
                                               MapType& se_end_map,
                                               LastKeyType& last_start_key,

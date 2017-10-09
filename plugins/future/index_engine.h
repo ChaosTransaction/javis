@@ -56,20 +56,20 @@ class IndexManager {
   IndexManager();
   virtual ~IndexManager();
  protected:
-  bool OnFetchIndexPos(const std::string& sec,
-                       const std::string& symbol,
+  bool OnFetchIndexPos(const std::string& sec, const std::string& symbol,
                        const HIS_DATA_TYPE& data_type,
                        const std::string& start_time,
                        const std::string& end_time,
                        future_infos::TickTimePos& start_time_pos,
                        future_infos::TickTimePos& end_time_pos);
  private:
-  template<typename MapType, typename MapITType, typename KeyType, typename LastKeyType,
-      typename ValType>
+  template<typename MapType, typename MapITType, typename KeyType,
+      typename LastKeyType, typename ValType>
   LOADERROR GetCompareTimeTickPos(MapType& ss_start_map, MapType& se_end_map,
-                                  LastKeyType& last_start_key, LastKeyType& last_end_key,
-                                  KeyType& start_key, KeyType& end_key,
-                                  ValType& start_val, ValType& end_val);
+                                  LastKeyType& last_start_key,
+                                  LastKeyType& last_end_key, KeyType& start_key,
+                                  KeyType& end_key, ValType& start_val,
+                                  ValType& end_val);
 
   LOADERROR GetCompareMintuePos(MINUTEPOS_MAP& ss_start_map,
                                 MINUTEPOS_MAP& se_end_map,
@@ -77,7 +77,19 @@ class IndexManager {
                                 future_infos::TickTimePos& start_val,
                                 future_infos::TickTimePos& end_val);
 
-  void OnLoadIndex(future_infos::TimeUnit* time_unit, const std::string& sec, 
+  LOADERROR GetCompareDayPos(struct threadrw_t* lock,
+                             DAYPOS_MAP& start_day_pos_map,
+                             DAYPOS_MAP& end_day_pos_map,
+                             future_infos::TimeFrame& time_frame,
+                             HOURPOS_MAP& start_hour_map,
+                             HOURPOS_MAP& end_hour_map);
+
+  bool GetDayPos(struct threadrw_t* lock, const std::string& sec,
+                 const std::string& symbol, const HIS_DATA_TYPE& data_type,
+                 const STK_TYPE& stk_type, DAYPOS_MAP& day_pos_map,
+                 const int64 unix_time, HOURPOS_MAP& start_hour_map);
+
+  void OnLoadIndex(future_infos::TimeUnit* time_unit, const std::string& sec,
                    struct threadrw_t* lock, const std::string& symbol,
                    const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
                    SYMBOL_MAP& symbol_map, DATETYPE_MAP& type_map,
