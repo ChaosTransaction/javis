@@ -3,9 +3,7 @@
 
 #include "future/future_logic.h"
 #include "config/config.h"
-#include "index_engine.h"
-#include "static_engine.h"
-#include "data_engine.h"
+#include "future_engine.h"
 #define DEFAULT_CONFIG_PATH "./plugins/future/future_config.xml"
 
 namespace future_logic {
@@ -18,6 +16,8 @@ Futurelogic::Futurelogic() {
 }
 
 Futurelogic::~Futurelogic() {
+    FutureEngine::FreeFutureEngine();
+    FutureEngine::FreeSchdulerManager();
 }
 
 bool Futurelogic::Init() {
@@ -28,14 +28,23 @@ bool Futurelogic::Init() {
     return false;
   r = config->LoadConfig(path);
 
-  /*
+  FutureEngine::GetSchdulerManager();
+  FutureEngine::GetFutureEngine();
+
+  int64 uid = 10001;
+  std::string token = "e12323123daqwe";
+  std::string field = "json";
   int socket = 0;
   std::string sec_symbol = "WT001.CZCE";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
-  std::string start_time = "2009-12-12 13:40:22";
-  std::string end_time = "2009-12-20 10:52:21";
+  std::string start_time = "2009-12-14 10:40:22";
+  std::string end_time = "2009-12-14 14:52:21";
 
-  size_t start_pos = sec_symbol.find(".");
+
+  FutureEngine::GetSchdulerManager()->OnDynaTick(uid,
+          token, field, sec_symbol, FUTURE,
+          start_time,end_time);
+  /*size_t start_pos = sec_symbol.find(".");
   std::string symbol = sec_symbol.substr(0, start_pos);
   std::string sec = sec_symbol.substr(start_pos + 1,
                                       sec_symbol.length() - symbol.length() - 1);

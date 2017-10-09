@@ -59,33 +59,34 @@ bool DataManager::OnLoadData(
     const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
     std::list<future_infos::StaticInfo>& static_list,
     std::map<int32, future_infos::DayMarket>& market_hash) {
+    bool r = false;
   for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
       it != static_list.end(); it++) {
     future_infos::StaticInfo static_info = (*it);
-    bool r = false;
-    std::string sec = static_info.static_info().market_mtk();
-    std::string symbol = static_info.static_info().symbol();
+    const std::string sec = static_info.static_info().market_mtk();
+    const std::string symbol = static_info.static_info().symbol();
     int32 market_date = static_info.static_info().market_date();
     future_infos::DayMarket dym;
     if (sec == "CZCE"){
-      LoadData(sec, symbol, market_date, data_lock_->zc_future_lock_,
+      r = LoadData(sec, symbol, market_date, data_lock_->zc_future_lock_,
                data_type, stk_type, data_cache_->zc_future_,dym);
     } else if (sec == "DCE") {
-      LoadData(sec, symbol, market_date, data_lock_->dc_future_lock_,
+      r = LoadData(sec, symbol, market_date, data_lock_->dc_future_lock_,
                data_type, stk_type, data_cache_->dc_future_,dym);
     }else if (sec == "SHFE"){
-      LoadData(sec, symbol, market_date, data_lock_->sc_future_lock_,
+      r = LoadData(sec, symbol, market_date, data_lock_->sc_future_lock_,
                data_type, stk_type, data_cache_->sc_future_,dym);
     }
     market_hash[market_date] = dym;
   }
-  return true;
+  return r;
 }
 
-bool LoadData(const std::string& sec, const std::string& symbol,
+bool DataManager::LoadData(const std::string& sec, const std::string& symbol,
               int32& market_date, struct threadrw_t* lock,
               const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
-              DAYSYMBOL_MAP& symbol_map, future_infos::DayMarket& dym) {
+              DAYSYMBOL_MAP& symbol_map,
+              future_infos::DayMarket& dym) {
   bool r = false;
   DAYTYPE_MAP day_type_map;
   DAY_MARKET_MAP day_market_map;
@@ -98,7 +99,7 @@ bool LoadData(const std::string& sec, const std::string& symbol,
   if (!r)
     LoadData(sec, symbol, data_type, stk_type, market_date,
              lock, symbol_map, day_type_map,
-             day_market_map, dymarket);
+             day_market_map, dym);
 
   {
     base_logic::RLockGd lk(lock);
@@ -108,11 +109,11 @@ bool LoadData(const std::string& sec, const std::string& symbol,
   if (!r)
     LoadData(sec, symbol, data_type, stk_type, market_date,
              lock, symbol_map, day_type_map,
-             day_market_map, dymarket);
+             day_market_map, dym);
   {
     base_logic::RLockGd lk(lock);
     r = base::MapGet<DAY_MARKET_MAP, DAY_MARKET_MAP::iterator, int32,
-        future_infos::DayMarket>(day_market_map, data_type, dymarket);
+        future_infos::DayMarket>(day_market_map, data_type, dym);
   }
   if (!r)
     r = LoadData(sec, symbol, data_type, stk_type, market_date,
@@ -124,7 +125,7 @@ bool LoadData(const std::string& sec, const std::string& symbol,
 bool DataManager::Test(const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
                        std::list<future_infos::StaticInfo>& static_list) {
 
-  std::map<int32, future_infos::DayMarket> market_hash;
+/*  std::map<int32, future_infos::DayMarket> market_hash;
   while (static_list.size() > 0) {
     future_infos::StaticInfo static_info = static_list.front();
     static_list.pop_front();
@@ -171,7 +172,7 @@ bool DataManager::Test(const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
       if (r)
         market_hash[market_date] = dymarket;
     }
-  }
+  }*/
   return true;
 }
 

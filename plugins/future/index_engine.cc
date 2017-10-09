@@ -284,6 +284,7 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
                 start_min_map);
   if (time_frame.start_full_day() == time_frame.end_full_day()) {
     end_hour_map = start_hour_map;
+    end_min_map = start_min_map;
   } else {
     r = GetDayPos(lock,-86400, sec, symbol, data_type, stk_type, end_day_pos_map,
                   time_frame.mutable_end_time(), end_hour_map,

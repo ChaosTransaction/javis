@@ -5,7 +5,7 @@
 #include "index_engine.h"
 #include "data_engine.h"
 #include "static_engine.h"
-
+#include "logic/logic_comm.h"
 namespace future_logic {
 
 FutureEngine* FutureEngine::schduler_engine_ = NULL;

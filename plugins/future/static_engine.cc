@@ -98,11 +98,11 @@ bool StaticManager::OnGetStaticInfo(
     //    return false;
 
   std::list<future_infos::TimeUnit> time_unit_list;
-  int64 start_time = start_time_pos.time_index();
-  int64 end_time = end_time_pos.time_index();
+  int64 start_time = ((start_time_pos.time_index() / 24 / 60 / 60) * 60 * 60 * 24) - 8 * 60 * 60;
+  int64 end_time = ((end_time_pos.time_index() / 24 / 60 / 60) * 60 * 60 *24) - 8 * 60 * 60;
   //future_infos::TimeUnit s_time_unit(start_time);
   //time_unit_list.push_back(s_time_unit);
-  while (start_time < end_time) {
+  while (start_time <= end_time) {
     future_infos::TimeUnit time_unit(start_time);
     time_unit_list.push_back(time_unit);
     start_time += 60 * 60 * 24;

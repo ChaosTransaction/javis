@@ -4,6 +4,10 @@
 #ifndef FUTURE_FUTURE_ENGINE_H_
 #define FUTURE_FUTURE_ENGINE_H_
 
+#include "future_infos.h"
+#include "basic/basictypes.h"
+#include <string>
+#include <list>
 namespace future_logic {
 
 class FutureManager {
@@ -25,8 +29,8 @@ class FutureEngine {
   static FutureManager* schduler_mgr_;
 
  protected:
-  FutureEngine();
-  virtual ~FutureEngine();
+  FutureEngine(){}
+  virtual ~FutureEngine(){}
 
  protected:
   static FutureManager* GetSchdulerManager() {
