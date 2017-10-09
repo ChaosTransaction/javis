@@ -165,7 +165,8 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
    end_minute_pos_map);*/
   GetCompareDayPos(lock, sec, symbol, data_type, stk_type, start_day_pos_map,
                    end_day_pos_map, time_frame, start_hour_pos_map,
-                   end_hour_pos_map);
+                   end_hour_pos_map,start_minute_pos_map,
+                   end_minute_pos_map);
 
   SetIndexPos(lock, symbol_map, symbol, start_type_pos_map, data_type,
               start_day_pos_map, time_frame.start_full_day(),
@@ -264,24 +265,29 @@ LOADERROR IndexManager::GetCompareMintuePos(
   return load_error;
 }
 
-LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock, const std::string& sec,
-                           const std::string& symbol,
-                           const HIS_DATA_TYPE& data_type,
-                           const STK_TYPE& stk_type,
-                           DAYPOS_MAP& start_day_pos_map,
-                           DAYPOS_MAP& end_day_pos_map,
-                           future_infos::TimeFrame& time_frame,
-                           HOURPOS_MAP& start_hour_map,
-                           HOURPOS_MAP& end_hour_map) {
+LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
+                                         const std::string& sec,
+                                         const std::string& symbol,
+                                         const HIS_DATA_TYPE& data_type,
+                                         const STK_TYPE& stk_type,
+                                         DAYPOS_MAP& start_day_pos_map,
+                                         DAYPOS_MAP& end_day_pos_map,
+                                         future_infos::TimeFrame& time_frame,
+                                         HOURPOS_MAP& start_hour_map,
+                                         HOURPOS_MAP& end_hour_map,
+                                         MINUTEPOS_MAP& start_min_map,
+                                         MINUTEPOS_MAP& end_min_map) {
   LOADERROR load_error = LOAD_SUCCESS;
   bool r = false;
   r = GetDayPos(sec, symbol, data_type, stk_type, start_day_pos_map,
-                time_frame.start_time()->ToUnixTime(), start_hour_map);
+                time_frame.start_time()->ToUnixTime(), start_hour_map,
+                start_min_map);
   if (time_frame.start_full_day() == time_frame.end_full_day()) {
     end_hour_map = start_hour_map;
   } else {
     r = GetDayPos(sec, symbol, data_type, stk_type, end_day_pos_map,
-                  time_frame.end_time()->ToUnixTime(), end_hour_map);
+                  time_frame.end_time()->ToUnixTime(), end_hour_map,
+                  end_min_map);
   }
   return load_error;
 }
@@ -290,8 +296,8 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, const std::string& sec,
                              const std::string& symbol,
                              const HIS_DATA_TYPE& data_type,
                              const STK_TYPE& stk_type, DAYPOS_MAP& day_pos_map,
-                             const int64 unix_time,
-                             HOURPOS_MAP& start_hour_map) {
+                             const int64 unix_time, HOURPOS_MAP& hour_pos_map,
+                             MINUTEPOS_MAP& min_pos_map) {
   bool r = false;
   int64 start_time = unix_time;
   do {
@@ -299,12 +305,12 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, const std::string& sec,
     {
       base_logic::RLockGd lk(lock);
       r = base::MapGet<DAYPOS_MAP, DAYPOS_MAP::iterator, const int32,
-          HOURPOS_MAP>(day_pos_map, time_unit.full_day(), start_hour_map);
+          HOURPOS_MAP>(day_pos_map, time_unit.full_day(), hour_pos_map);
     }
     if (!r)
       r = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
                          time_unit.exploded().year, time_unit.exploded().month,
-                         time_unit.exploded().day_of_month, start_hour_map);
+                         time_unit.exploded().day_of_month, min_pos_map);
     start_time -= 60 * 60 * 24;
   } while (r);
   return true;
