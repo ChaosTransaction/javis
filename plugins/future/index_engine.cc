@@ -107,8 +107,8 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   LOADERROR load_erron;
   {
     base_logic::RLockGd lk(lock);
-    load_erron = GetCompareTimeTickPos<SYMBOL_MAP, SYMBOL_MAP::iterator,
-        const std::string, DATETYPE_MAP>(symbol_map, symbol_map, symbol, symbol,
+    load_erron = GetCompareTimeTickPos<SYMBOL_MAP, SYMBOL_MAP::iterator,const std::string,
+        const std::string, DATETYPE_MAP>(symbol_map, symbol_map, symbol, symbol,symbol,symbol,
                                          start_type_pos_map, end_type_pos_map);
   }
 
@@ -124,8 +124,8 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   {
     base_logic::RLockGd lk(lock);
     load_erron = GetCompareTimeTickPos<DATETYPE_MAP, DATETYPE_MAP::iterator,
-        const HIS_DATA_TYPE, DAYPOS_MAP>(start_type_pos_map, end_type_pos_map,
-                                         data_type, data_type,
+        const HIS_DATA_TYPE, const std::string, DAYPOS_MAP>(start_type_pos_map, end_type_pos_map,
+                                         symbol, symbol, data_type, data_type,
                                          start_day_pos_map, end_day_pos_map);
   }
 
@@ -141,8 +141,8 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   {
     base_logic::RLockGd lk(lock);
     load_erron = GetCompareTimeTickPos<DAYPOS_MAP, DAYPOS_MAP::iterator,
-        const int32, HOURPOS_MAP>(start_day_pos_map, end_day_pos_map,
-                                  time_frame.start_full_day(),
+        const int32, const HIS_DATA_TYPE, HOURPOS_MAP>(start_day_pos_map, end_day_pos_map,
+                                  data_type,data_type,time_frame.start_full_day(),
                                   time_frame.end_full_day(), start_hour_pos_map,
                                   end_hour_pos_map);
   }
@@ -159,7 +159,9 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   {
     base_logic::RLockGd lk(lock);
     load_erron = GetCompareTimeTickPos<HOURPOS_MAP, HOURPOS_MAP::iterator,
-        const int32, MINUTEPOS_MAP>(start_hour_pos_map, end_hour_pos_map,
+        const int32, const int32,MINUTEPOS_MAP>(start_hour_pos_map, end_hour_pos_map,
+                                    time_frame.start_full_day(),
+                                    time_frame.end_full_day(),
                                     time_frame.start_exploded().hour,
                                     time_frame.end_exploded().hour,
                                     start_minute_pos_map, end_minute_pos_map);
@@ -243,10 +245,11 @@ LOADERROR IndexManager::GetCompareMintuePos(
   return load_error;
 }
 
-template<typename MapType, typename MapITType, typename KeyType,
-    typename ValType>
+template<typename MapType, typename MapITType, typename KeyType,typename LastKeyType,    typename ValType>
 LOADERROR IndexManager::GetCompareTimeTickPos(MapType& ss_start_map,
                                               MapType& se_end_map,
+                                              LastKeyType& last_start_key,
+                                              LastKeyType& last_end_key,
                                               KeyType& start_key,
                                               KeyType& end_key,
                                               ValType& start_val,
@@ -259,7 +262,7 @@ LOADERROR IndexManager::GetCompareTimeTickPos(MapType& ss_start_map,
   if (!r)
     load_error = START_NOT_EXITS;
 
-  if (start_key == end_key) {
+  if ((start_key == end_key) && (last_start_key == last_end_key)) {
     end_val = start_val;
   } else {
     r = base::MapGet<MapType, MapITType, KeyType, ValType>(se_end_map, end_key,

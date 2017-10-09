@@ -64,9 +64,10 @@ class IndexManager {
                        future_infos::TickTimePos& start_time_pos,
                        future_infos::TickTimePos& end_time_pos);
  private:
-  template<typename MapType, typename MapITType, typename KeyType,
+  template<typename MapType, typename MapITType, typename KeyType, typename LastKeyType,
       typename ValType>
   LOADERROR GetCompareTimeTickPos(MapType& ss_start_map, MapType& se_end_map,
+                                  LastKeyType& last_start_key, LastKeyType& last_end_key,
                                   KeyType& start_key, KeyType& end_key,
                                   ValType& start_val, ValType& end_val);
 
