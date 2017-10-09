@@ -5,6 +5,7 @@
 #define FUTURE_FUTURE_INFOS_H_
 
 #include "proto/symbol_static.pb.h"
+#include "proto/symbol_dynam_market.pb.h"
 #include "logic/time.h"
 #include "basic/basictypes.h"
 #include <string>
@@ -52,7 +53,8 @@ namespace future_infos {
 
 class DayMarket {
 public:
-  DayMarket(const DayDynamMarket& dym);
+  DayMarket();
+  DayMarket(const DayMarket& dym);
   DayMarket(const int32 market_date, const std::string& str);
 
   DayMarket& operator = (const DayMarket& dym);
@@ -67,12 +69,13 @@ public:
   class Data {
    public:
     Data(const int32 market_date, const std::string& str)
-        : refcount_(1)
-        , market_date_(market_date)
-        , market_data_(str){
+        : market_date_(market_date)
+        , market_data_(str)
+        , refcount_(1){
     }
 
-
+    Data():market_date_(0)
+      ,refcount_(1){}
    public:
     const int32 market_date_;
     const std::string market_data_;

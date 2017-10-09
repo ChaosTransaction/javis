@@ -8,7 +8,7 @@
 namespace future_logic {
 
 DataEngine* DataEngine::schduler_engine_ = NULL;
-DataManager* DataManager::schduler_mgr_ = NULL;
+DataManager* DataEngine::schduler_mgr_ = NULL;
 
 DataManager::DataManager() {
   Init();
@@ -56,7 +56,7 @@ void DataManager::DeinitLock() {
 }
 
 bool DataManager::Test(const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
-                       std::list<future_infos::StaticInfo> static_list) {
+                       std::list<future_infos::StaticInfo>& static_list) {
 
   std::map<int32, future_infos::DayMarket> market_hash;
   while (static_list.size() > 0) {
@@ -113,7 +113,6 @@ bool DataManager::LoadLocal(const std::string& sec, const std::string& symbol,
                             const HIS_DATA_TYPE& data_type,
                             const STK_TYPE& stk_type, int32 market_date,
                             std::string& content) {
-  std::string content;
   bool r = FutureFile::ReadFile(sec, s_stk_type[data_type],
                                 g_stk_type[stk_type],
                                 g_his_data_suffix[data_type], symbol,
@@ -127,9 +126,9 @@ bool DataManager::LoadData(const std::string& sec, const std::string& symbol,
                            const STK_TYPE& stk_type, int32 market_date,
                            struct threadrw_t* lock,
                            DAYSYMBOL_MAP& daysymbol_map,
-                           DAYTYPE_MAP day_type_map,
-                           DAY_MARKET_MAP day_market_map,
-                           future_infos::DayMarket dymarket) {
+                           DAYTYPE_MAP& day_type_map,
+                           DAY_MARKET_MAP& day_market_map,
+                           future_infos::DayMarket& dymarket) {
   std::string content;
   bool r = LoadLocal(sec, symbol, data_type, stk_type, market_date, content);
   if (r) {
@@ -138,7 +137,7 @@ bool DataManager::LoadData(const std::string& sec, const std::string& symbol,
     dymarket = temp_dymarket;
     day_market_map[market_date] = temp_dymarket;
     day_type_map[data_type] = day_market_map;
-    data_cache_->zc_future_[symbol] = dymarket;
+    data_cache_->zc_future_[symbol] = day_type_map;
   }
   return r;
 }

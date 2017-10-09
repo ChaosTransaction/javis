@@ -19,9 +19,12 @@ const char* g_stk_type[STK_TYPE_COUNT] = { "index", "stock", "fund", "bond",
 
 namespace future_infos {
 
+DayMarket::DayMarket(){
+    data_ = new Data();
+}
 
 DayMarket::DayMarket(const int32 market_date, const std::string& str) {
-  data_ = new Data(market_date);
+  data_ = new Data(market_date, str);
 }
 
 DayMarket::DayMarket(const DayMarket& dym)

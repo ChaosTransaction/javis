@@ -12,10 +12,12 @@ class FutureFile {
   friend class IndexEngine;
   friend class StaticManager;
   friend class StaticEngine;
+  friend class DataManger;
+  friend class DataEngine;
  protected:
   FutureFile();
   virtual ~FutureFile();
- protected:
+ public:
   static bool ReadStaticFile(const std::string& sec, const std::string& symbol,
                              const std::string& stk_type, const int32 year,
                              const int32 month, const int32 day,

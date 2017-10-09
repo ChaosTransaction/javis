@@ -5,7 +5,7 @@
 #include "config/config.h"
 #include "index_engine.h"
 #include "static_engine.h"
-
+#include "data_engine.h"
 #define DEFAULT_CONFIG_PATH "./plugins/future/future_config.xml"
 
 namespace future_logic {
@@ -39,6 +39,8 @@ bool Futurelogic::Init() {
   StaticEngine::GetSchdulerManager();
   StaticEngine::GetIndexEngine();
 
+  DataEngine::GetSchdulerManager();
+  DataEngine::GetDataEngine();
   int socket = 0;
   std::string sec_symbol = "WT001.CZCE";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
@@ -60,6 +62,10 @@ bool Futurelogic::Init() {
   StaticEngine::GetSchdulerManager()->OnFetchStaticInfo(
           sec, symbol, FUTURE, start_time_pos,end_time_pos,static_list
           );
+   
+   DataEngine::GetSchdulerManager()->Test(data_type, FUTURE,
+                                       static_list);
+  
   /*std::string sec = "ZC";
    std::string data_type = "INDEXPOS";
    std::string shuffix = ".ipos";

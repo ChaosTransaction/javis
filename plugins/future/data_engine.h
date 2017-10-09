@@ -1,7 +1,7 @@
 //  Copyright (c) 2017-2018 The Javis Authors. All rights reserved.
 //  Created on: 2017年10月9日 Author: kerry
-#ifndef FUTURE_INDEX_ENGINE_H_
-#define FUTURE_INDEX_ENGINE_H_
+#ifndef FUTURE_DATA_ENGINE_H_
+#define FUTURE_DATA_ENGINE_H_
 
 #include "future_infos.h"
 #include "future_file.h"
@@ -33,13 +33,14 @@ class DataLock {
   struct threadrw_t* dc_ftr_lock_;
 };
 
-class DataManager {
+class DataManager { 
+  friend class DataEngine;
   friend class Futurelogic;
  protected:
   DataManager();
   virtual ~DataManager();
  protected:
-  bool Test();
+  bool Test(const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,std::list<future_infos::StaticInfo>& static_list);
  private:
   bool LoadData(const std::string& sec,
                 const std::string& symbol,
@@ -48,9 +49,9 @@ class DataManager {
                 int32 market_date,
                 struct threadrw_t* lock,
                 DAYSYMBOL_MAP& daysymbol_map,
-                DAYTYPE_MAP day_type_map,
-                DAY_MARKET_MAP day_market_map,
-                future_infos::DayMarket dymarket
+                DAYTYPE_MAP& day_type_map,
+                DAY_MARKET_MAP& day_market_map,
+                future_infos::DayMarket& dymarket
                 );
 
   bool LoadLocal(const std::string& sec,
@@ -88,7 +89,7 @@ class DataEngine {
     return schduler_mgr_;
   }
 
-  static DataEngine* GetIndexEngine() {
+  static DataEngine* GetDataEngine() {
     if (schduler_engine_ == NULL)
       schduler_engine_ = new DataEngine();
     return schduler_engine_;
