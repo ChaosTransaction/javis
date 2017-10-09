@@ -51,7 +51,8 @@ class IndexLock {
 
 class IndexManager {
   friend class IndexEngine;
-  friend class Futurelogic;
+  friend class FutureEngine;
+  friend class FutureManager;
  protected:
   IndexManager();
   virtual ~IndexManager();
@@ -138,7 +139,8 @@ class IndexManager {
 };
 
 class IndexEngine {
-  friend class Futurelogic;
+  friend class FutureEngine;
+  friend class FutureManager;
  private:
   static IndexEngine* schduler_engine_;
   static IndexManager* schduler_mgr_;

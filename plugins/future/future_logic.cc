@@ -18,11 +18,6 @@ Futurelogic::Futurelogic() {
 }
 
 Futurelogic::~Futurelogic() {
-  IndexEngine::FreeIndexEngine();
-  IndexEngine::FreeSchdulerManager();
-
-  StaticEngine::FreeIndexEngine();
-  StaticEngine::FreeSchdulerManager();
 }
 
 bool Futurelogic::Init() {
@@ -33,14 +28,7 @@ bool Futurelogic::Init() {
     return false;
   r = config->LoadConfig(path);
 
-  IndexEngine::GetSchdulerManager();
-  IndexEngine::GetIndexEngine();
-
-  StaticEngine::GetSchdulerManager();
-  StaticEngine::GetIndexEngine();
-
-  DataEngine::GetSchdulerManager();
-  DataEngine::GetDataEngine();
+  /*
   int socket = 0;
   std::string sec_symbol = "WT001.CZCE";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
@@ -65,6 +53,8 @@ bool Futurelogic::Init() {
    
    DataEngine::GetSchdulerManager()->Test(data_type, FUTURE,
                                        static_list);
+
+   */
   
   /*std::string sec = "ZC";
    std::string data_type = "INDEXPOS";

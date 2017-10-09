@@ -33,33 +33,36 @@ class DataLock {
   struct threadrw_t* dc_ftr_lock_;
 };
 
-class DataManager { 
+class DataManager {
   friend class DataEngine;
-  friend class Futurelogic;
+  friend class FutureEngine;
+  friend class FutureManager;
  protected:
   DataManager();
   virtual ~DataManager();
  protected:
-  bool Test(const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,std::list<future_infos::StaticInfo>& static_list);
- private:
-  bool LoadData(const std::string& sec,
-                const std::string& symbol,
-                const HIS_DATA_TYPE& data_type,
-                const STK_TYPE& stk_type,
-                int32 market_date,
-                struct threadrw_t* lock,
-                DAYSYMBOL_MAP& daysymbol_map,
-                DAYTYPE_MAP& day_type_map,
-                DAY_MARKET_MAP& day_market_map,
-                future_infos::DayMarket& dymarket
-                );
+  bool Test(const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
+            std::list<future_infos::StaticInfo>& static_list);
 
-  bool LoadLocal(const std::string& sec,
-                 const std::string& symbol,
-                 const HIS_DATA_TYPE& data_type,
-                 const STK_TYPE& stk_type,
-                 int32 market_date,
-                 std::string& content);
+  bool OnLoadData(const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
+                  std::list<future_infos::StaticInfo>& static_list,
+                  std::map<int32, future_infos::DayMarket>& market_hash);
+ private:
+  bool LoadData(const std::string& sec, const std::string& symbol,
+                const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
+                int32 market_date, struct threadrw_t* lock,
+                DAYSYMBOL_MAP& daysymbol_map, DAYTYPE_MAP& day_type_map,
+                DAY_MARKET_MAP& day_market_map,
+                future_infos::DayMarket& dymarket);
+
+  bool LoadLocal(const std::string& sec, const std::string& symbol,
+                 const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
+                 int32 market_date, std::string& content);
+
+  bool LoadData(const std::string& sec, const std::string& symbol,
+                int32& market_date, struct threadrw_t* lock,
+                const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
+                DAYSYMBOL_MAP& symbol_map, future_infos::DayMarket& dym);
  private:
   void Init();
   void Deinit();
@@ -71,7 +74,8 @@ class DataManager {
 };
 
 class DataEngine {
-  friend class Futurelogic;
+  friend class FutureEngine;
+  friend class FutureManager;
  private:
   static DataEngine* schduler_engine_;
   static DataManager* schduler_mgr_;

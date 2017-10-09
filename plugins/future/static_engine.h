@@ -36,7 +36,8 @@ class StaticLock {
 
 class StaticManager {
  friend class StaticEngine;
- friend class Futurelogic;
+ friend class FutureEngine;
+ friend class FutureManager;
  protected:
   StaticManager();
   virtual ~StaticManager();
@@ -74,7 +75,8 @@ class StaticManager {
 };
 
 class StaticEngine {
-  friend class Futurelogic;
+  friend class FutureEngine;
+  friend class FutureManager;
  private:
   static StaticEngine* schduler_engine_;
   static StaticManager* schduler_mgr_;
