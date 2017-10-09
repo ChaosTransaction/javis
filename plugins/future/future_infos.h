@@ -105,6 +105,10 @@ class TimeUnit {
     }
   }
 
+  void reset_time(const int64 unix_time) {
+    data_->reset_time(unix_time);
+  }
+
   int32 full_day() const {
     return 10000 * data_->time_explod_.year + 100 * data_->time_explod_.month
         + data_->time_explod_.day_of_month;
@@ -140,6 +144,10 @@ class TimeUnit {
       base_time_.LocalExplode(&time_explod_);
     }
 
+    void reset_time(const int64 unix_time){
+      base_time_ = base::Time::FromTimeT(unix_time);
+      base_time_.LocalExplode(&time_explod_);
+    }
    public:
     base::Time::Exploded time_explod_;
     base::Time base_time_;
@@ -171,6 +179,7 @@ class TimeFrame {
     }
   }
 
+
   int32 start_full_day() const {
     return data_->start_time_->full_day();
   }
@@ -193,6 +202,22 @@ class TimeFrame {
 
   TimeUnit* end_time() const {
     return data_->end_time_;
+  }
+
+  TimeUnit* mutable_start_time() {
+    return data_->start_time_;
+  }
+
+  TimeUnit* mutable_end_time() {
+    return data_->end_time_;
+  }
+
+  void set_start_time(TimeUnit* start_time_unit) {
+    data_->start_time_ = start_time_unit;
+  }
+
+  void set_end_time(TimeUnit* end_time_unit) {
+    data_->end_time_ = end_time_unit;
   }
 
   class Data {

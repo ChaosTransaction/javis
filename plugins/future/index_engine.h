@@ -93,7 +93,7 @@ class IndexManager {
   bool GetDayPos(struct threadrw_t* lock, const std::string& sec,
                  const std::string& symbol, const HIS_DATA_TYPE& data_type,
                  const STK_TYPE& stk_type, DAYPOS_MAP& day_pos_map,
-                 const int64 unix_time, HOURPOS_MAP& hour_pos_map,
+                 future_infos::TimeUnit* time_unit, HOURPOS_MAP& hour_pos_map,
                  MINUTEPOS_MAP& min_pos_map);
 
   void OnLoadIndex(future_infos::TimeUnit* time_unit, const std::string& sec,

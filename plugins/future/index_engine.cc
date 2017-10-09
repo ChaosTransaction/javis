@@ -280,13 +280,13 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
   LOADERROR load_error = LOAD_SUCCESS;
   bool r = false;
   r = GetDayPos(lock,sec, symbol, data_type, stk_type, start_day_pos_map,
-                time_frame.start_time()->ToUnixTime(), start_hour_map,
+                time_frame.mutable_start_time(), start_hour_map,
                 start_min_map);
   if (time_frame.start_full_day() == time_frame.end_full_day()) {
     end_hour_map = start_hour_map;
   } else {
     r = GetDayPos(lock, sec, symbol, data_type, stk_type, end_day_pos_map,
-                  time_frame.end_time()->ToUnixTime(), end_hour_map,
+                  time_frame.mutable_end_time(), end_hour_map,
                   end_min_map);
   }
   return load_error;
@@ -296,10 +296,10 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, const std::string& sec,
                              const std::string& symbol,
                              const HIS_DATA_TYPE& data_type,
                              const STK_TYPE& stk_type, DAYPOS_MAP& day_pos_map,
-                             const int64 unix_time, HOURPOS_MAP& hour_pos_map,
+                             future_infos::TimeUnit* time_unit, HOURPOS_MAP& hour_pos_map,
                              MINUTEPOS_MAP& min_pos_map) {
   bool r = false;
-  int64 start_time = unix_time;
+  int64 start_time = time_unit->ToUnixTime();
   do {
     future_infos::TimeUnit time_unit(start_time);
     {
@@ -311,6 +311,9 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, const std::string& sec,
       r = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
                          time_unit.exploded().year, time_unit.exploded().month,
                          time_unit.exploded().day_of_month, min_pos_map);
+
+    if (r)
+      time_unit.reset_time(start_time);
     start_time -= 60 * 60 * 24;
   } while (!r);
   return true;
