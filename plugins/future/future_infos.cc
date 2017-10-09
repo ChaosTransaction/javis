@@ -19,9 +19,37 @@ const char* g_stk_type[STK_TYPE_COUNT] = { "index", "stock", "fund", "bond",
 
 namespace future_infos {
 
-    StaticInfo::StaticInfo() {
-        data_ = new Data();
-    }
+
+DayMarket::DayMarket(const int32 market_date, const std::string& str) {
+  data_ = new Data(market_date);
+}
+
+DayMarket::DayMarket(const DayMarket& dym)
+    : data_(dym.data_) {
+  if (data_ != NULL) {
+    data_->AddRef();
+  }
+}
+
+DayMarket& DayMarket::operator =(const DayMarket& dym) {
+  if (dym.data_ != NULL) {
+    dym.data_->AddRef();
+  }
+
+  if (data_ != NULL) {
+    data_->Release();
+  }
+
+  data_ = dym.data_;
+  return (*this);
+}
+
+
+
+StaticInfo::StaticInfo() {
+  data_ = new Data();
+}
+
 StaticInfo::StaticInfo(const std::string& str) {
   data_ = new Data(str);
 }
@@ -57,9 +85,10 @@ TimeUnit::TimeUnit(const TimeUnit& time_unit)
   }
 }
 
-    TimeUnit::TimeUnit(const int64 unix_time){
-        data_ = new Data(unix_time);;    
-    }
+TimeUnit::TimeUnit(const int64 unix_time) {
+  data_ = new Data(unix_time);
+  ;
+}
 
 TimeUnit& TimeUnit::operator =(const TimeUnit& time_unit) {
   if (time_unit.data_ != NULL) {
@@ -98,7 +127,6 @@ TimeFrame& TimeFrame::operator =(const TimeFrame& time_frame) {
   data_ = time_frame.data_;
   return (*this);
 }
-
 
 TickTimePos::TickTimePos(const TickTimePos& tit_pos)
     : data_(tit_pos.data_) {

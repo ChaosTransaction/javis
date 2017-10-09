@@ -16,18 +16,16 @@ class FutureFile {
   FutureFile();
   virtual ~FutureFile();
  protected:
-  static bool ReadStaticFile(const std::string& sec,
-                             const std::string& symbol,
-                             const std::string& stk_type,
-                             const int32 year,
+  static bool ReadStaticFile(const std::string& sec, const std::string& symbol,
+                             const std::string& stk_type, const int32 year,
                              const int32 month, const int32 day,
                              std::string* content);
 
   static bool ReadFile(const std::string& sec, const std::string& data_type,
-                       const std::string& stk_type,
-                const std::string& shuffix, const std::string& symbol,
-                const int32 year, const int32 month, const int32 day,
-                std::string* content);
+                       const std::string& stk_type, const std::string& shuffix,
+                       const std::string& symbol, const int32 year,
+                       const int32 month, const int32 day,
+                       std::string* content);
  private:
 
   static bool ReadFile(const std::string& dir, const std::string& file,

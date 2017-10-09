@@ -56,7 +56,7 @@ bool Futurelogic::Init() {
                                                      start_time, end_time,
                                                      start_time_pos,
                                                      end_time_pos);
- std::list<future_infos::StaticInfo> static_list;
+  std::list<future_infos::StaticInfo> static_list;
   StaticEngine::GetSchdulerManager()->OnFetchStaticInfo(
           sec, symbol, FUTURE, start_time_pos,end_time_pos,static_list
           );

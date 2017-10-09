@@ -49,6 +49,49 @@ extern const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT];
 extern const char* g_stk_type[STK_TYPE_COUNT];
 namespace future_infos {
 
+
+class DayMarket {
+public:
+  DayMarket(const DayDynamMarket& dym);
+  DayMarket(const int32 market_date, const std::string& str);
+
+  DayMarket& operator = (const DayMarket& dym);
+
+
+  ~DayMarket() {
+    if (data_ != NULL) {
+      data_->Release();
+    }
+  }
+
+  class Data {
+   public:
+    Data(const int32 market_date, const std::string& str)
+        : refcount_(1)
+        , market_date_(market_date)
+        , market_data_(str){
+    }
+
+
+   public:
+    const int32 market_date_;
+    const std::string market_data_;
+
+    void AddRef() {
+      __sync_fetch_and_add(&refcount_, 1);
+    }
+
+    void Release() {
+      __sync_fetch_and_sub(&refcount_, 1);
+      if (!refcount_)
+        delete this;
+    }
+   private:
+    int refcount_;
+  };
+  Data* data_;
+};
+
 class StaticInfo {
  public:
   StaticInfo();
@@ -63,6 +106,10 @@ class StaticInfo {
     }
   }
 
+
+  chaos_data::SymbolStatic& static_info() const {
+    return data_->static_info;
+  }
   class Data {
    public:
     Data()
