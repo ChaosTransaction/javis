@@ -58,7 +58,7 @@ class DynaTick {
   }
 
   void set_uid(const int64 uid) {
-    uid_ = new base_logic::StringValue(uid);
+    uid_ = new base_logic::FundamentalValue(uid);
   }
 
   void set_sec_id(const std::string& sec_id) {
@@ -83,7 +83,7 @@ class DynaTick {
     return access_token;
   }
 
-  const int64 uid() const {
+  int64 uid() const {
     int64 uid = 0;
     uid_->GetAsBigInteger(&uid);
     return uid;
@@ -163,7 +163,7 @@ class DynaTick {
     dyna_tick_ = new base_logic::ListValue;
   }
 
-  const int32 Size() {
+  int32 Size() const {
     return dyna_tick_->GetSize();
   }
 
@@ -245,6 +245,7 @@ class DynaTickUnit {
     tick_count_ = new base_logic::FundamentalValue(tick_count);
   }
 
+  //====>
   void set_buy_price_one(const double buy_price_one) {
     buy_price_one_ = new base_logic::FundamentalValue(buy_price_one);
   }
@@ -265,6 +266,27 @@ class DynaTickUnit {
     buy_price_five_ = new base_logic::FundamentalValue(buy_price_five);
   }
 
+//==>
+  void set_buy_vol_one(const int64 buy_vol_one) {
+    buy_vol_one_ = new base_logic::FundamentalValue(buy_vol_one);
+  }
+
+  void set_buy_vol_two(const int64 buy_vol_two) {
+    buy_vol_two_ = new base_logic::FundamentalValue(buy_vol_two);
+  }
+
+  void set_buy_vol_three(const int64 buy_vol_three) {
+    buy_vol_three_ = new base_logic::FundamentalValue(buy_vol_three);
+  }
+
+  void set_buy_vol_four(const int64 buy_vol_four) {
+    buy_vol_four_ = new base_logic::FundamentalValue(buy_vol_four);
+  }
+
+  void set_buy_vol_five(const int64 buy_vol_five) {
+    buy_vol_five_ = new base_logic::FundamentalValue(buy_vol_five);
+  }
+//===>
   void set_sell_price_one(const double sell_price_one) {
     sell_price_one_ = new base_logic::FundamentalValue(sell_price_one);
   }
@@ -285,28 +307,33 @@ class DynaTickUnit {
     sell_price_five_ = new base_logic::FundamentalValue(sell_price_five);
   }
 
-  void set_buy_vol_one(const int64 buy_vol_one) {
-    buy_vol_one_ = new base_logic::FundamentalValue(buy_vol_one);
+//===>
+  void set_sell_vol_one(const int64 sell_vol_one) {
+    sell_vol_one_ = new base_logic::FundamentalValue(sell_vol_one);
   }
 
-  void set_buy_vol_two(const int64 buy_vol_two) {
-    buy_vol_two_ = new base_logic::FundamentalValue(buy_vol_two);
+  void set_sell_vol_two(const int64 sell_vol_two) {
+    sell_vol_two_ = new base_logic::FundamentalValue(sell_vol_two);
   }
 
-  void set_buy_vol_three(const int64 buy_vol_three) {
-    buy_vol_three_ = new base_logic::FundamentalValue(buy_vol_three);
+  void set_sell_vol_three(const int64 sell_vol_three) {
+    sell_vol_three_ = new base_logic::FundamentalValue(sell_vol_three);
   }
 
-  void set_buy_vol_four(const int64 buy_vol_four) {
-    buy_vol_four_ = new base_logic::FundamentalValue(buy_vol_four);
+  void set_sell_vol_four(const int64 sell_vol_four) {
+    sell_vol_four_ = new base_logic::FundamentalValue(sell_vol_four);
   }
 
-  void set_buy_vol_five(const int64 buy_vol_five) {
-    buy_vol_five_ = new base_logic::FundamentalValue(buy_vol_five);
+  void set_sell_vol_five(const int64 sell_vol_five) {
+    sell_vol_five_ = new base_logic::FundamentalValue(sell_vol_five);
   }
 
-  void set_open_interset(const int64 open_interset) {
-    open_interest_ = new base_logic::FundamentalValue(open_interset);
+  void set_open_interest(const int64 open_interest) {
+    open_interest_ = new base_logic::FundamentalValue(open_interest);
+  }
+
+  void set_settle_price(const double settle_price){
+      settle_price_ = new  base_logic::FundamentalValue(settle_price);
   }
 
   base_logic::DictionaryValue* get() {

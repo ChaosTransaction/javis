@@ -2,13 +2,14 @@
 //  Created on: 2017年10月8日 Author: kerry
 
 #include "future_engine.h"
-#include "future_value_buf.h"
 #include "index_engine.h"
 #include "data_engine.h"
 #include "static_engine.h"
 #include "logic/logic_comm.h"
 #include "proto/symbol_dynam_market.pb.h"
 #include "basic/template.h"
+#include "file/file_path.h"
+#include "file/file_util.h"
 namespace future_logic {
 
 FutureEngine* FutureEngine::schduler_engine_ = NULL;
@@ -75,13 +76,25 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
    market_hash);*/
 
   net_reply::DynaTick dyna_tick;
-  SendDynamMarket(start_time_pos, end_time_pos, static_list, dyna_tick);
+  SendDynamMarket(start_time_pos, end_time_pos, static_list, market_hash, dyna_tick);
+  base_logic::DictionaryValue* value = dyna_tick.get();
+                                   base_logic::ValueSerializer* engine = base_logic::ValueSerializer::Create(
+                                       base_logic::IMPL_JSON
+                                       );
+  std::string body_stream;
+  r = engine->Serialize((*value),&body_stream);
+  
+                                   std::string file_name = "2.txt";
+                                   file::FilePath temp_file_name(file_name);
+                                   file::WriteFile(temp_file_name, body_stream.c_str(),body_stream.length());
+  return r;
 }
 
 bool FutureManager::SendDynamMarket(
-    const std::string& field, future_infos::TickTimePos& start_pos,
+    future_infos::TickTimePos& start_pos,
     future_infos::TickTimePos& end_pos,
     std::list<future_infos::StaticInfo>& static_list,
+    std::map<int32, future_infos::DayMarket>& market_hash,
     net_reply::DynaTick& dyna_tick) {
   future_infos::TimeUnit start_time_unit(start_pos.time_index());
   future_infos::TimeUnit end_time_unit(end_pos.time_index());
@@ -103,7 +116,7 @@ bool FutureManager::SendDynamMarket(
     if (start_time_unit.full_day() == end_time_unit.full_day()) {  //开始结束同一天
       CalcuDynamMarket(day_market.market_data().c_str() + start_pos.start_pos(),
                        end_pos.end_pos() - start_pos.start_pos(), static_info,
-                       dynam_list);
+                       dyna_tick);
     } else if (start_time_unit.full_day() != end_time_unit.full_day()) {
       if (static_info.static_info().market_date()
           == start_time_unit.full_day()) {  //开始日期
