@@ -60,6 +60,8 @@ public:
   DayMarket& operator = (const DayMarket& dym);
 
 
+  int32 market_date() const {return data_->market_date_;}
+  std::string& market_data() const {return data_->market_data_;}
   ~DayMarket() {
     if (data_ != NULL) {
       data_->Release();

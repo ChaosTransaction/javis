@@ -17,9 +17,23 @@ class FutureManager {
   FutureManager();
   virtual ~FutureManager();
  protected:
-  bool OnDynaTick(const int64 uid, const std::string& token,
+  bool OnDynaTick(const int socket, const int64 uid, const std::string& token,
                   const std::string&field, const std::string& sec_symbol,
-                  const STK_TYPE& stk_type,const std::string& start_time, const std::string& end_time);
+                  const STK_TYPE& stk_type, const std::string& start_time,
+                  const std::string& end_time);
+
+ private:
+  bool ExtractDynamMarket(
+      const int socket, future_infos::TickTimePos& start_pos,
+      future_infos::TickTimePos& end_pos,
+      std::list<future_infos::StaticInfo>& static_list,
+      std::map<int32, future_infos::DayMarket>& market_hash);
+
+  bool CalcuDynamMarket(const char* raw_data, const size_t raw_data_length,
+                        future_infos::StaticInfo& static_info,
+                        std::list<chaos_data::SymbolDynamMarket>& dynam_list);
+
+  int GetPriceMul(const uint8 price_digit) const;
 };
 
 class FutureEngine {
@@ -29,8 +43,10 @@ class FutureEngine {
   static FutureManager* schduler_mgr_;
 
  protected:
-  FutureEngine(){}
-  virtual ~FutureEngine(){}
+  FutureEngine() {
+  }
+  virtual ~FutureEngine() {
+  }
 
  protected:
   static FutureManager* GetSchdulerManager() {
