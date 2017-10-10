@@ -113,6 +113,9 @@ future_infos.o : ./future_infos.cc ./future_infos.h
 future_file.o : ./future_file.cc ./future_file.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_file.cc $(INCLUDE_PATHS)
 
+future_value_buf.o : ./future_value_buf.cc ./future_value_buf.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_value_buf.cc $(INCLUDE_PATHS)
+
 symbol_static.pb.o : ./../../proto/symbol_static.pb.cc ./../../proto/symbol_static.pb.h 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../proto/symbol_static.pb.cc
 
@@ -125,7 +128,7 @@ symbol_dynam_market.pb.o : ./../../proto/symbol_dynam_market.pb.cc  ./../../prot
 time.o : ./../../pub/logic/time.cc ./../../pub/logic/time.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../pub/logic/time.cc $(INCLUDE_PATHS)
 	
-$(PLUGIN) : index_engine.o static_engine.o data_engine.o future_engine.o\
+$(PLUGIN) : index_engine.o static_engine.o data_engine.o future_engine.o future_value_buf.o\
 		future_init.o future_logic.o future_infos.o future_logic.o future_file.o time.o\
 		symbol_static.pb.o symbol_pos_index.pb.o symbol_dynam_market.pb.o\
 	$(LIB_DIR)/mylib/base/lib/mybase.a

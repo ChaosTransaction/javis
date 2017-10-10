@@ -33,6 +33,15 @@ class FutureManager {
                         future_infos::StaticInfo& static_info,
                         std::list<chaos_data::SymbolDynamMarket>& dynam_list);
 
+  bool SendDynamMarket(const std::string& field,
+                       future_infos::TickTimePos& start_pos,
+                       future_infos::TickTimePos& end_pos,
+                       std::list<future_infos::StaticInfo>& static_list,
+                       net_reply::DynaTick& dyna_tick);
+
+  bool CalcuDynamMarket(const char* raw_data, const size_t raw_data_length,
+                        future_infos::StaticInfo& static_info,
+                        net_reply::DynaTick& dyna_tick);
   int GetPriceMul(const uint8 price_digit) const;
 };
 
