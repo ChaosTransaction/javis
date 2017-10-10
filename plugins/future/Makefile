@@ -95,6 +95,12 @@ index_engine.o : ./index_engine.cc ./index_engine.h
 static_engine.o : ./static_engine.cc ./static_engine.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./static_engine.cc $(INCLUDE_PATHS)
 
+data_engine.o : ./data_engine.cc ./data_engine.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./data_engine.cc $(INCLUDE_PATHS)
+
+future_engine.o : ./future_engine.cc ./future_engine.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_engine.cc $(INCLUDE_PATHS)
+
 future_init.o : ./future_init.cc ./future_init.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./future_init.cc $(INCLUDE_PATHS)
 
@@ -113,11 +119,15 @@ symbol_static.pb.o : ./../../proto/symbol_static.pb.cc ./../../proto/symbol_stat
 symbol_pos_index.pb.o : ./../../proto/symbol_pos_index.pb.cc  ./../../proto/symbol_pos_index.pb.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../proto/symbol_pos_index.pb.cc
 
+symbol_dynam_market.pb.o : ./../../proto/symbol_dynam_market.pb.cc  ./../../proto/symbol_dynam_market.pb.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../proto/symbol_dynam_market.pb.cc
+
 time.o : ./../../pub/logic/time.cc ./../../pub/logic/time.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../pub/logic/time.cc $(INCLUDE_PATHS)
 	
-$(PLUGIN) : index_engine.o static_engine.o  future_init.o future_logic.o future_infos.o future_logic.o future_file.o time.o\
-		symbol_static.pb.o symbol_pos_index.pb.o\
+$(PLUGIN) : index_engine.o static_engine.o data_engine.o future_engine.o\
+		future_init.o future_logic.o future_infos.o future_logic.o future_file.o time.o\
+		symbol_static.pb.o symbol_pos_index.pb.o symbol_dynam_market.pb.o\
 	$(LIB_DIR)/mylib/base/lib/mybase.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LINK_PATHS) -liconv -lprotobuf -lpthread -lexpat -lrt -ldl \
 	$^ -o $@

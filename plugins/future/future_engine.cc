@@ -7,6 +7,7 @@
 #include "static_engine.h"
 #include "logic/logic_comm.h"
 #include "proto/symbol_dynam_market.pb.h"
+#include "basic/template.h"
 namespace future_logic {
 
 FutureEngine* FutureEngine::schduler_engine_ = NULL;
@@ -69,7 +70,7 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                                                    static_list, market_hash);
 
   //ULOG_DEBUG2("%d", market_hash.size());
-  ExtractDynamMarket(start_time_pos, end_time_pos, static_list, market_hash);
+  ExtractDynamMarket(socket,start_time_pos, end_time_pos, static_list, market_hash);
 }
 
 bool FutureManager::ExtractDynamMarket(
@@ -172,13 +173,24 @@ bool FutureManager::CalcuDynamMarket(
     dynma_market.set_open_interest(dynma_market.open_interest() * vol_unit);
     dynma_market.set_settle_price(dynma_market.settle_price() * price_digit);
 
+    future_infos::TimeUnit time_unit(dynma_market.current_time());
+    ULOG_DEBUG2("%d-%d-%d %d:%d:%d\t->open_price:%6d\t,high_price:%6d\t,low_price:%6d\t,new_price:%6d\t,volume:%6d\t,inner_vol:%6d\t,buy_one_price:%6d\t,sell_one_price:%6d\t,buy_one_vol:%6d\t,sell_one_vol:%6d\t,open_interest:%6d\t,settle_price:%6d\t",
+                   time_unit.exploded().year, time_unit.exploded().month,
+                   time_unit.exploded().day_of_month, time_unit.exploded().hour,
+                   time_unit.exploded().minute,time_unit.exploded().second,
+                   dynma_market.open_price(),dynma_market.high_price(),
+                   dynma_market.low_price(),dynma_market.new_price(),
+                   dynma_market.volume(),dynma_market.inner_vol(),
+                   dynma_market.buy_price(0),dynma_market.sell_price(0),
+                   dynma_market.buy_vol(0),dynma_market.sell_vol(0),
+                   dynma_market.open_interest(),dynma_market.settle_price());
     dynam_list.push_back(dynma_market);
   }
   return true;
 }
 
-int GetPriceMul(const uint8 price_digit) const {
-  int nMul = min(6, (int) price_digit);
+int FutureManager::GetPriceMul(const uint8 price_digit) const {
+  int nMul = std::min(6, (int) price_digit);
   int n = 1;
   for (int i = 0; i < nMul; i++)
     n *= 10;

@@ -38,10 +38,10 @@ bool Futurelogic::Init() {
   std::string sec_symbol = "WT001.CZCE";
   HIS_DATA_TYPE data_type = _DYNA_DATA;
   std::string start_time = "2009-12-14 10:40:22";
-  std::string end_time = "2009-12-14 14:52:21";
+  std::string end_time = "2009-12-17 14:52:21";
 
 
-  FutureEngine::GetSchdulerManager()->OnDynaTick(uid,
+  FutureEngine::GetSchdulerManager()->OnDynaTick(socket,uid,
           token, field, sec_symbol, FUTURE,
           start_time,end_time);
   /*size_t start_pos = sec_symbol.find(".");
