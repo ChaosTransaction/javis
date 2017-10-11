@@ -141,6 +141,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   int vol_unit = static_info.static_info().vol_unit();
   int32 max_count = 490;
   int32 index_pos = 0;
+  int64 last_time = 0;
   while (pos < raw_data_length&& index_pos < max_count) {
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
@@ -201,8 +202,10 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
 
     dyna_tick.set_unit(r_dyna_tick_unit->get());
     index_pos++;
-
+    last_time = dynma_market.current_time();
   }
+
+  dyna_tick.set_last_time(last_time);
   return true;
 }
 

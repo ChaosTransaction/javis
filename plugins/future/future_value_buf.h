@@ -144,6 +144,10 @@ class DynaTick {
     dyna_tick_->Append(value);
   }
 
+  void set_last_time(const int64 last_time){
+    last_time_ = new base_logic::FundamentalValue(last_time);
+  }
+
   base_logic::DictionaryValue* get() {
     value_ = new base_logic::DictionaryValue();
     if (!dyna_tick_->empty()) {
@@ -152,8 +156,12 @@ class DynaTick {
       delete dyna_tick_;
       dyna_tick_ = NULL;
     }
+
+    if(last_time_ != NULL)
+      value_->Set(L"lt",last_time_);
     return value_;
   }
+
 
   void Reset() {
     if (value_) {
@@ -169,6 +177,7 @@ class DynaTick {
 
  private:
   base_logic::ListValue* dyna_tick_;
+  base_logic::FundamentalValue* last_time_;
   base_logic::DictionaryValue* value_;
 };
 
