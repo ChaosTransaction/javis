@@ -64,17 +64,17 @@ bool StaticManager::OnFetchStaticInfo(
 
   bool r = false;
   if (sec == "CZCE") {
-   r =  OnGetStaticInfo(sec, symbol, static_cache_->zc_future_,
-                    static_lock_->zc_future_lock_, stk_type, start_time_pos,
-                    end_time_pos, static_list);
+    r = OnGetStaticInfo(sec, symbol, static_cache_->zc_future_,
+                        static_lock_->zc_future_lock_, stk_type, start_time_pos,
+                        end_time_pos, static_list);
   } else if (sec == "DCE") {
     r = OnGetStaticInfo(sec, symbol, static_cache_->dc_future_,
-                    static_lock_->zc_future_lock_, stk_type, start_time_pos,
-                    end_time_pos, static_list);
+                        static_lock_->zc_future_lock_, stk_type, start_time_pos,
+                        end_time_pos, static_list);
   } else if (sec == "SHFE") {
     r = OnGetStaticInfo(sec, symbol, static_cache_->sc_future_,
-                    static_lock_->zc_future_lock_, stk_type, start_time_pos,
-                    end_time_pos, static_list);
+                        static_lock_->zc_future_lock_, stk_type, start_time_pos,
+                        end_time_pos, static_list);
   }
 
   return r;
@@ -86,7 +86,7 @@ bool StaticManager::OnGetStaticInfo(
     const STK_TYPE& stk_type, future_infos::TickTimePos& start_time_pos,
     future_infos::TickTimePos& end_time_pos,
     std::list<future_infos::StaticInfo>& static_list) {
-   
+
   bool r = false;
   STATIC_MAP static_map;
   {
@@ -95,11 +95,13 @@ bool StaticManager::OnGetStaticInfo(
         const std::string, STATIC_MAP>(symbol_map, symbol, static_map);
   }
   //if (!r)
-    //    return false;
+  //    return false;
 
   std::list<future_infos::TimeUnit> time_unit_list;
-  int64 start_time = ((start_time_pos.time_index() / 24 / 60 / 60) * 60 * 60 * 24) - 8 * 60 * 60;
-  int64 end_time = ((end_time_pos.time_index() / 24 / 60 / 60) * 60 * 60 *24) - 8 * 60 * 60;
+  int64 start_time = ((start_time_pos.time_index() / 24 / 60 / 60) * 60 * 60
+      * 24) - 8 * 60 * 60;
+  int64 end_time = ((end_time_pos.time_index() / 24 / 60 / 60) * 60 * 60 * 24)
+      - 8 * 60 * 60;
   //future_infos::TimeUnit s_time_unit(start_time);
   //time_unit_list.push_back(s_time_unit);
   while (start_time <= end_time) {
@@ -110,7 +112,8 @@ bool StaticManager::OnGetStaticInfo(
 
   //future_infos::TimeUnit e_time_unit(start_time);
   //time_unit_list.push_back(e_time_unit);
-   GetStaticInfo(static_map, symbol, sec, stk_type, lock, time_unit_list,static_list);
+  GetStaticInfo(static_map, symbol, sec, stk_type, lock, time_unit_list,
+                static_list);
   {
     base_logic::WLockGd lk(lock);
     symbol_map[symbol] = static_map;
@@ -123,16 +126,16 @@ void StaticManager::GetStaticInfo(
     const STK_TYPE& stk_type, struct threadrw_t* lock,
     std::list<future_infos::TimeUnit>& time_list,
     std::list<future_infos::StaticInfo>& static_list) {
-        bool r = false;
-while (time_list.size() > 0) {
+  bool r = false;
+  while (time_list.size() > 0) {
     future_infos::TimeUnit time_unit = time_list.front();
     time_list.pop_front();
     future_infos::StaticInfo static_info;
     {
       base_logic::RLockGd lk(lock);
-      r =
-        base::MapGet<STATIC_MAP, STATIC_MAP::iterator, int32,future_infos::StaticInfo>(
-              static_map, time_unit.full_day(), static_info);
+      r = base::MapGet<STATIC_MAP, STATIC_MAP::iterator, int32,
+          future_infos::StaticInfo>(static_map, time_unit.full_day(),
+                                    static_info);
     }
 
     if (!r) {

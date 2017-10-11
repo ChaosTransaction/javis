@@ -76,23 +76,15 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
    market_hash);*/
 
   net_reply::DynaTick dyna_tick;
-  SendDynamMarket(start_time_pos, end_time_pos, static_list, market_hash, dyna_tick);
+  SendDynamMarket(start_time_pos, end_time_pos, static_list, market_hash,
+                  dyna_tick);
   base_logic::DictionaryValue* value = dyna_tick.get();
-                                   base_logic::ValueSerializer* engine = base_logic::ValueSerializer::Create(
-                                       base_logic::IMPL_JSON
-                                       );
-  std::string body_stream;
-  r = engine->Serialize((*value),&body_stream);
-  
-                                   std::string file_name = "2.txt";
-                                   file::FilePath temp_file_name(file_name);
-                                   file::WriteFile(temp_file_name, body_stream.c_str(),body_stream.length());
+  send_value(socket, value);
   return r;
 }
 
 bool FutureManager::SendDynamMarket(
-    future_infos::TickTimePos& start_pos,
-    future_infos::TickTimePos& end_pos,
+    future_infos::TickTimePos& start_pos, future_infos::TickTimePos& end_pos,
     std::list<future_infos::StaticInfo>& static_list,
     std::map<int32, future_infos::DayMarket>& market_hash,
     net_reply::DynaTick& dyna_tick) {

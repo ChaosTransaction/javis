@@ -124,7 +124,7 @@ class DynaTick {
 
 }
 
-namespace net_reply{
+namespace net_reply {
 class DynaTick {
  public:
   DynaTick()
@@ -332,8 +332,8 @@ class DynaTickUnit {
     open_interest_ = new base_logic::FundamentalValue(open_interest);
   }
 
-  void set_settle_price(const double settle_price){
-      settle_price_ = new  base_logic::FundamentalValue(settle_price);
+  void set_settle_price(const double settle_price) {
+    settle_price_ = new base_logic::FundamentalValue(settle_price);
   }
 
   base_logic::DictionaryValue* get() {

@@ -50,18 +50,20 @@ extern const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT];
 extern const char* g_stk_type[STK_TYPE_COUNT];
 namespace future_infos {
 
-
 class DayMarket {
-public:
+ public:
   DayMarket();
   DayMarket(const DayMarket& dym);
   DayMarket(const int32 market_date, const std::string& str);
 
-  DayMarket& operator = (const DayMarket& dym);
+  DayMarket& operator =(const DayMarket& dym);
 
-
-  int32 market_date() const {return data_->market_date_;}
-  const std::string& market_data() const {return data_->market_data_;}
+  int32 market_date() const {
+    return data_->market_date_;
+  }
+  const std::string& market_data() const {
+    return data_->market_data_;
+  }
   ~DayMarket() {
     if (data_ != NULL) {
       data_->Release();
@@ -71,13 +73,15 @@ public:
   class Data {
    public:
     Data(const int32 market_date, const std::string& str)
-        : market_date_(market_date)
-        , market_data_(str)
-        , refcount_(1){
+        : market_date_(market_date),
+          market_data_(str),
+          refcount_(1) {
     }
 
-    Data():market_date_(0)
-      ,refcount_(1){}
+    Data()
+        : market_date_(0),
+          refcount_(1) {
+    }
    public:
     const int32 market_date_;
     const std::string market_data_;
@@ -110,7 +114,6 @@ class StaticInfo {
       data_->Release();
     }
   }
-
 
   chaos_data::SymbolStatic& static_info() const {
     return data_->static_info;
@@ -196,7 +199,7 @@ class TimeUnit {
       base_time_.LocalExplode(&time_explod_);
     }
 
-    void reset_time(const int64 unix_time){
+    void reset_time(const int64 unix_time) {
       base_time_ = base::Time::FromTimeT(unix_time);
       base_time_.LocalExplode(&time_explod_);
     }
@@ -230,7 +233,6 @@ class TimeFrame {
       data_->Release();
     }
   }
-
 
   int32 start_full_day() const {
     return data_->start_time_->full_day();
@@ -322,9 +324,15 @@ class TickTimePos {
     }
   }
 
-  int64 time_index() const {return data_->tt_time_;}
-  int32 start_pos() const {return data_->start_pos_;}
-  int32 end_pos() const {return data_->end_pos_;}
+  int64 time_index() const {
+    return data_->tt_time_;
+  }
+  int32 start_pos() const {
+    return data_->start_pos_;
+  }
+  int32 end_pos() const {
+    return data_->end_pos_;
+  }
 
   class Data {
    public:

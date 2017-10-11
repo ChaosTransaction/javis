@@ -48,7 +48,7 @@ class DataManager {
                   std::list<future_infos::StaticInfo>& static_list,
                   std::map<int32, future_infos::DayMarket>& market_hash);
  private:
-  bool LoadData(const std::string& sec, const std::string& symbol, 
+  bool LoadData(const std::string& sec, const std::string& symbol,
                 const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
                 int32 market_date, struct threadrw_t* lock,
                 DAYSYMBOL_MAP& daysymbol_map, DAYTYPE_MAP& day_type_map,

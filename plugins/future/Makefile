@@ -127,9 +127,15 @@ symbol_dynam_market.pb.o : ./../../proto/symbol_dynam_market.pb.cc  ./../../prot
 
 time.o : ./../../pub/logic/time.cc ./../../pub/logic/time.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../pub/logic/time.cc $(INCLUDE_PATHS)
+
+logic_unit.o : ./../../pub/logic/logic_unit.cc ./../../pub/logic/logic_unit.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../pub/logic/logic_unit.cc $(INCLUDE_PATHS)
 	
-$(PLUGIN) : index_engine.o static_engine.o data_engine.o future_engine.o future_value_buf.o\
-		future_init.o future_logic.o future_infos.o future_logic.o future_file.o time.o\
+packet_processing.o : ./../../pub/net/packet_processing.cc ./../../pub/net/packet_processing.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c ./../../pub/net/packet_processing.cc $(INCLUDE_PATHS)
+
+$(PLUGIN) : index_engine.o static_engine.o data_engine.o future_engine.o future_value_buf.o packet_processing.o\
+		future_init.o future_logic.o future_infos.o future_logic.o future_file.o time.o logic_unit.o\
 		symbol_static.pb.o symbol_pos_index.pb.o symbol_dynam_market.pb.o\
 	$(LIB_DIR)/mylib/base/lib/mybase.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LINK_PATHS) -liconv -lprotobuf -lpthread -lexpat -lrt -ldl \

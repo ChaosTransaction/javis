@@ -78,11 +78,10 @@ class IndexManager {
                                 future_infos::TickTimePos& start_val,
                                 future_infos::TickTimePos& end_val);
 
-  LOADERROR GetCompareDayPos(struct threadrw_t* lock,
-                            const std::string& sec,
-                            const std::string& symbol,
-                            const HIS_DATA_TYPE& data_type,
-                            const STK_TYPE& stk_type,
+  LOADERROR GetCompareDayPos(struct threadrw_t* lock, const std::string& sec,
+                             const std::string& symbol,
+                             const HIS_DATA_TYPE& data_type,
+                             const STK_TYPE& stk_type,
                              DAYPOS_MAP& start_day_pos_map,
                              DAYPOS_MAP& end_day_pos_map,
                              future_infos::TimeFrame& time_frame,
@@ -91,11 +90,12 @@ class IndexManager {
                              MINUTEPOS_MAP& start_min_map,
                              MINUTEPOS_MAP& end_min_map);
 
-  bool GetDayPos(struct threadrw_t* lock, int32 frame_time,const std::string& sec,
-                 const std::string& symbol, const HIS_DATA_TYPE& data_type,
-                 const STK_TYPE& stk_type, DAYPOS_MAP& day_pos_map,
-                 future_infos::TimeUnit* frame_time_unit, HOURPOS_MAP& hour_pos_map,
-                 MINUTEPOS_MAP& min_pos_map);
+  bool GetDayPos(struct threadrw_t* lock, int32 frame_time,
+                 const std::string& sec, const std::string& symbol,
+                 const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
+                 DAYPOS_MAP& day_pos_map,
+                 future_infos::TimeUnit* frame_time_unit,
+                 HOURPOS_MAP& hour_pos_map, MINUTEPOS_MAP& min_pos_map);
 
   void OnLoadIndex(future_infos::TimeUnit* time_unit, const std::string& sec,
                    struct threadrw_t* lock, const std::string& symbol,

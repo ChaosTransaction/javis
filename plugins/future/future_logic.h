@@ -40,6 +40,9 @@ class Futurelogic {
   bool OnTimeout(struct server *srv, char *id, int opcode, int time);
 
  private:
+  bool OnDynaTick(struct server* srv, int socket, struct PacketHead* packet);
+
+ private:
   bool Init();
  private:
 
