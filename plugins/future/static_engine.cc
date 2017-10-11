@@ -152,6 +152,8 @@ void StaticManager::GetStaticInfo(
           static_list.push_back(stc_info);
         }
       }
+    }else {
+        static_list.push_back(static_info);
     }
   }
 }
