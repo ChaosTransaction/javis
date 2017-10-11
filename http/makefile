@@ -17,7 +17,7 @@ LINK_FLAGS = -g  -fPIC
 ## for release
 ## LINK_FLAGS = -s -O3 -shared -fPIC
 
-LIB_DIR = ../../library
+LIB_DIR = ../../../library
 BASE_DIR = ./../pub
 PLUGIN_DIR = ../plugins
 CUSTOM_THIRD_PATH = $(LIB_DIR)/mylib/third_party
@@ -35,7 +35,7 @@ INCLUDE_PATHS = -I./\
 
 ## 库
 LINK_PATHS =  -L./
-LINK_LIBRARYS = -lrt -lpthread -lfcgi++ \
+LINK_LIBRARYS = -lrt -liconv -lpthread -lfcgi++ \
 
 
 # 编译
@@ -47,11 +47,9 @@ LINK = $(COMPILER) $(LINK_FLAGS) $(LINK_PATHS) $? -o $(OUTPUT_FILE) $(LINK_LIBRA
 LINKALL = $(COMPILER) $(LINK_FLAGS) $(LINK_PATHS) $?  $(LINK_LIBRARYS)
 
 POBJ =  mig_log.o core_interface.o http_formate.o fcgimodule.o  packet_processing.o\
-	$(LIB_DIR)/mylib/third_party/dmg_fp/lib/dmg_fp.a\
 	$(LIB_DIR)/mylib/base/lib/mybase.a\
-	/usr/local/lib/lib/libiconv.a
 
-OUTPUT_FILE = /var/www/cgi-bin/star
+OUTPUT_FILE = /var/www/cgi-bin/chaos
 #############################################################################################################################
 ##all: clean proc delete-temp-file
 all: proc 
@@ -76,7 +74,7 @@ $(API_OBJECT_PATH)/$(APINAME)dynatick.o:
 clean:
 	-rm -f *.o
 	-rm -f $(OUTPUT_FILE)./*.fcgi
-	-rm -f obj/*.o
+	-rm -f obj/*/*.o
 
 delete-temp-file:
 	-rm -f obj/*.o

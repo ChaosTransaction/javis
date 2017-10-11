@@ -22,7 +22,8 @@ FcgiModule::~FcgiModule() {
 
 bool FcgiModule::Init(const char *addr, unsigned short port, int api_type,
               int operate_code, int log_type){
- net::core_connect_net(addr, port);
+  ULOG_DEBUG2("%s,%d",addr, port);
+  net::core_connect_net(addr, port);
  #if defined (FCGI_PLUS)
    FCGX_Init();
    FCGX_InitRequest(&request_, 0, 0);
@@ -64,7 +65,7 @@ void FcgiModule::StdRun() {
   const char* query;
 #if defined (FCGI_STD)
   while (FCGI_Accept() == 0) {
-    LOG_DEBUG("=============================fcgiaccept");
+    ULOG_DEBUG("=============================fcgiaccept");
     char *request_method = getenv("REQUEST_METHOD");
     char *contentLength = getenv("CONTENT_LENGTH");
     if (strcmp(request_method, "POST") == 0) {
@@ -144,7 +145,7 @@ bool FcgiModule::GetRequestMethod(const char* query) {
   //api_logger_.LogMsg(content.c_str(), content.length());
   ret = net::core_get(0, content.c_str(), content.length(), respone, flag,
                       code);
-  LOG_DEBUG2("Get responst:%s", respone.c_str());
+  ULOG_DEBUG2("Get responst:%s", respone.c_str());
 
   if (!respone.empty()) {
     printf("Content-type: text/html\r\n"
@@ -248,13 +249,13 @@ bool FcgiModule::PostRequestMethod(const std::string & content) {
   r = net::core_get(0, reinterpret_cast<char*>(packet_stream),
                     packet_stream_length, respone, flag, code);
 
-  LOG_DEBUG2("respone length %d,r %d",respone.length(),r);
+  ULOG_DEBUG2("respone length %d,r %d",respone.length(),r);
 
   std::string r_repone;
   r_repone.clear();
   if (r && !is_filter_)
-    r_repone = net::PacketProsess::StrUnpacket((void*) (respone.c_str()),
-                                               respone.length());
+    r_repone = respone;/*net::PacketProsess::StrUnpacket((void*) (respone.c_str()),
+                                               respone.length());*/
   else
     r_repone = respone;
   if (!r_repone.empty() && r) {
