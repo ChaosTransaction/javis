@@ -142,6 +142,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   int32 max_count = 490;
   int32 index_pos = 0;
   int64 last_time = 0;
+  int64 next_time = 0;
   while (pos < raw_data_length&& index_pos < max_count) {
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
@@ -205,7 +206,19 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     last_time = dynma_market.current_time();
   }
 
+  if(index_pos >= max_count) {
+    int16 packet_length = *(int16*) (raw_data + pos);
+    std::string packet;
+    packet.assign(raw_data + pos + sizeof(int16),
+                  packet_length - sizeof(int16));
+    pos += packet_length;
+    chaos_data::SymbolDynamMarket dynma_market;
+    dynma_market.ParseFromString(packet);
+    next_time = dynma_market.current_time();
+  }
+
   dyna_tick.set_last_time(last_time);
+  dyna_tick.set_next_time(next_time);
   return true;
 }
 
