@@ -4,6 +4,10 @@
 #ifndef PUB_LOGIC_LOGIC_UNIT_H_
 #define PUB_LOGIC_LOGIC_UNIT_H_
 
+#include "basic/basictypes.h"
+#include "logic/base_values.h"
+#include "thread/base_thread_handler.h"
+#include "thread/base_thread_lock.h"
 
 namespace logic {
 
@@ -33,8 +37,6 @@ class SendUtils {
 
 }
 
-//#define send_message(socket, packet) \
- // logic::SendUtils::GetInstance()->SendMessage(socket, packet, __FILE__, __LINE__)\
 
 #define send_value(socket, packet)\
     logic::SendUtils::GetInstance()->SendValue(socket, packet)\

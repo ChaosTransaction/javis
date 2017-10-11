@@ -8,9 +8,10 @@
 #include <list>
 #include <string>
 
-#define DUMPPACKBUF 4096 * 10
 
 namespace net {
+
+#define DUMPPACKETBUF 4096 * 10
 
 bool PacketProsess::PacketStream(const PacketHead *packet_head,
                                  void **packet_stream,
@@ -41,7 +42,7 @@ bool PacketProsess::PacketStream(const PacketHead *packet_head,
 
   BUILDPAKCET(body_stream.length());
 
-  LOG_DEBUG2("%s",body_stream.c_str());
+  ULOG_DEBUG2("%s",body_stream.c_str());
 
   *packet_stream = reinterpret_cast<void *>(const_cast<char *>(out.GetData()));
   *packet_stream_length = PACKET_HEAD_LENGTH + body_stream.length();
@@ -136,7 +137,7 @@ void PacketProsess::DumpPacket(const struct PacketHead *packet_head) {
   int32 reserved = packet_control->reserved;
   int16 signature = packet_control->signature;
   base_logic::DictionaryValue* value = packet_control->body_;
-  char buf[DUMPPACKBUF];
+  char buf[DUMPPACKETBUF];
   bool r = false;
   int32 j = 0;
 #endif
@@ -213,7 +214,7 @@ void PacketProsess::HexEncode(const void *bytes, size_t size) {
       sret[(i * 3) + 2] = '\40';
     else
       sret[(i * 3) + 2] = '\n';
-  }LOG_DEBUG2("===start====\nopcode[%d]:\n%s\n====end====\n", head->operate_code,
+  }ULOG_DEBUG2("===start====\nopcode[%d]:\n%s\n====end====\n", head->operate_code,
       sret.c_str());
 #endif
 }

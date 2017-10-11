@@ -1,12 +1,9 @@
 //  Copyright (c) 2017-2018 The Javis Authors. All rights reserved.
 //  Created on: 2017年9月30日 Author: kerry
-#include <sys/socket.h>
-#include <time.h>
-#include <sstream>
 #include <string>
+#include <sys/socket.h>
 #include "logic/logic_unit.h"
 #include "logic/logic_comm.h"
-
 namespace logic {
 SendUtils *SendUtils::instance_ = NULL;
 
@@ -69,17 +66,17 @@ bool SendUtils::SendValue(int socket, base_logic::DictionaryValue* value) {
   std::string body_stream;
   bool r = engine->Serialize((*value), &body_stream);
 
-  int ret = SendFull(socket, reinterpret_cast<char*>(body_stream.c_str()),
+  int ret = SendFull(socket, const_cast<char*>(body_stream.c_str()),
                      body_stream.length());
 
 
   if (engine) {
     delete engine;
-    engine = NUL;
+    engine = NULL;
   }
   if(ret != body_stream.length())
     return false;
-  return true;
+  return r;
 }
 
 /*

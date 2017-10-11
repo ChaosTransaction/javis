@@ -6,6 +6,7 @@
 #include "data_engine.h"
 #include "static_engine.h"
 #include "logic/logic_comm.h"
+#include "logic/logic_unit.h"
 #include "proto/symbol_dynam_market.pb.h"
 #include "basic/template.h"
 #include "file/file_path.h"

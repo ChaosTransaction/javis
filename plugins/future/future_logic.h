@@ -6,7 +6,7 @@
 
 #include "basic/basictypes.h"
 #include "core/common.h"
-
+#include "net/packet_processing.h"
 namespace future_logic {
 
 class Futurelogic {

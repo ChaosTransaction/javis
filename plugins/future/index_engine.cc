@@ -400,10 +400,14 @@ void IndexManager::SetIndexPos(struct threadrw_t* lock, SYMBOL_MAP& symbol_map,
                                MINUTEPOS_MAP& minute_map) {
 
   base_logic::WLockGd lk(lock);
-  hour_map[hour_key] = minute_map;
-  day_map[day_key] = hour_map;
-  type_map[type_key] = day_map;
-  symbol_map[symbol_key] = type_map;
+  if (minute_map.size() != 0)
+    hour_map[hour_key] = minute_map;
+  if (hour_map.size() != 0)
+    day_map[day_key] = hour_map;
+  if (day_map.size() != 0)
+   type_map[type_key] = day_map;
+  if (type_map.size() != 0)
+   symbol_map[symbol_key] = type_map;
 }
 /*
  bool IndexManager::LoadLocalIndexPosInfo(const std::string& sec,

@@ -2,7 +2,7 @@
 //  Created on: 2017年9月30日 Author: kerry
 
 #include "future/future_logic.h"
-#include "operator_code.h"
+#include "future/operator_code.h"
 #include "config/config.h"
 #include "future_engine.h"
 #define DEFAULT_CONFIG_PATH "./plugins/future/future_config.xml"
@@ -99,6 +99,28 @@ bool Futurelogic::OnFutureMessage(struct server *srv, const int socket,
                                   const void *msg, const int len) {
   bool r = false;
 
+  struct PacketHead *packet = NULL;
+  if (srv == NULL || socket < 0 || msg == NULL || len < PACKET_HEAD_LENGTH)
+    return false;
+
+  if (!net::PacketProsess::UnpackStream(msg, len, &packet)) {
+    LOG_ERROR2("UnpackStream Error socket %d", socket);
+    return false;
+  }
+
+  switch (packet->operate_code) {
+    case R_FUTURE_DYNA_TICK: {
+     r =  OnDynaTick(srv, socket, packet);
+      break;
+    }
+    default:
+      break;
+  }
+
+  if (packet) {
+    delete packet;
+    packet = NULL;
+  }
   return true;
 }
 
@@ -113,40 +135,12 @@ bool Futurelogic::OnBroadcastConnect(struct server *srv, const int socket,
 
 bool Futurelogic::OnBroadcastMessage(struct server *srv, const int socket,
                                      const void *msg, const int len) {
-  bool r = false;
-  struct PacketHead *packet = NULL;
-  if (srv == NULL || socket < 0 || msg == NULL || len < PACKET_HEAD_LENGTH)
-    return false;
-
-  if (!net::PacketProsess::UnpackStream(msg, len, &packet)) {
-    LOG_ERROR2("UnpackStream Error socket %d", socket);
-    return false;
-  }
-
-  switch (packet->operate_code) {
-    case R_FUTURE_DYNA_TICK: {
-      OnDynaTick(srv, socket, packet);
-      break;
-    }
-    default:
-      break;
-  }
-
-  if (packet) {
-    delete packet;
-    packet = NULL;
-  }
   return true;
 }
 
-bool Futurelogic::OnBroadcastClose(struct server *srv, const int socket) {
-  return true;
-}
 
 bool Futurelogic::OnIniTimer(struct server *srv) {
-  if (srv->add_time_task != NULL) {
-  }
-  return true;
+
 }
 
 bool Futurelogic::OnTimeout(struct server *srv, char *id, int opcode,
@@ -167,7 +161,7 @@ bool Futurelogic::OnDynaTick(struct server* srv, int socket,
     return false;
   }
   struct PacketControl* packet_control = (struct PacketControl*) (packet);
-  bool r = cancel_order.set_http_packet(packet_control->body_);
+  bool r = dyna_tick.set_http_packet(packet_control->body_);
   if (!r) {
     //send_error(socket, ERROR_TYPE, ERROR_TYPE, FORMAT_ERRNO);
     return false;
