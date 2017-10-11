@@ -261,7 +261,7 @@ LOADERROR IndexManager::GetCompareMintuePos(
         load_error = BOTH_NOT_EXITS;
       else{
         load_error = END_NOT_EXITS;
-        start_val = ss_start_map.end()->second;
+        end_val = se_end_map.rbegin()->second;
       }
     }
   }
