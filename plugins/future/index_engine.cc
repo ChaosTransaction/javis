@@ -242,8 +242,10 @@ LOADERROR IndexManager::GetCompareMintuePos(
     start_unix -= 60;
   }
 
-  if (!r)
+  if (!r){
     load_error = START_NOT_EXITS;
+    start_val = ss_start_map.begin()->second;
+  }
 
   if (start_key == end_key) {
     end_val = start_val;
@@ -257,8 +259,10 @@ LOADERROR IndexManager::GetCompareMintuePos(
     if (!r) {
       if (load_error == START_NOT_EXITS)
         load_error = BOTH_NOT_EXITS;
-      else
+      else{
         load_error = END_NOT_EXITS;
+        start_val = ss_start_map.end()->second;
+      }
     }
   }
 

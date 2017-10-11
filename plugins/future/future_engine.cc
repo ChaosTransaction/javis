@@ -76,11 +76,13 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
   /*ExtractDynamMarket(socket, start_time_pos, end_time_pos, static_list,
    market_hash);*/
 
-  net_reply::DynaTick dyna_tick;
-  SendDynamMarket(start_time_pos, end_time_pos, static_list, market_hash,
-                  dyna_tick);
-  base_logic::DictionaryValue* value = dyna_tick.get();
-  send_value(socket, value);
+  if (!static_list.empty()) {
+    net_reply::DynaTick dyna_tick;
+    SendDynamMarket(start_time_pos, end_time_pos, static_list, market_hash,
+                    dyna_tick);
+    base_logic::DictionaryValue* value = dyna_tick.get();
+    send_value(socket, value);
+  }
   return r;
 }
 
@@ -143,7 +145,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   int32 index_pos = 0;
   int64 last_time = 0;
   int64 next_time = 0;
-  while (pos < raw_data_length&& index_pos < max_count) {
+  while (pos < raw_data_length && index_pos < max_count) {
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
     packet.assign(raw_data + pos + sizeof(int16),
@@ -206,7 +208,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     last_time = dynma_market.current_time();
   }
 
-  if(index_pos >= max_count) {
+  if (index_pos >= max_count) {
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
     packet.assign(raw_data + pos + sizeof(int16),
