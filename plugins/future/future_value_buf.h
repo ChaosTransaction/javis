@@ -147,7 +147,7 @@ class DynaTick {
   base_logic::DictionaryValue* get() {
     value_ = new base_logic::DictionaryValue();
     if (!dyna_tick_->empty()) {
-      value_->Set(L"dynatick", dyna_tick_);
+      value_->Set(L"dt", dyna_tick_);
     } else {
       delete dyna_tick_;
       dyna_tick_ = NULL;
@@ -339,72 +339,72 @@ class DynaTickUnit {
   base_logic::DictionaryValue* get() {
     value_ = new base_logic::DictionaryValue();
     if (current_time_ != NULL)
-      value_->Set(L"currentTime", current_time_);
+      value_->Set(L"ct", current_time_);
     if (open_price_ != NULL)
-      value_->Set(L"openPrice", open_price_);
+      value_->Set(L"op", open_price_);
     if (high_price_ != NULL)
-      value_->Set(L"highPrice", high_price_);
+      value_->Set(L"hp", high_price_);
     if (low_price_ != NULL)
-      value_->Set(L"lowPrice", low_price_);
+      value_->Set(L"lp", low_price_);
     if (new_price_ != NULL)
-      value_->Set(L"newPrice", new_price_);
+      value_->Set(L"np", new_price_);
     if (volume_ != NULL)
-      value_->Set(L"volume", volume_);
+      value_->Set(L"vl", volume_);
     if (amount_ != NULL)
-      value_->Set(L"amount", amount_);
+      value_->Set(L"ao", amount_);
     if (inner_vol_ != NULL)
-      value_->Set(L"innerVol", inner_vol_);
+      value_->Set(L"iv", inner_vol_);
     if (tick_count_ != NULL)
-      value_->Set(L"tickCount", tick_count_);
+      value_->Set(L"tc", tick_count_);
 
     if (buy_price_one_ != NULL)
-      value_->Set(L"buyPriceOne", buy_price_one_);
+      value_->Set(L"bp1", buy_price_one_);
     if (buy_price_two_ != NULL)
-      value_->Set(L"buyPriceTwo", buy_price_two_);
+      value_->Set(L"bp2", buy_price_two_);
     if (buy_price_three_ != NULL)
-      value_->Set(L"buyPriceThree", buy_price_three_);
+      value_->Set(L"bp3", buy_price_three_);
     if (buy_price_four_ != NULL)
-      value_->Set(L"buyPriceFour", buy_price_four_);
+      value_->Set(L"bp4", buy_price_four_);
     if (buy_price_five_ != NULL)
-      value_->Set(L"buyPriceFive", buy_price_five_);
+      value_->Set(L"bp5", buy_price_five_);
 
     if (sell_price_one_ != NULL)
-      value_->Set(L"sellPriceOne", sell_price_one_);
+      value_->Set(L"sp1", sell_price_one_);
     if (sell_price_two_ != NULL)
-      value_->Set(L"sellPriceTwo", sell_price_two_);
+      value_->Set(L"sp2", sell_price_two_);
     if (sell_price_three_ != NULL)
-      value_->Set(L"sellPriceThree", sell_price_three_);
+      value_->Set(L"sp3", sell_price_three_);
     if (sell_price_four_ != NULL)
-      value_->Set(L"sellPriceFour", sell_price_four_);
+      value_->Set(L"sp4", sell_price_four_);
     if (sell_price_five_ != NULL)
-      value_->Set(L"sellPriceFive", sell_price_five_);
+      value_->Set(L"sp5", sell_price_five_);
 
     if (buy_vol_one_ != NULL)
-      value_->Set(L"buyVolOne", buy_vol_one_);
+      value_->Set(L"bv1", buy_vol_one_);
     if (buy_vol_two_ != NULL)
-      value_->Set(L"buyVolTwo", buy_vol_two_);
+      value_->Set(L"bv2", buy_vol_two_);
     if (buy_vol_three_ != NULL)
-      value_->Set(L"buyVolThree", buy_vol_three_);
+      value_->Set(L"bv3", buy_vol_three_);
     if (buy_vol_four_ != NULL)
-      value_->Set(L"buyVolFour", buy_vol_four_);
+      value_->Set(L"bv4", buy_vol_four_);
     if (buy_vol_five_ != NULL)
-      value_->Set(L"buyVolFive", buy_vol_five_);
+      value_->Set(L"bv5", buy_vol_five_);
 
     if (sell_vol_one_ != NULL)
-      value_->Set(L"sellVolOne", sell_vol_one_);
+      value_->Set(L"sv1", sell_vol_one_);
     if (sell_vol_two_ != NULL)
-      value_->Set(L"sellVolTwo", sell_vol_two_);
+      value_->Set(L"sv2", sell_vol_two_);
     if (sell_vol_three_ != NULL)
-      value_->Set(L"sellVolThree", sell_vol_three_);
+      value_->Set(L"sv3", sell_vol_three_);
     if (sell_vol_four_ != NULL)
-      value_->Set(L"sellVolFour", sell_vol_four_);
+      value_->Set(L"sv4", sell_vol_four_);
     if (sell_vol_five_ != NULL)
-      value_->Set(L"sellVolFive", sell_vol_five_);
+      value_->Set(L"sv5", sell_vol_five_);
 
     if (open_interest_ != NULL)
-      value_->Set(L"openInterest", open_interest_);
+      value_->Set(L"oi", open_interest_);
     if (settle_price_ != NULL)
-      value_->Set(L"settlePrice", settle_price_);
+      value_->Set(L"sp", settle_price_);
     return value_;
   }
 
