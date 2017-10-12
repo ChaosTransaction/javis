@@ -141,11 +141,9 @@ bool FcgiModule::GetRequestMethod(const char* query) {
       << operate_code_ << "&type=" << api_type_ << "&log_type=" << log_type_
       << "\n\t\r";
   content = os.str();
-  // log trace,暂时不用 
-  //api_logger_.LogMsg(content.c_str(), content.length());
+
   ret = net::core_get(0, content.c_str(), content.length(), respone, flag,
                       code);
-  ULOG_DEBUG2("Get responst:%s", respone.c_str());
 
   if (!respone.empty()) {
     printf("Content-type: text/html\r\n"
@@ -153,56 +151,6 @@ bool FcgiModule::GetRequestMethod(const char* query) {
            "%s",
            respone.c_str());
   }
-  return true;
-}
-
-bool FcgiModule::TestStrPacket() {
-  int flag;
-  int code;
-  std::string respone;
-  std::string content =
-      "{\"id\":100002,\"token\":\"adc28ac69625652b46d5c00b\",\"exchangeName\":\"TJPME\",\"platformName\":\"JH\",\"symbol\":\"AG\",\"chartType\":1}";
-  std::stringstream os;
-  std::string addr = "115.122.238.25";
-  os << content;
-  //os << content << "&remote_addr=" << addr << "&type=" << api_type_
-  //  << "&operate_code=" << operate_code_ << "&log_type=" << log_type_ << "\n";
-
-  /*
-   * const int16 t_operate_code,
-   const int8 t_is_zip_encrypt, const int8 t_type,
-   int64 t_session_id, const int32 t_reserved,
-   const std::string& body_stream, void **packet_stream,
-   int32 *packet_stream_length
-   * */
-
-  void *packet_stream = NULL;
-  int32_t packet_stream_length = 0;
-  int16 operate_code = operate_code_;
-  int8 t_is_zip_encrypt = 0;
-  const int8 t_type = api_type_;
-  net::PacketProsess::StrPacket(operate_code_, t_is_zip_encrypt, t_type, 0, 0,
-                                os.str().c_str(), &packet_stream,
-                                &packet_stream_length);
-
-  respone.append(reinterpret_cast<const char*>(packet_stream),
-                 packet_stream_length);
-  if (packet_stream) {
-    delete packet_stream;
-    packet_stream = NULL;
-  }
-
-  std::string r_respone = net::PacketProsess::StrUnpacket(
-      (void*) (respone.c_str()), respone.length());
-
-  //使用解包函数
-  struct PacketHead *packet = NULL;
-
-  if (!net::PacketProsess::UnpackStream(packet_stream, packet_stream_length,
-                                        &packet)) {
-    return false;
-  }
-
   return true;
 }
 
@@ -334,6 +282,57 @@ bool FcgiModule::PostFilter(const std::string& content,std::string& req_msg) {
     return true;
   }
   return false;
+}
+
+
+bool FcgiModule::TestStrPacket() {
+  int flag;
+  int code;
+  std::string respone;
+  std::string content =
+      "{\"id\":100002,\"token\":\"adc28ac69625652b46d5c00b\",\"exchangeName\":\"TJPME\",\"platformName\":\"JH\",\"symbol\":\"AG\",\"chartType\":1}";
+  std::stringstream os;
+  std::string addr = "115.122.238.25";
+  os << content;
+  //os << content << "&remote_addr=" << addr << "&type=" << api_type_
+  //  << "&operate_code=" << operate_code_ << "&log_type=" << log_type_ << "\n";
+
+  /*
+   * const int16 t_operate_code,
+   const int8 t_is_zip_encrypt, const int8 t_type,
+   int64 t_session_id, const int32 t_reserved,
+   const std::string& body_stream, void **packet_stream,
+   int32 *packet_stream_length
+   * */
+
+  void *packet_stream = NULL;
+  int32_t packet_stream_length = 0;
+  int16 operate_code = operate_code_;
+  int8 t_is_zip_encrypt = 0;
+  const int8 t_type = api_type_;
+  net::PacketProsess::StrPacket(operate_code_, t_is_zip_encrypt, t_type, 0, 0,
+                                os.str().c_str(), &packet_stream,
+                                &packet_stream_length);
+
+  respone.append(reinterpret_cast<const char*>(packet_stream),
+                 packet_stream_length);
+  if (packet_stream) {
+    delete packet_stream;
+    packet_stream = NULL;
+  }
+
+  std::string r_respone = net::PacketProsess::StrUnpacket(
+      (void*) (respone.c_str()), respone.length());
+
+  //使用解包函数
+  struct PacketHead *packet = NULL;
+
+  if (!net::PacketProsess::UnpackStream(packet_stream, packet_stream_length,
+                                        &packet)) {
+    return false;
+  }
+
+  return true;
 }
 
 }  // namespace fcgi_module end

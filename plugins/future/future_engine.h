@@ -19,9 +19,14 @@ class FutureManager {
   virtual ~FutureManager();
  protected:
   bool OnDynaTick(const int socket, const int64 uid, const std::string& token,
-                  const std::string&field, const std::string& sec_symbol,
+                  const std::string& field, const std::string& sec_symbol,
                   const STK_TYPE& stk_type, const std::string& start_time,
                   const std::string& end_time);
+
+  bool OnBasicFuture(const int socket, const int64 uid,
+                     const std::string& token, const std::string& field,
+                     const std::string& sec, const std::string& exchange,
+                     FutureStatus& status);
 
  private:
   bool ExtractDynamMarket(

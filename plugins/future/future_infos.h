@@ -45,6 +45,13 @@ enum STK_TYPE {
   STK_TYPE_COUNT
 };
 
+enum FutureStatus {
+  ALL = 0, //全部都包含
+  L = 1, //上市
+  DE = 2, //已退市
+  UN = 3, //未上市
+};
+
 extern const char* s_stk_type[HIS_DATA_TYPE_COUNT];
 extern const char* g_his_data_suffix[HIS_DATA_TYPE_COUNT];
 extern const char* g_stk_type[STK_TYPE_COUNT];

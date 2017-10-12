@@ -12,16 +12,110 @@
 
 namespace future_logic {
 namespace net_request {
-class DynaTick {
+
+class BaseValue {
  public:
-  DynaTick()
+  BaseValue()
       : access_token_(NULL),
         uid_(NULL),
-        sec_id_(NULL),
         field_(NULL),
-        start_time_(NULL),
-        end_time_(NULL) {
+        address_(NULL) {
+  }
 
+  ~BaseValue() {
+    if (access_token_) {
+      delete access_token_;
+      access_token_ = NULL;
+    }
+    if (uid_) {
+      delete uid_;
+      uid_ = NULL;
+    }
+    if (field_) {
+      delete field_;
+      field_ = NULL;
+    }
+    if (address_) {
+      delete address_;
+      address_ = NULL;
+    }
+  }
+
+  bool set_http_packet(base_logic::DictionaryValue* value);
+
+  void set_access_token(const std::string& access_token) {
+    access_token_ = new base_logic::StringValue(access_token);
+  }
+
+  void set_uid(const int64 uid) {
+    uid_ = new base_logic::FundamentalValue(uid);
+  }
+
+  void set_field(const std::string& field) {
+    field_ = new base_logic::StringValue(field);
+  }
+
+  void set_address(const std::string& address) {
+    address_ = new base_logic::StringValue(address);
+  }
+
+  std::string access_token() const {
+    std::string access_token;
+    access_token_->GetAsString(&access_token);
+    return access_token;
+  }
+
+  int64 uid() const {
+    int64 uid = 0;
+    uid_->GetAsBigInteger(&uid);
+    return uid;
+  }
+
+  std::string address() const {
+    std::string address;
+    address_->GetAsString(&address);
+    return address;
+  }
+
+  std::string field() const {
+    std::string field;
+    field_->GetAsString(&field);
+    return field;
+  }
+
+ public:
+  base_logic::StringValue* access_token_;
+  base_logic::FundamentalValue* uid_;
+  base_logic::StringValue* field_;
+  base_logic::StringValue* address_;
+
+};
+
+class BaseFuture: public BaseValue{
+ public:
+  BaseFuture()
+   : status_(NULL),
+     sec_id_(NULL),
+     ticker_(NULL),
+     exchange_(NULL){}
+
+  bool set_http_packet(base_logic::DictionaryValue* value);
+
+
+public:
+  base_logic::FundamentalValue* status_;
+  base_logic::StringValue* sec_id_;
+  base_logic::StringValue* ticker_;
+  base_logic::StringValue* exchange_;
+};
+
+
+class DynaTick:public BaseValue{
+ public:
+  DynaTick()
+      : sec_id_(NULL),
+        start_time_(NULL),
+        end_time_(NULL){
   }
 
   ~DynaTick() {
@@ -53,21 +147,10 @@ class DynaTick {
 
   bool set_http_packet(base_logic::DictionaryValue* value);
 
-  void set_access_token(const std::string& access_token) {
-    access_token_ = new base_logic::StringValue(access_token);
-  }
-
-  void set_uid(const int64 uid) {
-    uid_ = new base_logic::FundamentalValue(uid);
-  }
-
   void set_sec_id(const std::string& sec_id) {
     sec_id_ = new base_logic::StringValue(sec_id);
   }
 
-  void set_field(const std::string& field) {
-    field_ = new base_logic::StringValue(field);
-  }
 
   void set_start_time(const std::string& start_time) {
     start_time_ = new base_logic::StringValue(start_time);
@@ -77,28 +160,10 @@ class DynaTick {
     end_time_ = new base_logic::StringValue(end_time);
   }
 
-  std::string access_token() const {
-    std::string access_token;
-    access_token_->GetAsString(&access_token);
-    return access_token;
-  }
-
-  int64 uid() const {
-    int64 uid = 0;
-    uid_->GetAsBigInteger(&uid);
-    return uid;
-  }
-
   std::string sec_id() const {
     std::string sec_id;
     sec_id_->GetAsString(&sec_id);
     return sec_id;
-  }
-
-  std::string field() const {
-    std::string field;
-    field_->GetAsString(&field);
-    return field;
   }
 
   std::string start_time() const {
@@ -114,12 +179,19 @@ class DynaTick {
   }
 
  public:
-  base_logic::StringValue* access_token_;
-  base_logic::FundamentalValue* uid_;
   base_logic::StringValue* sec_id_;
-  base_logic::StringValue* field_;
   base_logic::StringValue* start_time_;
   base_logic::StringValue* end_time_;
+};
+
+class BasicFuture {
+ public:
+  base_logic::StringValue* access_token_;
+  base_logic::FundamentalValue* uid_;
+  base_logic::StringValue* field_;
+  base_logic::StringValue* sec_;
+  base_logic::StringValue* exchange;
+  base_logic::FundamentalValue* status_;
 };
 
 }
@@ -129,6 +201,8 @@ class DynaTick {
  public:
   DynaTick()
       : dyna_tick_(NULL),
+        last_time_(NULL),
+        next_time_(NULL),
         value_(NULL) {
     dyna_tick_ = new base_logic::ListValue;
   }
@@ -144,7 +218,7 @@ class DynaTick {
     dyna_tick_->Append(value);
   }
 
-  void set_last_time(const int64 last_time){
+  void set_last_time(const int64 last_time) {
     last_time_ = new base_logic::FundamentalValue(last_time);
   }
 
@@ -160,14 +234,13 @@ class DynaTick {
       dyna_tick_ = NULL;
     }
 
-    if(last_time_ != NULL)
-      value_->Set(L"lt",last_time_);
+    if (last_time_ != NULL)
+      value_->Set(L"lt", last_time_);
 
-    if(next_time_ != NULL)
-      value_->Set(L"nt",next_time_);
+    if (next_time_ != NULL)
+      value_->Set(L"nt", next_time_);
     return value_;
   }
-
 
   void Reset() {
     if (value_) {
