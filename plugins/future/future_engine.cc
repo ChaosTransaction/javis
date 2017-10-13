@@ -86,8 +86,8 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
     net_reply::DynaTick dyna_tick;
     SendDynamMarket(start_time_pos, end_time_pos, max_count, static_list,
                     market_hash, dyna_tick);
-
-    dyna_tick.check_minute();
+    if(dyna_tick.next_time() > 0)
+      dyna_tick.check_minute();
     base_logic::DictionaryValue* value = dyna_tick.get();
     send_value(socket, value);
   } else {
@@ -221,7 +221,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     last_time = dynma_market.current_time();
   }
 
-  if (index_pos >= max_count) {
+  if (pos < raw_data_length) {  //有未完成的數據
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
     packet.assign(raw_data + pos + sizeof(int16),

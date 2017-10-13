@@ -245,6 +245,13 @@ class DynaTick {
     dyna_tick_->Append(value);
   }
 
+  int64 next_time() const {
+    int64 next_time = 0;
+    if(next_time != NULL)
+      next_time_->GetAsBigInteger(&next_time);
+    return next_time;
+  }
+
   void set_last_time(const int64 last_time) {
     last_time_ = new base_logic::FundamentalValue(last_time);
   }
