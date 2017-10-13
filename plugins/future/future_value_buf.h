@@ -247,7 +247,7 @@ class DynaTick {
 
   int64 next_time() const {
     int64 next_time = 0;
-    if(next_time != NULL)
+    if(next_time_ != NULL)
       next_time_->GetAsBigInteger(&next_time);
     return next_time;
   }
