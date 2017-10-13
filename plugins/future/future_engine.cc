@@ -65,7 +65,10 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                                                             end_time_pos,
                                                             static_list);
 
-  if (!r)
+ ULOG_DEBUG2("static_list :%d start:%d end:%d",
+              static_list.size(),start_time_pos.time_index(),
+              end_time_pos.time_index());
+ if (!r)
     return false;
 
   std::map<int32, future_infos::DayMarket> market_hash;

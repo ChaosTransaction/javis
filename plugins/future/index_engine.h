@@ -22,6 +22,7 @@ typedef std::map<std::string, DATETYPE_MAP> SYMBOL_MAP;  //合约行情 //key:�
 //typedef std::map<std::string, SYMBOL_MAP> MKT_MAP;//交易所行情 //交易所编号
 
 enum LOADERROR {
+  UNKOWN_ERROR = -4,
   BOTH_NOT_EXITS = -3,
   START_NOT_EXITS = -2,
   END_NOT_EXITS = -1,

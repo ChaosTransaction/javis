@@ -91,7 +91,7 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   //bool r = false;
   /*future_infos::TickTimePos start_time_pos;
    future_infos::TickTimePos end_time_pos;*/
-
+  
   DATETYPE_MAP start_type_pos_map;
   DATETYPE_MAP end_type_pos_map;
 
@@ -286,11 +286,13 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
   r = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
                 start_day_pos_map, time_frame.mutable_start_time(),
                 start_hour_map, start_min_map);
+  ULOG_DEBUG2("start:%d|-----|end:%d",time_frame.start_full_day(),
+             time_frame.end_full_day());
   if (time_frame.start_full_day() == time_frame.end_full_day()) {
     end_hour_map = start_hour_map;
     end_min_map = start_min_map;
   } else {
-    r = GetDayPos(lock, -86400, sec, symbol, data_type, stk_type,
+    r = GetDayPos(lock,-86400, sec, symbol, data_type, stk_type,
                   end_day_pos_map, time_frame.mutable_end_time(), end_hour_map,
                   end_min_map);
   }
