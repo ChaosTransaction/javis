@@ -136,12 +136,14 @@ bool FcgiModule::GetRequestMethod(const char* query) {
   int code = 0;
   bool ret = false;
   char *addr = getenv("REMOTE_ADDR");
-  char *author = getenv("Authorization");
-  //os << std::string(query) << "&remote_addr=" << addr << "&operate_code="
+  //char *author = getenv("AUTHORIZATION");A
+  //ULOG_DEBUG("=>>>>>>>>>");
+    //os << std::string(query) << "&remote_addr=" << addr << "&operate_code="
   //  << operate_code_ << "&type=" << api_type_ << "&log_type=" << log_type_
   // << "\n\t\r";
   //content = os.str();
-  std::string content = query + "address=" << addr << "access_token" << author;
+  
+    content = std::string(query) + "&address=" + std::string(addr);
   ULOG_DEBUG2("%s",content.c_str());
   /*ret = net::core_get(0, content.c_str(), content.length(), respone, flag,
    code);*/
