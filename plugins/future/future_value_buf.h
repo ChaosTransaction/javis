@@ -10,7 +10,7 @@
 #include <string>
 #include "logic/logic_comm.h"
 
-enum NET_ERRNO{
+enum NET_ERRNO {
   NO_ERRNO = 0,
   EXCEPTION = -1,
   FORMAT_ERRNO = -2,
@@ -22,6 +22,13 @@ enum NET_ERRNO{
   END_TIME_ERRNO = -8,
   TIME_NO_DATA = -9
 
+};
+
+#define   BASE_NET_TYPE  1000
+
+enum NET_TYPE {
+  HTTP_TYPE = 2,
+  TCP_TYPE = 3,
 };
 
 namespace future_logic {
@@ -36,7 +43,8 @@ class BaseValue {
       : access_token_(NULL),
         uid_(NULL),
         field_(NULL),
-        address_(NULL) {
+        address_(NULL),
+        net_code_(NULL){
   }
 
   ~BaseValue() {
@@ -56,6 +64,10 @@ class BaseValue {
       delete address_;
       address_ = NULL;
     }
+    if(net_code_){
+      delete net_code_;
+      net_code_ = NULL;
+    }
   }
 
   NET_ERRNO set_http_packet(base_logic::DictionaryValue* value);
@@ -66,6 +78,10 @@ class BaseValue {
 
   void set_uid(const int64 uid) {
     uid_ = new base_logic::FundamentalValue(uid);
+  }
+
+  void set_net_code(const int32 net_code){
+    net_code_ = new base_logic::FundamentalValue(net_code);
   }
 
   void set_field(const std::string& field) {
@@ -88,6 +104,12 @@ class BaseValue {
     return uid;
   }
 
+  int32 net_code() const {
+    int32 net_code = 0;
+    net_code_->GetAsBigInteger(net_code);
+    return net_code;
+  }
+
   std::string address() const {
     std::string address;
     address_->GetAsString(&address);
@@ -105,53 +127,42 @@ class BaseValue {
   base_logic::FundamentalValue* uid_;
   base_logic::StringValue* field_;
   base_logic::StringValue* address_;
+  base_logic::FundamentalValue* net_code_; //1000 为http
 
 };
 
-class BaseFuture: public BaseValue{
+class BaseFuture : public BaseValue {
  public:
   BaseFuture()
-   : status_(NULL),
-     sec_id_(NULL),
-     ticker_(NULL),
-     exchange_(NULL){}
+      : status_(NULL),
+        sec_id_(NULL),
+        ticker_(NULL),
+        exchange_(NULL) {
+  }
 
   bool set_http_packet(base_logic::DictionaryValue* value);
 
-
-public:
+ public:
   base_logic::FundamentalValue* status_;
   base_logic::StringValue* sec_id_;
   base_logic::StringValue* ticker_;
   base_logic::StringValue* exchange_;
 };
 
-
-class DynaTick:public BaseValue{
+class DynaTick : public BaseValue {
  public:
   DynaTick()
       : sec_id_(NULL),
         start_time_(NULL),
-        end_time_(NULL){
+        end_time_(NULL) {
   }
 
   ~DynaTick() {
-    if (access_token_) {
-      delete access_token_;
-      access_token_ = NULL;
-    }
-    if (uid_) {
-      delete uid_;
-      uid_ = NULL;
-    }
     if (sec_id_) {
       delete sec_id_;
       sec_id_ = NULL;
     }
-    if (field_) {
-      delete field_;
-      field_ = NULL;
-    }
+
     if (start_time_) {
       delete start_time_;
       start_time_ = NULL;
@@ -167,7 +178,6 @@ class DynaTick:public BaseValue{
   void set_sec_id(const std::string& sec_id) {
     sec_id_ = new base_logic::StringValue(sec_id);
   }
-
 
   void set_start_time(const std::string& start_time) {
     start_time_ = new base_logic::StringValue(start_time);

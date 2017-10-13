@@ -39,6 +39,7 @@ FutureManager::~FutureManager() {
 bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                                const std::string& token,
                                const std::string& field,
+                               const int32 net_code,
                                const std::string& sec_symbol,
                                const STK_TYPE& stk_type,
                                const std::string& start_time,
@@ -52,6 +53,14 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
 
   future_infos::TickTimePos start_time_pos;
   future_infos::TickTimePos end_time_pos;
+
+  int32 max_count = 0;
+
+  if (net_code == HTTP_TYPE * BASE_NET_TYPE)
+    max_count = 100;
+  else
+    max_count = 300;
+
 
   r = IndexEngine::GetSchdulerManager()->OnFetchIndexPos(sec, symbol, data_type,
                                                          start_time, end_time,
@@ -77,7 +86,8 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
 
   if (!static_list.empty()) {
     net_reply::DynaTick dyna_tick;
-    SendDynamMarket(start_time_pos, end_time_pos, static_list, market_hash,
+    SendDynamMarket(start_time_pos, end_time_pos, max_count,
+                    static_list, market_hash,
                     dyna_tick);
     base_logic::DictionaryValue* value = dyna_tick.get();
     send_value(socket, value);
@@ -89,6 +99,7 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
 
 bool FutureManager::SendDynamMarket(
     future_infos::TickTimePos& start_pos, future_infos::TickTimePos& end_pos,
+    const int32 max_count,
     std::list<future_infos::StaticInfo>& static_list,
     std::map<int32, future_infos::DayMarket>& market_hash,
     net_reply::DynaTick& dyna_tick) {
@@ -97,7 +108,6 @@ bool FutureManager::SendDynamMarket(
   bool r = false;
 
   int32 index_pos = 0;
-  int32 max_count = 300;
   for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
       it != static_list.end(); it++) {
     future_infos::StaticInfo static_info = (*it);

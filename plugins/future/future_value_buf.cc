@@ -35,6 +35,8 @@ NET_ERRNO BaseValue::set_http_packet(base_logic::DictionaryValue* value) {
   bool r = false;
   std::string access_token;
   int64 uid = 0;
+  int32 net_code = 0;
+  int64 big_net_code = 0;
   std::string field;
   std::string address;
   r = value->GetString(L"access_token", &access_token);
@@ -42,6 +44,7 @@ NET_ERRNO BaseValue::set_http_packet(base_logic::DictionaryValue* value) {
     set_access_token(access_token);
   else
     return TOKEN_ERRNO;
+
 
   r = value->GetBigInteger(L"uid", &uid);
   if (r)
@@ -58,6 +61,13 @@ NET_ERRNO BaseValue::set_http_packet(base_logic::DictionaryValue* value) {
   if (r)
     set_address(address);
 
+  r = value->GetBigInteger(L"net_code", &big_net_code);
+   if (r)
+     net_code = big_net_code;
+   else
+     net_code = TCP_TYPE * BASE_NET_TYPE;
+
+  set_net_code(net_code);
   return NO_ERRNO;
 }
 

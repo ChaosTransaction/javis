@@ -147,7 +147,8 @@ bool FcgiModule::GetRequestMethod(const char* query) {
   bool r = false;
   char *addr = getenv("REMOTE_ADDR");
 
-  content = std::string(query) + "&address=" + std::string(addr);
+  content = std::string(query) + "&address=" + std::string(addr) + "&net_code="
+        + 2001;
   std::string deurl_content;
   base::BasicUtil::UrlDecode(content, deurl_content);
   base_logic::ValueSerializer *engine = base_logic::ValueSerializer::Create(

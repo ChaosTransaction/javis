@@ -175,6 +175,7 @@ bool Futurelogic::OnDynaTick(struct server* srv, int socket,
   FutureEngine::GetSchdulerManager()->OnDynaTick(socket, dyna_tick.uid(),
                                                  dyna_tick.access_token(),
                                                  dyna_tick.field(),
+                                                 dyna_tick.net_code(),
                                                  dyna_tick.sec_id(), FUTURE,
                                                  dyna_tick.start_time(),
                                                  dyna_tick.end_time());
