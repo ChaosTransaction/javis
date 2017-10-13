@@ -106,7 +106,7 @@ class BaseValue {
 
   int32 net_code() const {
     int32 net_code = 0;
-    net_code_->GetAsBigInteger(net_code);
+    net_code_->GetAsInteger(&net_code);
     return net_code;
   }
 

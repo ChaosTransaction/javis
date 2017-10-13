@@ -56,10 +56,10 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
 
   int32 max_count = 0;
 
-  if (net_code == HTTP_TYPE * BASE_NET_TYPE)
+  if (net_code / BASE_NET_TYPE == HTTP_TYPE)
     max_count = 100;
   else
-    max_count = 300;
+    max_count = 280;
 
 
   r = IndexEngine::GetSchdulerManager()->OnFetchIndexPos(sec, symbol, data_type,
@@ -149,7 +149,7 @@ bool FutureManager::SendDynamMarket(
 
 bool FutureManager::CalcuDynamMarket(const char* raw_data,
                                      const size_t raw_data_length,
-                                     int32& index_pos, int32& max_count,
+                                     int32& index_pos, const int32 max_count,
                                      future_infos::StaticInfo& static_info,
                                      net_reply::DynaTick& dyna_tick) {
   size_t pos = 0;
