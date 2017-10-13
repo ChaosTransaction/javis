@@ -98,7 +98,7 @@ bool FutureManager::SendDynamMarket(
   bool r = false;
 
   int32 index_pos = 0;
-  int32 max_count = 0;
+  int32 max_count = 300;
   for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
       it != static_list.end(); it++) {
     future_infos::StaticInfo static_info = (*it);
@@ -140,7 +140,7 @@ bool FutureManager::SendDynamMarket(
 
 bool FutureManager::CalcuDynamMarket(const char* raw_data,
                                      const size_t raw_data_length,
-                                     int32 index_pos, int32 max_count,
+                                     int32& index_pos, int32& max_count,
                                      future_infos::StaticInfo& static_info,
                                      net_reply::DynaTick& dyna_tick) {
   size_t pos = 0;
@@ -149,6 +149,8 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   int64 last_time = 0;
   int64 next_time = 0;
   ULOG_DEBUG("================>");
+  if(index_pos>=max_count)
+    return true;
   while (pos < raw_data_length && index_pos < max_count) {
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
@@ -221,11 +223,13 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     chaos_data::SymbolDynamMarket dynma_market;
     dynma_market.ParseFromString(packet);
     next_time = dynma_market.current_time();
+    ULOG_DEBUG2("next_time:%d",next_time);
   }
-  ULOG_DEBUG2("%d---->%d---->%d", index_pos, dyna_tick.Size(), max_count);
 
+  ULOG_DEBUG2("last_time:%d next_time:%d",last_time,next_time);
   dyna_tick.set_last_time(last_time);
-  dyna_tick.set_next_time(next_time);
+  dyna_tick.set_next_time(next_time); 
+  ULOG_DEBUG2("%d---->%d---->%d", index_pos, dyna_tick.Size(), max_count);
   return true;
 }
 
