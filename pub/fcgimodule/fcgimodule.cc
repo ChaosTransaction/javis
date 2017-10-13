@@ -21,21 +21,20 @@ FcgiModule::~FcgiModule() {
 }
 
 bool FcgiModule::Init(const char *addr, unsigned short port, int api_type,
-              int operate_code, int log_type){
-  ULOG_DEBUG2("%s,%d",addr, port);
+                      int operate_code, int log_type) {
+  ULOG_DEBUG2("%s,%d", addr, port);
   net::core_connect_net(addr, port);
- #if defined (FCGI_PLUS)
-   FCGX_Init();
-   FCGX_InitRequest(&request_, 0, 0);
- #endif
-   api_type_ = api_type;
-   log_type_ = log_type;
-   operate_code_ = operate_code;
-   //api_logger_.Init(UNIX_LOGGER_SOCK_FILE_PATH);
+#if defined (FCGI_PLUS)
+  FCGX_Init();
+  FCGX_InitRequest(&request_, 0, 0);
+#endif
+  api_type_ = api_type;
+  log_type_ = log_type;
+  operate_code_ = operate_code;
+  //api_logger_.Init(UNIX_LOGGER_SOCK_FILE_PATH);
 
-   return true;
- }
-
+  return true;
+}
 
 bool FcgiModule::Init(std::string& core_sock_file, int api_type,
                       int operate_code, int log_type) {
@@ -137,19 +136,22 @@ bool FcgiModule::GetRequestMethod(const char* query) {
   int code = 0;
   bool ret = false;
   char *addr = getenv("REMOTE_ADDR");
-  os << std::string(query) << "&remote_addr=" << addr << "&operate_code="
-      << operate_code_ << "&type=" << api_type_ << "&log_type=" << log_type_
-      << "\n\t\r";
-  content = os.str();
-
-  ret = net::core_get(0, content.c_str(), content.length(), respone, flag,
-                      code);
+  char *author = getenv("Authorization");
+  //os << std::string(query) << "&remote_addr=" << addr << "&operate_code="
+  //  << operate_code_ << "&type=" << api_type_ << "&log_type=" << log_type_
+  // << "\n\t\r";
+  //content = os.str();
+  std::string content = query + "address=" << addr << "access_token" << author;
+  ULOG_DEBUG2("%s",content.c_str());
+  /*ret = net::core_get(0, content.c_str(), content.length(), respone, flag,
+   code);*/
 
   if (!respone.empty()) {
-    printf("Content-type: text/html\r\n"
-           "\r\n"
-           "%s",
-           respone.c_str());
+    printf(
+        "Content-type: application/json;charset=utf-8\r\nAccess-Control-Allow-Origin: *\r\n"
+        "\r\n"
+        "%s",
+        respone.c_str());
   }
   return true;
 }
@@ -167,7 +169,6 @@ bool FcgiModule::PostRequestMethod(const std::string & content) {
 #endif
   os << content;
 
-
   void *packet_stream = NULL;
   int32 packet_stream_length = 0;
 
@@ -177,41 +178,40 @@ bool FcgiModule::PostRequestMethod(const std::string & content) {
   int8 t_is_zip_encrypt = 0;
   const int8 t_type = api_type_;
   std::string ct = os.str();
-  if (is_filter_){
+  if (is_filter_) {
     std::string result;
-    if (XMLFilter(ct,result))
+    if (XMLFilter(ct, result))
       ct = result;
   }
   //postdeal key=value&key=value
-  if (filter_type_ == 0){
+  if (filter_type_ == 0) {
     std::string result;
-    if (PostFilter(ct,result))
+    if (PostFilter(ct, result))
       ct = result;
   }
   net::PacketProsess::StrPacket(operate_code_, t_is_zip_encrypt, t_type, 0,
                                 2001, ct.c_str(), &packet_stream,
                                 &packet_stream_length);
 
-
   respone.clear();
   r = net::core_get(0, reinterpret_cast<char*>(packet_stream),
                     packet_stream_length, respone, flag, code);
 
-  ULOG_DEBUG2("respone length %d,r %d",respone.length(),r);
+  ULOG_DEBUG2("respone length %d,r %d", respone.length(), r);
 
   std::string r_repone;
   r_repone.clear();
   if (r && !is_filter_)
     r_repone = respone;/*net::PacketProsess::StrUnpacket((void*) (respone.c_str()),
-                                               respone.length());*/
+     respone.length());*/
   else
     r_repone = respone;
   if (!r_repone.empty() && r) {
     printf(
         "Content-type: application/json;charset=utf-8\r\nAccess-Control-Allow-Origin: *\r\n"
-           "\r\n"
-           "%s",
-           r_repone.c_str());
+        "\r\n"
+        "%s",
+        r_repone.c_str());
   }
   return true;
 }
@@ -252,7 +252,7 @@ bool FcgiModule::DeleteRequestMethod(FCGX_Request * request) {
   return true;
 }
 
-bool FcgiModule::XMLFilter(const std::string& content,std::string& req_msg) {
+bool FcgiModule::XMLFilter(const std::string& content, std::string& req_msg) {
   if (!content.empty()) {
     std::string s = content;
     req_msg = "{\"result\":";
@@ -268,7 +268,7 @@ bool FcgiModule::XMLFilter(const std::string& content,std::string& req_msg) {
   return false;
 }
 
-bool FcgiModule::PostFilter(const std::string& content,std::string& req_msg) {
+bool FcgiModule::PostFilter(const std::string& content, std::string& req_msg) {
   if (!content.empty()) {
     std::string s = content;
     req_msg = "{\"result\":";
@@ -283,7 +283,6 @@ bool FcgiModule::PostFilter(const std::string& content,std::string& req_msg) {
   }
   return false;
 }
-
 
 bool FcgiModule::TestStrPacket() {
   int flag;
