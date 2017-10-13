@@ -25,7 +25,7 @@ void SendUtils::FreeInstance() {
   instance_ = NULL;
 }
 
-int32 SendUtils::SendFull(int socket, const char *buffer, size_t nbytes) {
+int32 SendUtils::SendFull(const int socket, const char *buffer, size_t nbytes) {
   base_logic::WLockGd lk(socket_lock_);
   ssize_t amt = 0;
   ssize_t total = 0;
@@ -47,7 +47,7 @@ int32 SendUtils::SendFull(int socket, const char *buffer, size_t nbytes) {
   return static_cast<int32>(amt == -1 ? amt : total);
 }
 
-bool SendUtils::SendBytes(int socket, const void* bytes, int32 len,
+bool SendUtils::SendBytes(const int socket, const void* bytes, int32 len,
                           const char* file, int32 line) {
   if (socket <= 0 || bytes == NULL || len <= 0)
     return false;
@@ -60,7 +60,7 @@ bool SendUtils::SendBytes(int socket, const void* bytes, int32 len,
   return true;
 }
 
-bool SendUtils::SendErrno(int socket, NET_ERRNO& err_code,
+bool SendUtils::SendErrno(const int socket, int err_code,
                const char* err_str) {
   base_logic::DictionaryValue err_value;
   err_value.SetInteger(L"err_code",err_code);
@@ -68,7 +68,7 @@ bool SendUtils::SendErrno(int socket, NET_ERRNO& err_code,
   return SendValue(socket,&err_value);
 }
 
-bool SendUtils::SendValue(int socket, base_logic::DictionaryValue* value) {
+bool SendUtils::SendValue(const int socket, base_logic::DictionaryValue* value) {
   base_logic::ValueSerializer* engine = base_logic::ValueSerializer::Create(
       base_logic::IMPL_JSON);
   std::string body_stream;

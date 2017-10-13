@@ -91,9 +91,9 @@ NET_ERRNO DynaTick::set_http_packet(base_logic::DictionaryValue* value) {
   if (r)
     set_end_time(end_time);
   else
-    rturn END_TIME_ERRNO;
+    return END_TIME_ERRNO;
 
-  return r;
+  return NO_ERRNO;
 }
 
 }

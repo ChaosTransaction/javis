@@ -5,6 +5,7 @@
 #include "index_engine.h"
 #include "data_engine.h"
 #include "static_engine.h"
+#include "future_value_buf.h"
 #include "logic/logic_comm.h"
 #include "logic/logic_unit.h"
 #include "proto/symbol_dynam_market.pb.h"
@@ -63,8 +64,8 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                                                             end_time_pos,
                                                             static_list);
 
-  ULOG_DEBUG2("static_list :%d start:%d end:%d", static_list.size(),
-              start_time_pos.time_index(), end_time_pos.time_index());
+  /*ULOG_DEBUG2("static_list :%d start:%d end:%d", static_list.size(),
+              start_time_pos.time_index(), end_time_pos.time_index());*/
 
   std::map<int32, future_infos::DayMarket> market_hash;
   r = DataEngine::GetSchdulerManager()->OnLoadData(data_type, stk_type,
@@ -81,7 +82,7 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
     base_logic::DictionaryValue* value = dyna_tick.get();
     send_value(socket, value);
   } else {
-    send_error(socket, TIME_NO_DATA, net_error(TIME_NO_DATA));
+      send_error(socket, TIME_NO_DATA, net_error(TIME_NO_DATA));
   }
   return r;
 }

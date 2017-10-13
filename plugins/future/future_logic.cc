@@ -3,6 +3,7 @@
 
 #include "future/future_logic.h"
 #include "future/operator_code.h"
+#include "logic/logic_unit.h"
 #include "config/config.h"
 #include "future_engine.h"
 #define DEFAULT_CONFIG_PATH "./plugins/future/future_config.xml"
@@ -101,13 +102,13 @@ bool Futurelogic::OnFutureMessage(struct server *srv, const int socket,
 
   struct PacketHead *packet = NULL;
   if (srv == NULL || socket < 0 || msg == NULL || len < PACKET_HEAD_LENGTH){
-    send_error(socket, NET_ERRNO::EXCEPTION, net_error(NET_ERRNO::EXCEPTION));
+    send_error(socket, EXCEPTION, net_error(EXCEPTION));
     return false;
   }
 
   if (!net::PacketProsess::UnpackStream(msg, len, &packet)) {
     LOG_ERROR2("UnpackStream Error socket %d", socket);
-    send_error(socket, NET_ERRNO::FORMAT_ERRNO, net_error(NET_ERRNO::FORMAT_ERRNO));
+    send_error(socket, FORMAT_ERRNO, net_error(FORMAT_ERRNO));
     return false;
   }
 
@@ -160,13 +161,13 @@ bool Futurelogic::OnDynaTick(struct server* srv, int socket,
   future_logic::net_request::DynaTick dyna_tick;
 
   if (packet->packet_length <= PACKET_HEAD_LENGTH) {
-    send_error(socket, NET_ERRNO::PACKET_LEN_ERRNO, net_error(NET_ERRNO::PACKET_LEN_ERRNO));
+    send_error(socket, PACKET_LEN_ERRNO, net_error(PACKET_LEN_ERRNO));
     return false;
   }
 
   struct PacketControl* packet_control = (struct PacketControl*) (packet);
   NET_ERRNO r = dyna_tick.set_http_packet(packet_control->body_);
-  if (r != NET_ERRNO) {
+  if (r != NO_ERRNO) {
     send_error(socket, r, net_error(r));
     return false;
   }

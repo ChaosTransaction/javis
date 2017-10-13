@@ -22,14 +22,14 @@ class SendUtils {
   static void FreeInstance();
 
  public:
-  int32 SendFull(int socket, const char* buffer, size_t bytes);
+  int32 SendFull(const int socket, const char* buffer, size_t bytes);
 
-  bool SendBytes(int socket, const void* bytes, int32 len, const char* file,
+  bool SendBytes(const int socket, const void* bytes, int32 len, const char* file,
                  int32 line);
 
-  bool SendValue(int socket, base_logic::DictionaryValue* value);
+  bool SendValue(const int socket, base_logic::DictionaryValue* value);
 
-  bool SendErrno(int socket, NET_ERRNO& err_code, const char* err_str);
+  bool SendErrno(const int socket, int err_code, const char* err_str);
 
   /*bool SendMessage(int socket, struct PacketHead* packet, const char* file,
    int32 line);*/
