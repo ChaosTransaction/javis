@@ -38,8 +38,7 @@ FutureManager::~FutureManager() {
 
 bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                                const std::string& token,
-                               const std::string& field,
-                               const int32 net_code,
+                               const std::string& field, const int32 net_code,
                                const std::string& sec_symbol,
                                const STK_TYPE& stk_type,
                                const std::string& start_time,
@@ -61,7 +60,6 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
   else
     max_count = 300;
 
-
   r = IndexEngine::GetSchdulerManager()->OnFetchIndexPos(sec, symbol, data_type,
                                                          start_time, end_time,
                                                          start_time_pos,
@@ -74,7 +72,7 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                                                             static_list);
 
   /*ULOG_DEBUG2("static_list :%d start:%d end:%d", static_list.size(),
-              start_time_pos.time_index(), end_time_pos.time_index());*/
+   start_time_pos.time_index(), end_time_pos.time_index());*/
 
   std::map<int32, future_infos::DayMarket> market_hash;
   r = DataEngine::GetSchdulerManager()->OnLoadData(data_type, stk_type,
@@ -86,21 +84,19 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
 
   if (!static_list.empty()) {
     net_reply::DynaTick dyna_tick;
-    SendDynamMarket(start_time_pos, end_time_pos, max_count,
-                    static_list, market_hash,
-                    dyna_tick);
+    SendDynamMarket(start_time_pos, end_time_pos, max_count, static_list,
+                    market_hash, dyna_tick);
     base_logic::DictionaryValue* value = dyna_tick.get();
     send_value(socket, value);
   } else {
-      send_error(socket, TIME_NO_DATA, net_error(TIME_NO_DATA));
+    send_error(socket, TIME_NO_DATA, net_error(TIME_NO_DATA));
   }
   return r;
 }
 
 bool FutureManager::SendDynamMarket(
     future_infos::TickTimePos& start_pos, future_infos::TickTimePos& end_pos,
-    const int32 max_count,
-    std::list<future_infos::StaticInfo>& static_list,
+    const int32 max_count, std::list<future_infos::StaticInfo>& static_list,
     std::map<int32, future_infos::DayMarket>& market_hash,
     net_reply::DynaTick& dyna_tick) {
   future_infos::TimeUnit start_time_unit(start_pos.time_index());
@@ -149,7 +145,7 @@ bool FutureManager::SendDynamMarket(
 
 bool FutureManager::CalcuDynamMarket(const char* raw_data,
                                      const size_t raw_data_length,
-                                     int32& index_pos, int32& max_count,
+                                     int32& index_pos, const int32 max_count,
                                      future_infos::StaticInfo& static_info,
                                      net_reply::DynaTick& dyna_tick) {
   size_t pos = 0;
