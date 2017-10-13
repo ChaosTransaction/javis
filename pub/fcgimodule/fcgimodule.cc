@@ -3,6 +3,7 @@
 
 #include "fcgimodule.h"
 #include "logic/logic_comm.h"
+#include "logic/base_values.h"
 #include "net/packet_processing.h"
 #include <algorithm>
 
@@ -131,29 +132,74 @@ void FcgiModule::Close() {
 bool FcgiModule::GetRequestMethod(const char* query) {
   std::string content;
   std::string respone;
-  std::stringstream os;
+  std::string error_str;
+  int error_code = 0;
+
+  void *packet_stream = NULL;
+  int32 packet_stream_length = 0;
+  int16 operate_code = operate_code_;
+  int8 t_is_zip_encrypt = 0;
+  const int8 t_type = api_type_;
+
   int flag = 0;
   int code = 0;
-  bool ret = false;
+  bool r = false;
   char *addr = getenv("REMOTE_ADDR");
-  //char *author = getenv("AUTHORIZATION");A
-  //ULOG_DEBUG("=>>>>>>>>>");
-    //os << std::string(query) << "&remote_addr=" << addr << "&operate_code="
-  //  << operate_code_ << "&type=" << api_type_ << "&log_type=" << log_type_
-  // << "\n\t\r";
-  //content = os.str();
-  
-    content = std::string(query) + "&address=" + std::string(addr);
-  ULOG_DEBUG2("%s",content.c_str());
-  /*ret = net::core_get(0, content.c_str(), content.length(), respone, flag,
-   code);*/
 
-  if (!respone.empty()) {
+  content = std::string(query) + "&address=" + std::string(addr);
+  base_logic::ValueSerializer *engine = base_logic::ValueSerializer::Create(
+      base_logic::IMPL_HTTP);
+  if (engine == NULL) {
+    LOG_ERROR("engine create null");
+    return false;
+  }
+  base_logic::DictionaryValue *value = (base_logic::DictionaryValue*) engine
+      ->Deserialize(&content, &error_code, &error_str);
+
+  if (engine) {
+    delete engine;
+    engine = NULL;
+  }
+
+  base_logic::ValueSerializer *engine = base_logic::ValueSerializer::Create(
+      base_logic::IMPL_JSON);
+  if (engine == NULL) {
+    LOG_ERROR("engine create null");
+    return false;
+  }
+  std::string body_stream;
+  bool r = engine->Serialize((*value), &body_stream);
+
+  if (engine) {
+    delete engine;
+    engine = NULL;
+  }
+  if (value) {
+    delete value;
+    value = NULL;
+  }
+
+  net::PacketProsess::StrPacket(operate_code_, t_is_zip_encrypt, t_type, 0,
+                                2001, body_stream.c_str(), &packet_stream,
+                                &packet_stream_length);
+
+  respone.clear();
+  r = net::core_get(0, reinterpret_cast<char*>(packet_stream),
+                    packet_stream_length, respone, flag, code);
+
+  std::string r_repone;
+  r_repone.clear();
+  if (r && !is_filter_)
+    r_repone = respone;/*net::PacketProsess::StrUnpacket((void*) (respone.c_str()),
+     respone.length());*/
+  else
+    r_repone = respone;
+  if (!r_repone.empty() && r) {
     printf(
         "Content-type: application/json;charset=utf-8\r\nAccess-Control-Allow-Origin: *\r\n"
         "\r\n"
         "%s",
-        respone.c_str());
+        r_repone.c_str());
   }
   return true;
 }
