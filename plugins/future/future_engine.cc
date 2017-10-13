@@ -87,13 +87,20 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
     SendDynamMarket(start_time_pos, end_time_pos, max_count, static_list,
                     market_hash, dyna_tick);
 
-    //倒序
+    //一次性讀取不完 倒序
     int32 dyna_count = dyna_tick.Size();
     int64 last_time = 0;
     int64 cur_time = 0;
     last_time = cur_time = dyna_tick.GetTime(dyna_count - 1);
 
-    bool rt = dyna_tick.Remove(dyna_count - 1);
+    for(int index = dyna_count - 2;dyna_tick.Size() == 0;){
+      cur_time = dyna_tick.GetTime(index);
+      future_infos::TimeUnit cur_time_unit(cur_time);
+      future_infos::TimeUnit last_time_unit(last_time);
+      if(cur_time_unit.exploded().minute != last_time_unit.exploded().minute)
+        break;
+      dyna_tick.Remove(index);
+    }
 
     base_logic::DictionaryValue* value = dyna_tick.get();
     send_value(socket, value);
