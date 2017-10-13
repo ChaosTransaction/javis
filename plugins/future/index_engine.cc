@@ -283,18 +283,22 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
                                          MINUTEPOS_MAP& end_min_map) {
   LOADERROR load_error = LOAD_SUCCESS;
   bool r = false;
+  bool ret = false;
   r = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
                 start_day_pos_map, time_frame.mutable_start_time(),
                 start_hour_map, start_min_map);
-  ULOG_DEBUG2("start:%d|-----|end:%d",time_frame.start_full_day(),
-             time_frame.end_full_day());
-  if (time_frame.start_full_day() == time_frame.end_full_day()) {
+  if (time_frame.start_full_day() == time_frame.end_full_day() && r) {
     end_hour_map = start_hour_map;
     end_min_map = start_min_map;
   } else {
-    r = GetDayPos(lock,-86400, sec, symbol, data_type, stk_type,
+    ret = GetDayPos(lock,-86400, sec, symbol, data_type, stk_type,
                   end_day_pos_map, time_frame.mutable_end_time(), end_hour_map,
                   end_min_map);
+  }
+
+  if(ret==true && r == false){//开始的时间没有数据，结束的时间有数据
+    start_hour_map = end_hour_map;
+    start_min_map = end_min_map;
   }
   return load_error;
 }
