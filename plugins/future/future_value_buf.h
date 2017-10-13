@@ -252,6 +252,9 @@ class DynaTick {
   void set_next_time(const int64 next_time) {
     next_time_ = new base_logic::FundamentalValue(next_time);
   }
+
+  void check_minute();
+
   base_logic::DictionaryValue* get() {
     value_ = new base_logic::DictionaryValue();
     if (!dyna_tick_->empty()) {
