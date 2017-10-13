@@ -29,14 +29,15 @@ class SendUtils {
 
   bool SendValue(int socket, base_logic::DictionaryValue* value);
 
+  bool SendErrno(int socket, NET_ERRNO& err_code, const char* err_str);
+
   /*bool SendMessage(int socket, struct PacketHead* packet, const char* file,
-                   int32 line);*/
+   int32 line);*/
  private:
   struct threadrw_t* socket_lock_;
 };
 
 }
-
 
 #define send_value(socket, packet)\
     logic::SendUtils::GetInstance()->SendValue(socket, packet)\
@@ -44,7 +45,10 @@ class SendUtils {
 #define send_full(socket, buffer, len) \
   logic::SendUtils::GetInstance()->SendFull(socket, buffer, len)\
 
-#define send_error(socket, type, error_code, session) \
+#define send_error(socket, err_code, err_str)\
+  logic::SendUtils::GetInstance()->SendErrno(socket, err_code,err_str)\
+
+/*#define send_error(socket, type, error_code, session) \
   do { \
     struct PacketControl packet_control; \
     MAKE_HEAD(packet_control, ERROR_TYPE, type, 0, session, 0); \
@@ -52,11 +56,9 @@ class SendUtils {
     dic.SetInteger(L"result", error_code); \
     packet_control.body_ = &dic; \
     send_message(socket, &packet_control); \
-  } while(0)
-
+  } while(0)*/
 
 #define closelockconnect(socket) \
     shutdown(socket, SHUT_RDWR);
-
 
 #endif /* PUB_LOGIC_LOGIC_UNIT_H_ */

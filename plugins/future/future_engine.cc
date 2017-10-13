@@ -56,8 +56,6 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                                                          start_time, end_time,
                                                          start_time_pos,
                                                          end_time_pos);
-  if (!r)
-    return false;
 
   std::list<future_infos::StaticInfo> static_list;
   r = StaticEngine::GetSchdulerManager()->OnFetchStaticInfo(sec, symbol, FUTURE,
@@ -67,8 +65,6 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
 
   ULOG_DEBUG2("static_list :%d start:%d end:%d", static_list.size(),
               start_time_pos.time_index(), end_time_pos.time_index());
-  if (!r)
-    return false;
 
   std::map<int32, future_infos::DayMarket> market_hash;
   r = DataEngine::GetSchdulerManager()->OnLoadData(data_type, stk_type,
@@ -84,6 +80,8 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                     dyna_tick);
     base_logic::DictionaryValue* value = dyna_tick.get();
     send_value(socket, value);
+  } else {
+    send_error(socket, TIME_NO_DATA, net_error(TIME_NO_DATA));
   }
   return r;
 }
@@ -149,7 +147,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   int64 last_time = 0;
   int64 next_time = 0;
   ULOG_DEBUG("================>");
-  if(index_pos>=max_count)
+  if (index_pos >= max_count)
     return true;
   while (pos < raw_data_length && index_pos < max_count) {
     int16 packet_length = *(int16*) (raw_data + pos);
@@ -223,12 +221,12 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     chaos_data::SymbolDynamMarket dynma_market;
     dynma_market.ParseFromString(packet);
     next_time = dynma_market.current_time();
-    ULOG_DEBUG2("next_time:%d",next_time);
+    ULOG_DEBUG2("next_time:%d", next_time);
   }
 
-  ULOG_DEBUG2("last_time:%d next_time:%d",last_time,next_time);
+  ULOG_DEBUG2("last_time:%d next_time:%d", last_time, next_time);
   dyna_tick.set_last_time(last_time);
-  dyna_tick.set_next_time(next_time); 
+  dyna_tick.set_next_time(next_time);
   ULOG_DEBUG2("%d---->%d---->%d", index_pos, dyna_tick.Size(), max_count);
   return true;
 }

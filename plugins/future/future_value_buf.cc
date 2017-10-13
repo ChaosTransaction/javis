@@ -4,9 +4,34 @@
 #include "future_value_buf.h"
 
 namespace future_logic {
+
+const char* net_error(NET_ERRNO nerrno) {
+  switch (nerrno) {
+    case EXCEPTION:
+      return "exception error";
+    case FORMAT_ERRNO:
+      return "format error";
+    case PACKET_LEN_ERRNO:
+      return "packet length error";
+    case TOKEN_ERRNO:
+      return "access token error";
+    case UID_ERRNO:
+      return "uid error";
+    case SEC_ERRNO:
+      return "sec error";
+    case START_TIME_ERRNO:
+      return "start time errno";
+    case END_TIME_ERRNO:
+      return "end time errno";
+    case TIME_NO_DATA:
+      return "time frame no data";
+    default:
+      return "unkown";
+  }
+}
 namespace net_request {
 
-bool BaseValue::set_http_packet(base_logic::DictionaryValue* value) {
+NET_ERRNO BaseValue::set_http_packet(base_logic::DictionaryValue* value) {
   bool r = false;
   std::string access_token;
   int64 uid = 0;
@@ -15,46 +40,58 @@ bool BaseValue::set_http_packet(base_logic::DictionaryValue* value) {
   r = value->GetString(L"access_token", &access_token);
   if (r)
     set_access_token(access_token);
+  else
+    return TOKEN_ERRNO;
 
   r = value->GetBigInteger(L"uid", &uid);
   if (r)
     set_uid(uid);
+  else
+    return UID_ERRNO;
 
   r = value->GetString(L"field", &field);
-  if (r)
-    set_field(field);
+  if (!r)
+    field = "format";
+  set_field(field);
 
   r = value->GetString(L"address", &address);
   if (r)
     set_address(address);
-  return true;
+
+  return NO_ERRNO;
 }
 
-bool DynaTick::set_http_packet(base_logic::DictionaryValue* value) {
+NET_ERRNO DynaTick::set_http_packet(base_logic::DictionaryValue* value) {
   bool r = false;
   std::string sec_id;
   std::string start_time;
   std::string end_time;
+  NET_ERRNO net_errno;
   if (value == NULL)
-    return false;
+    return FORMAT_ERRNO;
 
-  r = BaseValue::set_http_packet(value);
+  net_errno = BaseValue::set_http_packet(value);
 
-  if (!r)
-    return false;
+  if (net_errno != 0)
+    return net_errno;
 
   r = value->GetString(L"sec_id", &sec_id);
   if (r)
     set_sec_id(sec_id);
-
+  else
+    return SEC_ERRNO;
 
   r = value->GetString(L"start_time", &start_time);
   if (r)
     set_start_time(start_time);
+  else
+    return START_TIME_ERRNO;
 
   r = value->GetString(L"end_time", &end_time);
   if (r)
     set_end_time(end_time);
+  else
+    rturn END_TIME_ERRNO;
 
   return r;
 }

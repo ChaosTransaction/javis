@@ -100,11 +100,14 @@ bool Futurelogic::OnFutureMessage(struct server *srv, const int socket,
   bool r = false;
 
   struct PacketHead *packet = NULL;
-  if (srv == NULL || socket < 0 || msg == NULL || len < PACKET_HEAD_LENGTH)
+  if (srv == NULL || socket < 0 || msg == NULL || len < PACKET_HEAD_LENGTH){
+    send_error(socket, NET_ERRNO::EXCEPTION, net_error(NET_ERRNO::EXCEPTION));
     return false;
+  }
 
   if (!net::PacketProsess::UnpackStream(msg, len, &packet)) {
     LOG_ERROR2("UnpackStream Error socket %d", socket);
+    send_error(socket, NET_ERRNO::FORMAT_ERRNO, net_error(NET_ERRNO::FORMAT_ERRNO));
     return false;
   }
 
@@ -140,7 +143,7 @@ bool Futurelogic::OnBroadcastMessage(struct server *srv, const int socket,
 
 
 bool Futurelogic::OnIniTimer(struct server *srv) {
-
+  return true;
 }
 
 bool Futurelogic::OnTimeout(struct server *srv, char *id, int opcode,
@@ -157,13 +160,14 @@ bool Futurelogic::OnDynaTick(struct server* srv, int socket,
   future_logic::net_request::DynaTick dyna_tick;
 
   if (packet->packet_length <= PACKET_HEAD_LENGTH) {
-    //send_error(socket, ERROR_TYPE, ERROR_TYPE, FORMAT_ERRNO);
+    send_error(socket, NET_ERRNO::PACKET_LEN_ERRNO, net_error(NET_ERRNO::PACKET_LEN_ERRNO));
     return false;
   }
+
   struct PacketControl* packet_control = (struct PacketControl*) (packet);
-  bool r = dyna_tick.set_http_packet(packet_control->body_);
-  if (!r) {
-    //send_error(socket, ERROR_TYPE, ERROR_TYPE, FORMAT_ERRNO);
+  NET_ERRNO r = dyna_tick.set_http_packet(packet_control->body_);
+  if (r != NET_ERRNO) {
+    send_error(socket, r, net_error(r));
     return false;
   }
 

@@ -10,7 +10,24 @@
 #include <string>
 #include "logic/logic_comm.h"
 
+enum NET_ERRNO{
+  NO_ERRNO = 0,
+  EXCEPTION = -1,
+  FORMAT_ERRNO = -2,
+  PACKET_LEN_ERRNO = -3,
+  TOKEN_ERRNO = -4,
+  UID_ERRNO = -5,
+  SEC_ERRNO = -6,
+  START_TIME_ERRNO = -7,
+  END_TIME_ERRNO = -8,
+  TIME_NO_DATA = -9
+
+};
+
 namespace future_logic {
+
+const char* net_error(NET_ERRNO nerrno);
+
 namespace net_request {
 
 class BaseValue {
@@ -41,7 +58,7 @@ class BaseValue {
     }
   }
 
-  bool set_http_packet(base_logic::DictionaryValue* value);
+  NET_ERRNO set_http_packet(base_logic::DictionaryValue* value);
 
   void set_access_token(const std::string& access_token) {
     access_token_ = new base_logic::StringValue(access_token);
@@ -145,7 +162,7 @@ class DynaTick:public BaseValue{
     }
   }
 
-  bool set_http_packet(base_logic::DictionaryValue* value);
+  NET_ERRNO set_http_packet(base_logic::DictionaryValue* value);
 
   void set_sec_id(const std::string& sec_id) {
     sec_id_ = new base_logic::StringValue(sec_id);

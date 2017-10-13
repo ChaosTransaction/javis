@@ -60,6 +60,14 @@ bool SendUtils::SendBytes(int socket, const void* bytes, int32 len,
   return true;
 }
 
+bool SendUtils::SendErrno(int socket, NET_ERRNO& err_code,
+               const char* err_str) {
+  base_logic::DictionaryValue err_value;
+  err_value.SetInteger(L"err_code",err_code);
+  err_value.SetString(L"err_str",err_str);
+  return SendValue(socket,&err_value);
+}
+
 bool SendUtils::SendValue(int socket, base_logic::DictionaryValue* value) {
   base_logic::ValueSerializer* engine = base_logic::ValueSerializer::Create(
       base_logic::IMPL_JSON);
