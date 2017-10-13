@@ -55,10 +55,10 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
 
   int32 max_count = 0;
 
-  if (net_code == HTTP_TYPE * BASE_NET_TYPE)
+  if (net_code / BASE_NET_TYPE == HTTP_TYPE)
     max_count = 100;
   else
-    max_count = 300;
+    max_count = 280;
 
   r = IndexEngine::GetSchdulerManager()->OnFetchIndexPos(sec, symbol, data_type,
                                                          start_time, end_time,
