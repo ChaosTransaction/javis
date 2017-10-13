@@ -65,10 +65,9 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                                                             end_time_pos,
                                                             static_list);
 
- ULOG_DEBUG2("static_list :%d start:%d end:%d",
-              static_list.size(),start_time_pos.time_index(),
-              end_time_pos.time_index());
- if (!r)
+  ULOG_DEBUG2("static_list :%d start:%d end:%d", static_list.size(),
+              start_time_pos.time_index(), end_time_pos.time_index());
+  if (!r)
     return false;
 
   std::map<int32, future_infos::DayMarket> market_hash;
@@ -98,6 +97,8 @@ bool FutureManager::SendDynamMarket(
   future_infos::TimeUnit end_time_unit(end_pos.time_index());
   bool r = false;
 
+  int32 index_pos = 0;
+  int32 max_count = 0;
   for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
       it != static_list.end(); it++) {
     future_infos::StaticInfo static_info = (*it);
@@ -113,23 +114,23 @@ bool FutureManager::SendDynamMarket(
 
     if (start_time_unit.full_day() == end_time_unit.full_day()) {  //开始结束同一天
       CalcuDynamMarket(day_market.market_data().c_str() + start_pos.start_pos(),
-                       end_pos.end_pos() - start_pos.start_pos(), static_info,
-                       dyna_tick);
+                       end_pos.end_pos() - start_pos.start_pos(), index_pos,
+                       max_count, static_info, dyna_tick);
     } else if (start_time_unit.full_day() != end_time_unit.full_day()) {
       if (static_info.static_info().market_date()
           == start_time_unit.full_day()) {  //开始日期
         CalcuDynamMarket(
             day_market.market_data().c_str() + start_pos.start_pos(),
             day_market.market_data().length() - start_pos.start_pos(),
-            static_info, dyna_tick);
+            index_pos, max_count, static_info, dyna_tick);
       } else if (static_info.static_info().market_date()
           == end_time_unit.full_day()) {  //结束日期
         CalcuDynamMarket(day_market.market_data().c_str(), end_pos.end_pos(),
-                         static_info, dyna_tick);
+                         index_pos, max_count, static_info, dyna_tick);
       } else {
         CalcuDynamMarket(day_market.market_data().c_str(),
-                         day_market.market_data().length(), static_info,
-                         dyna_tick);
+                         day_market.market_data().length(), index_pos,
+                         max_count, static_info, dyna_tick);
       }
     }
   }
@@ -139,13 +140,12 @@ bool FutureManager::SendDynamMarket(
 
 bool FutureManager::CalcuDynamMarket(const char* raw_data,
                                      const size_t raw_data_length,
+                                     int32 index_pos, int32 max_count,
                                      future_infos::StaticInfo& static_info,
                                      net_reply::DynaTick& dyna_tick) {
   size_t pos = 0;
   int price_digit = GetPriceMul(static_info.static_info().price_digit());
   int vol_unit = static_info.static_info().vol_unit();
-  int32 max_count = 300;
-  int32 index_pos = 0;
   int64 last_time = 0;
   int64 next_time = 0;
   ULOG_DEBUG("================>");
@@ -222,7 +222,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     dynma_market.ParseFromString(packet);
     next_time = dynma_market.current_time();
   }
-  ULOG_DEBUG2("%d---->%d---->%d",index_pos,dyna_tick.Size(),max_count);
+  ULOG_DEBUG2("%d---->%d---->%d", index_pos, dyna_tick.Size(), max_count);
 
   dyna_tick.set_last_time(last_time);
   dyna_tick.set_next_time(next_time);

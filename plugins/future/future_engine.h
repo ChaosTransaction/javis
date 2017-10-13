@@ -46,6 +46,7 @@ class FutureManager {
                        net_reply::DynaTick& dyna_tick);
 
   bool CalcuDynamMarket(const char* raw_data, const size_t raw_data_length,
+                        int32 index, int32 max_count,
                         future_infos::StaticInfo& static_info,
                         net_reply::DynaTick& dyna_tick);
 
