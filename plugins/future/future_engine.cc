@@ -93,15 +93,19 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
     int64 cur_time = 0;
     last_time = cur_time = dyna_tick.GetTime(dyna_count - 1);
 
-    for(int index = dyna_count - 2;dyna_tick.Size() == 0;){
+    for(int index = dyna_count - 2;dyna_tick.Size() > 0;index--){
       cur_time = dyna_tick.GetTime(index);
       future_infos::TimeUnit cur_time_unit(cur_time);
       future_infos::TimeUnit last_time_unit(last_time);
+      ULOG_DEBUG2("cur_time minute:%d,last_time minute:%d",cur_time_unit.exploded().minute,
+                 last_time_unit.exploded().minute);
+      dyna_tick.Remove(index + 1);
       if(cur_time_unit.exploded().minute != last_time_unit.exploded().minute)
-        break;
-      dyna_tick.Remove(index);
+         break;
+      last_time = cur_time;
     }
-
+    dyna_tick.set_last_time(cur_time);
+    dyna_tick.set_next_time(last_time);
     base_logic::DictionaryValue* value = dyna_tick.get();
     send_value(socket, value);
   } else {
