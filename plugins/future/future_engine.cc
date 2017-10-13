@@ -86,6 +86,15 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
     net_reply::DynaTick dyna_tick;
     SendDynamMarket(start_time_pos, end_time_pos, max_count, static_list,
                     market_hash, dyna_tick);
+
+    //倒序
+    int32 dyna_count = dyna_tick.Size();
+    int64 last_time = 0;
+    int64 cur_time = 0;
+    last_time = cur_time = dyna_tick.GetTime(dyna_count - 1);
+
+    bool rt = dyna_tick.Remove(dyna_count - 1);
+
     base_logic::DictionaryValue* value = dyna_tick.get();
     send_value(socket, value);
   } else {
@@ -224,10 +233,10 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     std::string packet;
     packet.assign(raw_data + pos + sizeof(int16),
                   packet_length - sizeof(int16));
-    pos += packet_length;
     chaos_data::SymbolDynamMarket dynma_market;
     dynma_market.ParseFromString(packet);
     next_time = dynma_market.current_time();
+    pos += packet_length;
     ULOG_DEBUG2("next_time:%d", next_time);
   }
 

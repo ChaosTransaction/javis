@@ -44,7 +44,7 @@ class BaseValue {
         uid_(NULL),
         field_(NULL),
         address_(NULL),
-        net_code_(NULL){
+        net_code_(NULL) {
   }
 
   ~BaseValue() {
@@ -64,7 +64,7 @@ class BaseValue {
       delete address_;
       address_ = NULL;
     }
-    if(net_code_){
+    if (net_code_) {
       delete net_code_;
       net_code_ = NULL;
     }
@@ -80,7 +80,7 @@ class BaseValue {
     uid_ = new base_logic::FundamentalValue(uid);
   }
 
-  void set_net_code(const int32 net_code){
+  void set_net_code(const int32 net_code) {
     net_code_ = new base_logic::FundamentalValue(net_code);
   }
 
@@ -127,7 +127,7 @@ class BaseValue {
   base_logic::FundamentalValue* uid_;
   base_logic::StringValue* field_;
   base_logic::StringValue* address_;
-  base_logic::FundamentalValue* net_code_; //1000 为http
+  base_logic::FundamentalValue* net_code_;  //1000 为http
 
 };
 
@@ -276,6 +276,23 @@ class DynaTick {
     }
     dyna_tick_ = new base_logic::ListValue;
   }
+
+  int64 GetTime(const int index) const {
+    base_logic::Value* value = NULL;
+    int64 current_time;
+    dyna_tick_->Get(index, &value);
+    base_logic::DictionaryValue* dict = (base_logic::DictionaryValue*)(value);
+    dict->GetBigInteger(L"ct",&current_time);
+    return current_time;
+  }
+
+  bool Remove(const int index) {
+    base_logic::Value* value = NULL;
+    bool r = dyna_tick_->Remove(index,& value);
+    if(value) {delete value; value = NULL;}
+    return r;
+  }
+
 
   int32 Size() const {
     return dyna_tick_->GetSize();
