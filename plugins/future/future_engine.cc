@@ -144,10 +144,11 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   size_t pos = 0;
   int price_digit = GetPriceMul(static_info.static_info().price_digit());
   int vol_unit = static_info.static_info().vol_unit();
-  int32 max_count = 10;
+  int32 max_count = 300;
   int32 index_pos = 0;
   int64 last_time = 0;
   int64 next_time = 0;
+  ULOG_DEBUG("================>");
   while (pos < raw_data_length && index_pos < max_count) {
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
@@ -221,6 +222,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     dynma_market.ParseFromString(packet);
     next_time = dynma_market.current_time();
   }
+  ULOG_DEBUG2("%d---->%d---->%d",index_pos,dyna_tick.Size(),max_count);
 
   dyna_tick.set_last_time(last_time);
   dyna_tick.set_next_time(next_time);
