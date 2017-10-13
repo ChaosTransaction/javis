@@ -144,7 +144,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   size_t pos = 0;
   int price_digit = GetPriceMul(static_info.static_info().price_digit());
   int vol_unit = static_info.static_info().vol_unit();
-  int32 max_count = 420;
+  int32 max_count = 10;
   int32 index_pos = 0;
   int64 last_time = 0;
   int64 next_time = 0;

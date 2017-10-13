@@ -2,6 +2,7 @@
 //  Created on: 2015/11/24 Author: tianyiheng
 
 #include "fcgimodule.h"
+#include "basic/basic_util.h"
 #include "logic/logic_comm.h"
 #include "logic/base_values.h"
 #include "net/packet_processing.h"
@@ -147,6 +148,8 @@ bool FcgiModule::GetRequestMethod(const char* query) {
   char *addr = getenv("REMOTE_ADDR");
 
   content = std::string(query) + "&address=" + std::string(addr);
+  std::string deurl_content;
+  base::BasicUtil::UrlDecode(content, deurl_content);
   base_logic::ValueSerializer *engine = base_logic::ValueSerializer::Create(
       base_logic::IMPL_HTTP);
   if (engine == NULL) {
@@ -154,21 +157,21 @@ bool FcgiModule::GetRequestMethod(const char* query) {
     return false;
   }
   base_logic::DictionaryValue *value = (base_logic::DictionaryValue*) engine
-      ->Deserialize(&content, &error_code, &error_str);
+      ->Deserialize(&deurl_content, &error_code, &error_str);
 
   if (engine) {
     delete engine;
     engine = NULL;
   }
 
-  base_logic::ValueSerializer *engine = base_logic::ValueSerializer::Create(
+  engine = base_logic::ValueSerializer::Create(
       base_logic::IMPL_JSON);
   if (engine == NULL) {
     LOG_ERROR("engine create null");
     return false;
   }
   std::string body_stream;
-  bool r = engine->Serialize((*value), &body_stream);
+  r = engine->Serialize((*value), &body_stream);
 
   if (engine) {
     delete engine;
