@@ -29,11 +29,15 @@ FutureManager::FutureManager() {
 }
 
 FutureManager::~FutureManager() {
-  IndexEngine::FreeIndexEngine();
-  IndexEngine::FreeSchdulerManager();
 
-  StaticEngine::FreeIndexEngine();
+  IndexEngine::FreeSchdulerManager();
+  IndexEngine::FreeIndexEngine();
+
   StaticEngine::FreeSchdulerManager();
+  StaticEngine::FreeIndexEngine();
+
+  DataEngine::FreeSchdulerManager();
+  DataEngine::FreeDataEngine();
 }
 
 bool FutureManager::OnDynaTick(const int socket, const int64 uid,

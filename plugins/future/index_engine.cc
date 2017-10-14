@@ -26,6 +26,13 @@ void IndexManager::Init() {
 }
 
 void IndexManager::Deinit() {
+  index_cache_->zc_future_.clear();
+  index_cache_->zc_ftr_idx_.clear();
+  index_cache_->dc_ftr_idx_.clear();
+  index_cache_->dc_future_.clear();
+  index_cache_->sc_future_.clear();
+  index_cache_->sc_ftr_idx_.clear();
+
   if (index_cache_) {
     delete index_cache_;
     index_cache_ = NULL;

@@ -28,6 +28,14 @@ void StaticManager::Init() {
 }
 
 void StaticManager::Deinit() {
+
+  static_cache_->zc_future_.clear();
+  static_cache_->zc_ftr_idx_.clear();
+  static_cache_->dc_ftr_idx_.clear();
+  static_cache_->dc_future_.clear();
+  static_cache_->sc_future_.clear();
+  static_cache_->sc_ftr_idx_.clear();
+
   if (static_cache_) {
     delete static_cache_;
     static_cache_ = NULL;
@@ -152,8 +160,8 @@ void StaticManager::GetStaticInfo(
           static_list.push_back(stc_info);
         }
       }
-    }else {
-        static_list.push_back(static_info);
+    } else {
+      static_list.push_back(static_info);
     }
   }
 }

@@ -27,6 +27,14 @@ void DataManager::Init() {
 }
 
 void DataManager::Deinit() {
+
+  data_cache_->zc_future_.clear();
+  data_cache_->sc_future_.clear();
+  data_cache_->dc_future_.clear();
+  data_cache_->zc_ftr_idx_.clear();
+  data_cache_->sc_ftr_idx_.clear();
+  data_cache_->dc_ftr_idx_.clear();
+
   if (data_cache_) {
     delete data_cache_;
     data_cache_ = NULL;
@@ -35,6 +43,8 @@ void DataManager::Deinit() {
     delete data_lock_;
     data_lock_ = NULL;
   }
+
+
 }
 
 void DataManager::InitLock() {
