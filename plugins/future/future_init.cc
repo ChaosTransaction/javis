@@ -7,10 +7,10 @@
 #include "future/future_logic.h"
 
 struct futureplugin {
-  char *id;
-  char *name;
-  char *version;
-  char *provider;
+  const char *id;
+  const char *name;
+  const char *version;
+  const char *provider;
 };
 
 static void *OnFutureStart(struct server* srv) {

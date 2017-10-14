@@ -61,11 +61,11 @@ class DayMarket {
  public:
   DayMarket();
   DayMarket(const DayMarket& dym);
-  DayMarket(const int32 market_date, const std::string& str);
+  DayMarket(const uint32 market_date, const std::string& str);
 
   DayMarket& operator =(const DayMarket& dym);
 
-  int32 market_date() const {
+  uint32 market_date() const {
     return data_->market_date_;
   }
   const std::string& market_data() const {
@@ -79,7 +79,7 @@ class DayMarket {
 
   class Data {
    public:
-    Data(const int32 market_date, const std::string& str)
+    Data(const uint32 market_date, const std::string& str)
         : market_date_(market_date),
           market_data_(str),
           refcount_(1) {
@@ -90,7 +90,7 @@ class DayMarket {
           refcount_(1) {
     }
    public:
-    const int32 market_date_;
+    const uint32 market_date_;
     const std::string market_data_;
 
     void AddRef() {
@@ -171,7 +171,7 @@ class TimeUnit {
     data_->reset_time(unix_time);
   }
 
-  int32 full_day() const {
+  uint32 full_day() const {
     return 10000 * data_->time_explod_.year + 100 * data_->time_explod_.month
         + data_->time_explod_.day_of_month;
   }
@@ -241,11 +241,11 @@ class TimeFrame {
     }
   }
 
-  int32 start_full_day() const {
+  uint32 start_full_day() const {
     return data_->start_time_->full_day();
   }
 
-  int32 end_full_day() const {
+  uint32 end_full_day() const {
     return data_->end_time_->full_day();
   }
 

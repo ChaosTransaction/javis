@@ -37,18 +37,19 @@ CXXFLAGS += -g -Wall -Wextra -Wno-unused-parameter -pthread -shared -fPIC
 # created to the list.
 PLUGIN = $(SO_DIR)/future/future.so
 
-INCLUDE_PATHS = -I/usr/local/libmemcached-1.0.7/include \
-				-I$(LIB_DIR)/BasicCore \
-				-I$(THIRD_PATH)\
-				-I/usr/local/include\
-				-I/usr/include/mysql\
-				-I$(USER_DIR)\
-				-I$(CUSTOM_THIRD_PATH)/hiredis\
-				-I$(CUSTOM_THIRD_PATH)\
-				-I$(CUSTOM_THIRD_PATH)/librdkafka/src\
-				-I$(LIB_DIR)/mylib/base\
-				-I../\
-				-I../../\
+#You may try to include library headers using -isystem instead of -I. This will make them "system headers" and GCC won't report warnings for them.
+INCLUDE_PATHS = -isystem/usr/local/libmemcached-1.0.7/include \
+				-isystem$(LIB_DIR)/BasicCore \
+				-isystem$(THIRD_PATH)\
+				-isystem/usr/local/include\
+				-isystem/usr/include/mysql\
+				-isystem$(USER_DIR)\
+				-isystem$(CUSTOM_THIRD_PATH)/hiredis\
+				-isystem$(CUSTOM_THIRD_PATH)\
+				-isystem$(CUSTOM_THIRD_PATH)/librdkafka/src\
+				-isystem$(LIB_DIR)/mylib/base\
+				-isystem../\
+				-isystem../../\
 
 
 

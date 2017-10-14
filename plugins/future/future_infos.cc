@@ -23,7 +23,7 @@ DayMarket::DayMarket() {
   data_ = new Data();
 }
 
-DayMarket::DayMarket(const int32 market_date, const std::string& str) {
+DayMarket::DayMarket(const uint32 market_date, const std::string& str) {
   data_ = new Data(market_date, str);
 }
 

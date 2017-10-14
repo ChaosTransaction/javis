@@ -25,7 +25,7 @@ void SendUtils::FreeInstance() {
   instance_ = NULL;
 }
 
-int32 SendUtils::SendFull(const int socket, const char *buffer, size_t nbytes) {
+size_t SendUtils::SendFull(const int socket, const char *buffer, size_t nbytes) {
   base_logic::WLockGd lk(socket_lock_);
   ssize_t amt = 0;
   ssize_t total = 0;
@@ -44,7 +44,7 @@ int32 SendUtils::SendFull(const int socket, const char *buffer, size_t nbytes) {
     nbytes -= amt;
     total += amt;
   } while (nbytes > 0);
-  return static_cast<int32>(amt == -1 ? amt : total);
+  return (amt == -1 ? amt : total);
 }
 
 bool SendUtils::SendBytes(const int socket, const void* bytes, int32 len,
@@ -74,7 +74,7 @@ bool SendUtils::SendValue(const int socket, base_logic::DictionaryValue* value) 
   std::string body_stream;
   bool r = engine->Serialize((*value), &body_stream);
 
-  int ret = SendFull(socket, const_cast<char*>(body_stream.c_str()),
+  size_t ret = SendFull(socket, const_cast<char*>(body_stream.c_str()),
                      body_stream.length());
 
 

@@ -159,7 +159,6 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   int vol_unit = static_info.static_info().vol_unit();
   int64 last_time = 0;
   int64 next_time = 0;
-  ULOG_DEBUG("================>");
   if (index_pos >= max_count)
     return true;
   while (pos < raw_data_length && index_pos < max_count) {
@@ -234,13 +233,10 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     dynma_market.ParseFromString(packet);
     next_time = dynma_market.current_time();
     pos += packet_length;
-    ULOG_DEBUG2("next_time:%d", next_time);
   }
 
-  ULOG_DEBUG2("last_time:%d next_time:%d", last_time, next_time);
   dyna_tick.set_last_time(last_time);
   dyna_tick.set_next_time(next_time);
-  ULOG_DEBUG2("%d---->%d---->%d", index_pos, dyna_tick.Size(), max_count);
   return true;
 }
 

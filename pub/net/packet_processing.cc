@@ -57,7 +57,6 @@ bool PacketProsess::UnpackStream(const void *packet_stream, int32 len,
                                  struct PacketHead **packet_head) {
 
   int32 temp;
-  int error_code;
   std::string error_str;
 
   packet::DataInPacket in(
@@ -78,7 +77,6 @@ bool PacketProsess::UnpackStream(const void *packet_stream, int32 len,
 
   if (packet_length > PACKET_HEAD_LENGTH) {
     std::string body_stream = in.ReadData(data_length, temp);
-    bool r = false;
     int error_code;
     std::string error_str;
     base_logic::ValueSerializer *engine = base_logic::ValueSerializer::Create(
@@ -125,7 +123,7 @@ void PacketProsess::DeletePacket(const void *packet_stream, int32 len,
 }
 
 void PacketProsess::DumpPacket(const struct PacketHead *packet_head) {
-#if 1
+#if 0
   struct PacketControl* packet_control = (struct PacketControl*) (packet_head);
   int16 packet_length = packet_control->packet_length;
   int8 is_zip_encrypt = packet_control->is_zip_encrypt;
@@ -183,7 +181,7 @@ bool PacketProsess::PacketProsess::StrPacket(const int16 t_operate_code,
                                              const std::string& body_stream,
                                              void **packet_stream,
                                              int32 *packet_stream_length) {
-  bool r = true;
+  //bool r = true;
   int16 packet_length = body_stream.length() + PACKET_HEAD_LENGTH;
   int8 is_zip_encrypt = t_is_zip_encrypt;
   int8 type = t_type;

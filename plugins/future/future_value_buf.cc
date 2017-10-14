@@ -115,13 +115,10 @@ void DynaTick::check_minute() {
   int64 cur_time = 0;
   last_time = cur_time = GetTime(dyna_count - 1);
 
-  for (int index = dyna_count - 2; dyna_tick_->GetSize() > 0,index > 0; index--) {
+  for (int index = dyna_count - 2; dyna_count > 0 && index > 0; index--) {
     cur_time = GetTime(index);
     future_infos::TimeUnit cur_time_unit(cur_time);
     future_infos::TimeUnit last_time_unit(last_time);
-    ULOG_DEBUG2("cur_time minute:%d,last_time minute:%d",
-                cur_time_unit.exploded().minute,
-                last_time_unit.exploded().minute);
     Remove(index + 1);
     if (cur_time_unit.exploded().minute != last_time_unit.exploded().minute)
       break;

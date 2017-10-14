@@ -22,7 +22,7 @@ class SendUtils {
   static void FreeInstance();
 
  public:
-  int32 SendFull(const int socket, const char* buffer, size_t bytes);
+  size_t SendFull(const int socket, const char* buffer, size_t bytes);
 
   bool SendBytes(const int socket, const void* bytes, int32 len, const char* file,
                  int32 line);
