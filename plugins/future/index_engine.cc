@@ -201,13 +201,16 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
   future_infos::TimeUnit temp_unit(time_unit->ToUnixTime());
   bool r = false;
   //夜盘判断
-  if (time_unit->exploded().hour > 20) {
-    future_infos::TimeUnit s_time_unit(time_unit->ToUnixTime() + 60 * 60 * 5);
-    temp_unit = s_time_unit;
-  } else {
-    future_infos::TimeUnit s_time_unit(time_unit->ToUnixTime());
-    temp_unit = s_time_unit;
-  }
+  //fix me
+  /*if (time_unit->exploded().hour > 20) {
+   future_infos::TimeUnit s_time_unit(time_unit->ToUnixTime() + 60 * 60 * 5);
+   temp_unit = s_time_unit;
+   } else {
+   future_infos::TimeUnit s_time_unit(time_unit->ToUnixTime());
+   temp_unit = s_time_unit;
+   }*/
+  future_infos::TimeUnit s_time_unit(time_unit->ToUnixTime());
+  temp_unit = s_time_unit;
 
   //循环判断
   do {
@@ -309,11 +312,12 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, int32 frame_time,
   bool r = false;
   bool ret = false;
   int64 start_time = 0;
-  //夜盘判断
-  if (frame_time_unit->exploded().hour > 20)
+  //夜盘判断 //fix me
+  /*if (frame_time_unit->exploded().hour > 20)
     start_time = frame_time_unit->ToUnixTime() + 60 * 60 * 5;
   else
-    start_time = frame_time_unit->ToUnixTime();
+    start_time = frame_time_unit->ToUnixTime();*/
+  start_time = frame_time_unit->ToUnixTime();
 
   frame_time_unit->set_last_time(start_time);
   do {
@@ -401,7 +405,8 @@ bool IndexManager::OnLoadLoaclPos(const std::string& sec,
     future_infos::TickTimePos time_pos(last_pos_index.time_index(), market_date,
                                        last_pos_index.start_pos(),
                                        last_pos_index.end_pos());
-    min_pos_map[last_pos_index.time_index()] = time_pos;
+    if (last_pos_index.time_index() > 0)
+      min_pos_map[last_pos_index.time_index()] = time_pos;
   }
 
   return r;
