@@ -318,10 +318,14 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
   bool r = false;
   bool ret = false;
   future_infos::TimeUnit start_time_unit(time_frame.start_time()->ToUnixTime());
+  future_infos::TimeUnit end_time_unit(time_frame.end_time()->ToUnixTime());
   r = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
                 start_day_pos_map, time_frame.mutable_start_time(),
                 start_hour_map, start_min_map);
-  if (start_time_unit.full_day() == time_frame.end_full_day() && r) {
+  if(end_time_unit.exploded().hour > 20){
+    end_time_unit.reset_time(end_time_unit.ToUnixTime() + 60 * 60 * 5);
+  }
+  if (start_time_unit.full_day() == end_time_unit.full_day() && r) {
     end_hour_map = start_hour_map;
     end_min_map = start_min_map;
   } else {
