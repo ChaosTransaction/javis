@@ -283,21 +283,25 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
   bool ret = false;
   future_infos::TimeUnit start_time_unit(time_frame.start_time()->ToUnixTime());
   future_infos::TimeUnit end_time_unit(time_frame.end_time()->ToUnixTime());
-  r = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
-                start_day_pos_map, time_frame.mutable_start_time(),
-                start_min_map);
-  if (end_time_unit.exploded().hour > 20) {
-    end_time_unit.reset_time(end_time_unit.ToUnixTime() + 60 * 60 * 5);
-  }
+  if (!start_min_map.empty())
+    r = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
+                  start_day_pos_map, time_frame.mutable_start_time(),
+                  start_min_map);
+  //fix me
+  /*if (end_time_unit.exploded().hour > 20) {
+   end_time_unit.reset_time(end_time_unit.ToUnixTime() + 60 * 60 * 5);
+   }*/
   if (start_time_unit.full_day() == end_time_unit.full_day() && r) {
     end_min_map = start_min_map;
   } else {
-    ret = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
-                    end_day_pos_map, time_frame.mutable_end_time(),
-                    end_min_map);
+    if (!end_min_map.empty())
+      ret = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
+                      end_day_pos_map, time_frame.mutable_end_time(),
+                      end_min_map);
   }
 
-  if (ret == true && r == false) {  //开始的时间没有数据，结束的时间有数据
+  if (ret == true && r == false && !end_min_map.empty()
+      && start_min_map.empty()) {  //开始的时间没有数据，结束的时间有数据
     start_min_map = end_min_map;
   }
   return load_error;
@@ -314,9 +318,9 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, int32 frame_time,
   int64 start_time = 0;
   //夜盘判断 //fix me
   /*if (frame_time_unit->exploded().hour > 20)
-    start_time = frame_time_unit->ToUnixTime() + 60 * 60 * 5;
-  else
-    start_time = frame_time_unit->ToUnixTime();*/
+   start_time = frame_time_unit->ToUnixTime() + 60 * 60 * 5;
+   else
+   start_time = frame_time_unit->ToUnixTime();*/
   start_time = frame_time_unit->ToUnixTime();
 
   frame_time_unit->set_last_time(start_time);
