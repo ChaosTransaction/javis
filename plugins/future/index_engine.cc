@@ -283,7 +283,7 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
   bool ret = false;
   future_infos::TimeUnit start_time_unit(time_frame.start_time()->ToUnixTime());
   future_infos::TimeUnit end_time_unit(time_frame.end_time()->ToUnixTime());
-  if (!start_min_map.empty())
+  if (start_min_map.empty())
     r = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
                   start_day_pos_map, time_frame.mutable_start_time(),
                   start_min_map);
@@ -294,7 +294,7 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
   if (start_time_unit.full_day() == end_time_unit.full_day() && r) {
     end_min_map = start_min_map;
   } else {
-    if (!end_min_map.empty())
+    if (end_min_map.empty())
       ret = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
                       end_day_pos_map, time_frame.mutable_end_time(),
                       end_min_map);
