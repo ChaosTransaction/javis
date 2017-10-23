@@ -234,13 +234,23 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
                                HOURPOS_MAP& hour_map,
                                MINUTEPOS_MAP& minute_map) {
 
+  future_infos::TimeUnit temp_unit;
+  //夜盘判断
+  if(time_unit->exploded().hour > 20){
+    future_infos::TimeUnit s_time_unit(time_unit->ToUnixTime() + 60 * 60 * 5);
+    temp_unit = s_time_unit;
+  }else{
+    future_infos::TimeUnit s_time_unit(time_unit->ToUnixTime());
+    temp_unit = s_time_unit;
+  }
+
   bool r = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
-                          time_unit->exploded().year,
-                          time_unit->exploded().month,
-                          time_unit->exploded().day_of_month, minute_map);
+                          temp_unit.exploded().year,
+                          temp_unit.exploded().month,
+                          temp_unit.exploded().day_of_month, minute_map);
   if (r)
     SetIndexPos(lock, symbol_map, symbol, type_map, data_type, day_map,
-                time_unit->full_day(), hour_map, time_unit->exploded().hour,
+                temp_unit.full_day(), hour_map, time_unit->exploded().hour,
                 minute_map);
 }
 
