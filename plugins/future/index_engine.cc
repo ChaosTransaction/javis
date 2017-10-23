@@ -311,7 +311,7 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
     end_hour_map = start_hour_map;
     end_min_map = start_min_map;
   } else {
-    ret = GetDayPos(lock,-86400, sec, symbol, data_type, stk_type,
+    ret = GetDayPos(lock,86400, sec, symbol, data_type, stk_type,
                   end_day_pos_map, time_frame.mutable_end_time(), end_hour_map,
                   end_min_map);
   }

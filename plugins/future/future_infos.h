@@ -197,6 +197,7 @@ class TimeUnit {
    public:
     Data()
         : last_time_(0)
+        , market_date_(0)
         , refcount_(1){
       base::Time empty_time;
       empty_time.LocalExplode(&time_explod_);
@@ -204,6 +205,7 @@ class TimeUnit {
 
     Data(const int32 market_date)
         : last_time_(0)
+        , market_date_(0)
         , refcount_(1){
             /*time_explod_.year = market_date / 10000;
             time_explod_.month = (market_date / 100) % 100;
@@ -220,6 +222,7 @@ class TimeUnit {
 
     Data(const std::string& str_time)
         : last_time_(0)
+        , market_date_(0)
         , refcount_(1){
       //2015-07-10 10:10:10
       const char* format = "%d-%d-%d %d:%d:%d";
@@ -230,6 +233,7 @@ class TimeUnit {
 
     Data(const int64 unix_time)
         : last_time_(0)
+        , market_date_(0)
         , refcount_(1) {
       last_time_ = unix_time;
       base_time_ = base::Time::FromTimeT(unix_time);
@@ -244,6 +248,7 @@ class TimeUnit {
     base::Time::Exploded time_explod_;
     base::Time base_time_;
     int64 last_time_;//变化的上次时间，主要用于夜盘
+    int32 market_date_;
     void AddRef() {
       __sync_fetch_and_add(&refcount_, 1);
     }
