@@ -234,6 +234,7 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
                                MINUTEPOS_MAP& minute_map) {
 
   future_infos::TimeUnit temp_unit(time_unit->ToUnixTime());
+  bool r = false;
   //夜盘判断
   if (time_unit->exploded().hour > 20) {
     future_infos::TimeUnit s_time_unit(time_unit->ToUnixTime() + 60 * 60 * 5);
@@ -245,7 +246,7 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
 
   //循环判断
   do {
-    bool r = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
+    r = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
                             temp_unit.exploded().year,
                             temp_unit.exploded().month,
                             temp_unit.exploded().day_of_month, minute_map);
@@ -254,7 +255,7 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
                   temp_unit.full_day(), hour_map, time_unit->exploded().hour,
                   minute_map);
     temp_unit.reset_time(temp_unit.ToUnixTime() + 60 * 60 * 24);
-  } while (1);
+  } while (!r);
 }
 
 LOADERROR IndexManager::GetCompareMintuePos(
