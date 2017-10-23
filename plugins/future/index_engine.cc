@@ -332,7 +332,6 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, int32 frame_time,
                              MINUTEPOS_MAP& min_pos_map) {
   bool r = false;
   bool ret = false;
-  int32 full_day = 0;
   int64 start_time = 0;
   //夜盘判断
    if(frame_time_unit->exploded().hour > 20)
