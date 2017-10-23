@@ -123,11 +123,11 @@ bool FutureManager::SendDynamMarket(
     if (!r)
       continue;
 
-    if (start_time_unit.full_day() == end_time_unit.full_day()) {  //开始结束同一天
+    if (start_pos.market_date() == end_pos.market_date()/*start_time_unit.full_day() == end_time_unit.full_day()*/) {  //开始结束同一天
       CalcuDynamMarket(day_market.market_data().c_str() + start_pos.start_pos(),
                        end_pos.end_pos() - start_pos.start_pos(), index_pos,
                        max_count, static_info, dyna_tick);
-    } else if (start_time_unit.full_day() != end_time_unit.full_day()) {
+    } else if (start_pos.market_date() != end_pos.market_date()/*start_time_unit.full_day() != end_time_unit.full_day()*/) {
       if (static_info.static_info().market_date()
           == start_time_unit.full_day()) {  //开始日期
         CalcuDynamMarket(
@@ -340,7 +340,8 @@ bool FutureManager::CalcuDynamMarket(
     dynma_market.set_open_interest(dynma_market.open_interest() * vol_unit);
     dynma_market.set_settle_price(dynma_market.settle_price() * price_digit);
 
-    future_infos::TimeUnit time_unit(dynma_market.current_time());
+    int64 current_time = dynma_market.current_time();
+    future_infos::TimeUnit time_unit(current_time);
     ULOG_DEBUG2(
         "%d-%d-%d %d:%d:%d\t->open_price:%6d\t,high_price:%6d\t,low_price:%6d\t,new_price:%6d\t,volume:%6d\t,inner_vol:%6d\t,buy_one_price:%6d\t,sell_one_price:%6d\t,buy_one_vol:%6d\t,sell_one_vol:%6d\t,open_interest:%6d\t,settle_price:%6d\t",
         time_unit.exploded().year, time_unit.exploded().month,

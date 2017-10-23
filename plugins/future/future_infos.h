@@ -8,6 +8,7 @@
 #include "proto/symbol_dynam_market.pb.h"
 #include "logic/time.h"
 #include "basic/basictypes.h"
+#include "basic/basic_util.h"
 #include <string>
 
 #define ALIVE_TIME 3600
@@ -158,7 +159,7 @@ class TimeUnit {
   TimeUnit(const TimeUnit& time_unit);
   TimeUnit(const std::string& str_time);
   TimeUnit(const int64 unix_time);
-
+  TimeUnit(const int32 market_date);
   TimeUnit& operator =(const TimeUnit& time_unit);
 
   ~TimeUnit() {
@@ -180,28 +181,57 @@ class TimeUnit {
     return data_->time_explod_;
   }
 
-  int32 ToUnixTime() const {
+  int64 ToUnixTime() const {
     return data_->base_time_.ToTimeT();
+  }
+
+  void set_last_time(const int64 last_time) {
+      data_->last_time_ = last_time;
+  }
+
+  int64 last_time() const {
+      return data_->last_time_;
   }
 
   class Data {
    public:
     Data()
-        : refcount_(1) {
+        : last_time_(0)
+        , refcount_(1){
       base::Time empty_time;
       empty_time.LocalExplode(&time_explod_);
     }
 
+    Data(const int32 market_date)
+        : last_time_(0)
+        , refcount_(1){
+            /*time_explod_.year = market_date / 10000;
+            time_explod_.month = (market_date / 100) % 100;
+            time_explod_.day_of_month = market_date % 100;*/
+        std::string str_time = base::BasicUtil::StringUtil::Int64ToString(market_date / 10000 )
+            + "-" + base::BasicUtil::StringUtil::Int64ToString((market_date / 100) % 100)
+            + "-" + base::BasicUtil::StringUtil::Int64ToString(market_date % 100)
+            + " " + "0:00:00";
+      const char* format = "%d-%d-%d %d:%d:%d";
+      base_time_ = base::Time::FromStringFormat(str_time.c_str(), format);
+      base_time_.LocalExplode(&time_explod_);
+      last_time_ = base_time_.ToTimeT();
+    }
+
     Data(const std::string& str_time)
-        : refcount_(1) {
+        : last_time_(0)
+        , refcount_(1){
       //2015-07-10 10:10:10
       const char* format = "%d-%d-%d %d:%d:%d";
       base_time_ = base::Time::FromStringFormat(str_time.c_str(), format);
       base_time_.LocalExplode(&time_explod_);
+      last_time_ = base_time_.ToTimeT();
     }
 
     Data(const int64 unix_time)
-        : refcount_(1) {
+        : last_time_(0)
+        , refcount_(1) {
+      last_time_ = unix_time;
       base_time_ = base::Time::FromTimeT(unix_time);
       base_time_.LocalExplode(&time_explod_);
     }
@@ -213,6 +243,7 @@ class TimeUnit {
    public:
     base::Time::Exploded time_explod_;
     base::Time base_time_;
+    int64 last_time_;//变化的上次时间，主要用于夜盘
     void AddRef() {
       __sync_fetch_and_add(&refcount_, 1);
     }
@@ -280,7 +311,6 @@ class TimeFrame {
   void set_end_time(TimeUnit* end_time_unit) {
     data_->end_time_ = end_time_unit;
   }
-
   class Data {
    public:
     Data(const std::string& str_start_time, const std::string& str_end_time)
@@ -321,7 +351,7 @@ class TickTimePos {
  public:
   TickTimePos();
   TickTimePos(const TickTimePos& tit_pos);
-  TickTimePos(const int64 t_time, const int32 start_pos, const int32 end_pos);
+  TickTimePos(const int64 t_time, const int32 market_date, const int32 start_pos, const int32 end_pos);
 
   TickTimePos& operator =(const TickTimePos& tit_pos);
 
@@ -341,19 +371,24 @@ class TickTimePos {
     return data_->end_pos_;
   }
 
+  int32 market_date() const {
+    return data_->market_date_;
+  }
   class Data {
    public:
     Data()
         : tt_time_(0),
           start_pos_(0),
           end_pos_(0),
+          market_date_(0),
           refcount_(1) {
     }
 
-    Data(const int64 t_time, const int64 start_pos, const int64 end_pos)
+    Data(const int64 t_time,const int32 market_date,  const int64 start_pos, const int64 end_pos)
         : tt_time_(t_time),
           start_pos_(start_pos),
           end_pos_(end_pos),
+          market_date_(market_date),
           refcount_(1) {
     }
 
@@ -361,6 +396,7 @@ class TickTimePos {
     const int64 tt_time_;
     const int32 start_pos_;
     const int32 end_pos_;
+    const int32 market_date_;//交易日期，主要用于识别文件名
     void AddRef() {
       __sync_fetch_and_add(&refcount_, 1);
     }

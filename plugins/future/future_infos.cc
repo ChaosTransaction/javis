@@ -91,6 +91,10 @@ TimeUnit::TimeUnit(const int64 unix_time) {
   ;
 }
 
+TimeUnit::TimeUnit(const int32 market_date) {
+    data_ = new Data(market_date);
+}
+
 TimeUnit& TimeUnit::operator =(const TimeUnit& time_unit) {
   if (time_unit.data_ != NULL) {
     time_unit.data_->AddRef();
@@ -140,9 +144,9 @@ TickTimePos::TickTimePos() {
   data_ = new Data();
 }
 
-TickTimePos::TickTimePos(const int64 t_time, const int32 start_pos,
+TickTimePos::TickTimePos(const int64 t_time, const int32 market_date, const int32 start_pos,
                          const int32 end_pos) {
-  data_ = new Data(t_time, start_pos, end_pos);
+  data_ = new Data(t_time,market_date,  start_pos, end_pos);
 }
 
 TickTimePos& TickTimePos::operator =(const TickTimePos& tit_pos) {
