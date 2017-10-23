@@ -206,7 +206,7 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
     base_logic::RLockGd lk(lock);
     int32 start_unix_time = 0;
     int32 end_unix_time = 0;
-    if (time_frame.start_time()->exploded().hour > 20) {  //判断时间是否是夜盘时间
+   /* if (time_frame.start_time()->exploded().hour > 20) {  //判断时间是否是夜盘时间
       start_unix_time = time_frame.start_time()->last_time() / 60 * 60;
     } else {
       start_unix_time = time_frame.start_time()->ToUnixTime() / 60 * 60;
@@ -216,7 +216,10 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
       end_unix_time = time_frame.end_time()->last_time() / 60 * 60;
     } else {
       end_unix_time = time_frame.end_time()->ToUnixTime() / 60 * 60;
-    }
+    }*/
+    start_unix_time = time_frame.start_time()->ToUnixTime() / 60 * 60;
+    end_unix_time = time_frame.end_time()->ToUnixTime() / 60 * 60;
+
     load_erron = GetCompareMintuePos(start_minute_pos_map, end_minute_pos_map,
                                      start_unix_time, end_unix_time,
                                      start_time_pos, end_time_pos);
