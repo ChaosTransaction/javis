@@ -153,23 +153,6 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
                 symbol_map, end_type_pos_map, end_day_pos_map,
                 end_minute_pos_map);
 
-  /*{
-   base_logic::RLockGd lk(lock);
-   load_erron = GetCompareTimeTickPos<DAYPOS_MAP, DAYPOS_MAP::iterator,
-   const int32, const HIS_DATA_TYPE, HOURPOS_MAP>(
-   start_day_pos_map, end_day_pos_map, data_type, data_type,
-   time_frame.start_full_day(), time_frame.end_full_day(),
-   start_hour_pos_map, end_hour_pos_map);
-   }
-
-   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-   OnLoadIndex(time_frame.start_time(), sec, lock, symbol, data_type, stk_type,
-   symbol_map, start_type_pos_map, start_day_pos_map,
-   start_hour_pos_map, start_minute_pos_map);
-   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-   OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
-   symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
-   end_minute_pos_map);*/
   GetCompareDayPos(lock, sec, symbol, data_type, stk_type, start_day_pos_map,
                    end_day_pos_map, time_frame, start_minute_pos_map,
                    end_minute_pos_map);
@@ -181,25 +164,6 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   SetIndexPos(lock, symbol_map, symbol, end_type_pos_map, data_type,
               end_day_pos_map, time_frame.end_full_day(),
               time_frame.end_exploded().hour, end_minute_pos_map);
-
-  {
-    base_logic::RLockGd lk(lock);
-    load_erron = GetCompareTimeTickPos<HOURPOS_MAP, HOURPOS_MAP::iterator,
-        const int32, const int32, MINUTEPOS_MAP>(
-        start_hour_pos_map, end_hour_pos_map, time_frame.start_full_day(),
-        time_frame.end_full_day(), time_frame.start_exploded().hour,
-        time_frame.end_exploded().hour, start_minute_pos_map,
-        end_minute_pos_map);
-  }
-
-  if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
-    OnLoadIndex(time_frame.start_time(), sec, lock, symbol, data_type, stk_type,
-                symbol_map, start_type_pos_map, start_day_pos_map,
-                start_minute_pos_map);
-  else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
-    OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
-                symbol_map, end_type_pos_map, end_day_pos_map,
-                end_minute_pos_map);
 
   {
     base_logic::RLockGd lk(lock);
