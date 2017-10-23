@@ -105,8 +105,8 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   DAYPOS_MAP start_day_pos_map;
   DAYPOS_MAP end_day_pos_map;
 
-  HOURPOS_MAP start_hour_pos_map;
-  HOURPOS_MAP end_hour_pos_map;
+  //HOURPOS_MAP start_hour_pos_map;
+  //HOURPOS_MAP end_hour_pos_map;
 
   MINUTEPOS_MAP start_minute_pos_map;
   MINUTEPOS_MAP end_minute_pos_map;
@@ -126,10 +126,10 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
     OnLoadIndex(time_frame.start_time(), sec, lock, symbol, data_type, stk_type,
                 symbol_map, start_type_pos_map, start_day_pos_map,
-                start_hour_pos_map, start_minute_pos_map);
+                start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
     OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
-                symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
+                symbol_map, end_type_pos_map, end_day_pos_map,
                 end_minute_pos_map);
 
   {
@@ -147,10 +147,10 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
     OnLoadIndex(time_frame.start_time(), sec, lock, symbol, data_type, stk_type,
                 symbol_map, start_type_pos_map, start_day_pos_map,
-                start_hour_pos_map, start_minute_pos_map);
+                start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
     OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
-                symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
+                symbol_map, end_type_pos_map, end_day_pos_map,
                 end_minute_pos_map);
 
   /*{
@@ -171,16 +171,15 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
    symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
    end_minute_pos_map);*/
   GetCompareDayPos(lock, sec, symbol, data_type, stk_type, start_day_pos_map,
-                   end_day_pos_map, time_frame, start_hour_pos_map,
-                   end_hour_pos_map, start_minute_pos_map, end_minute_pos_map);
+                   end_day_pos_map, time_frame, start_minute_pos_map,
+                   end_minute_pos_map);
 
   SetIndexPos(lock, symbol_map, symbol, start_type_pos_map, data_type,
               start_day_pos_map, time_frame.start_full_day(),
-              start_hour_pos_map, time_frame.start_exploded().hour,
-              start_minute_pos_map);
+              time_frame.start_exploded().hour, start_minute_pos_map);
 
   SetIndexPos(lock, symbol_map, symbol, end_type_pos_map, data_type,
-              end_day_pos_map, time_frame.end_full_day(), end_hour_pos_map,
+              end_day_pos_map, time_frame.end_full_day(),
               time_frame.end_exploded().hour, end_minute_pos_map);
 
   {
@@ -196,27 +195,27 @@ bool IndexManager::OnFetchIndexPos(SYMBOL_MAP& symbol_map,
   if (load_erron == BOTH_NOT_EXITS || load_erron == START_NOT_EXITS)
     OnLoadIndex(time_frame.start_time(), sec, lock, symbol, data_type, stk_type,
                 symbol_map, start_type_pos_map, start_day_pos_map,
-                start_hour_pos_map, start_minute_pos_map);
+                start_minute_pos_map);
   else if (load_erron == BOTH_NOT_EXITS || load_erron == END_NOT_EXITS)
     OnLoadIndex(time_frame.end_time(), sec, lock, symbol, data_type, stk_type,
-                symbol_map, end_type_pos_map, end_day_pos_map, end_hour_pos_map,
+                symbol_map, end_type_pos_map, end_day_pos_map,
                 end_minute_pos_map);
 
   {
     base_logic::RLockGd lk(lock);
     int32 start_unix_time = 0;
     int32 end_unix_time = 0;
-   /* if (time_frame.start_time()->exploded().hour > 20) {  //判断时间是否是夜盘时间
-      start_unix_time = time_frame.start_time()->last_time() / 60 * 60;
-    } else {
-      start_unix_time = time_frame.start_time()->ToUnixTime() / 60 * 60;
-    }
+    /* if (time_frame.start_time()->exploded().hour > 20) {  //判断时间是否是夜盘时间
+     start_unix_time = time_frame.start_time()->last_time() / 60 * 60;
+     } else {
+     start_unix_time = time_frame.start_time()->ToUnixTime() / 60 * 60;
+     }
 
-    if (time_frame.end_time()->exploded().hour > 20) {  //判断时间是否是夜盘时间
-      end_unix_time = time_frame.end_time()->last_time() / 60 * 60;
-    } else {
-      end_unix_time = time_frame.end_time()->ToUnixTime() / 60 * 60;
-    }*/
+     if (time_frame.end_time()->exploded().hour > 20) {  //判断时间是否是夜盘时间
+     end_unix_time = time_frame.end_time()->last_time() / 60 * 60;
+     } else {
+     end_unix_time = time_frame.end_time()->ToUnixTime() / 60 * 60;
+     }*/
     start_unix_time = time_frame.start_time()->ToUnixTime() / 60 * 60;
     end_unix_time = time_frame.end_time()->ToUnixTime() / 60 * 60;
 
@@ -233,7 +232,6 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
                                const HIS_DATA_TYPE& data_type,
                                const STK_TYPE& stk_type, SYMBOL_MAP& symbol_map,
                                DATETYPE_MAP& type_map, DAYPOS_MAP& day_map,
-                               HOURPOS_MAP& hour_map,
                                MINUTEPOS_MAP& minute_map) {
 
   future_infos::TimeUnit temp_unit(time_unit->ToUnixTime());
@@ -250,13 +248,11 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
   //循环判断
   do {
     r = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
-                            temp_unit.exploded().year,
-                            temp_unit.exploded().month,
-                            temp_unit.exploded().day_of_month, minute_map);
+                       temp_unit.exploded().year, temp_unit.exploded().month,
+                       temp_unit.exploded().day_of_month, minute_map);
     if (r)
       SetIndexPos(lock, symbol_map, symbol, type_map, data_type, day_map,
-                  temp_unit.full_day(), hour_map, time_unit->exploded().hour,
-                  minute_map);
+                  temp_unit.full_day(), time_unit->exploded().hour, minute_map);
     temp_unit.reset_time(temp_unit.ToUnixTime() + 60 * 60 * 24);
   } while (!r);
 }
@@ -313,8 +309,6 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
                                          DAYPOS_MAP& start_day_pos_map,
                                          DAYPOS_MAP& end_day_pos_map,
                                          future_infos::TimeFrame& time_frame,
-                                         HOURPOS_MAP& start_hour_map,
-                                         HOURPOS_MAP& end_hour_map,
                                          MINUTEPOS_MAP& start_min_map,
                                          MINUTEPOS_MAP& end_min_map) {
   LOADERROR load_error = LOAD_SUCCESS;
@@ -324,21 +318,19 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
   future_infos::TimeUnit end_time_unit(time_frame.end_time()->ToUnixTime());
   r = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
                 start_day_pos_map, time_frame.mutable_start_time(),
-                start_hour_map, start_min_map);
-  if(end_time_unit.exploded().hour > 20){
+                start_min_map);
+  if (end_time_unit.exploded().hour > 20) {
     end_time_unit.reset_time(end_time_unit.ToUnixTime() + 60 * 60 * 5);
   }
   if (start_time_unit.full_day() == end_time_unit.full_day() && r) {
-    end_hour_map = start_hour_map;
     end_min_map = start_min_map;
   } else {
     ret = GetDayPos(lock, 86400, sec, symbol, data_type, stk_type,
                     end_day_pos_map, time_frame.mutable_end_time(),
-                    end_hour_map, end_min_map);
+                    end_min_map);
   }
 
   if (ret == true && r == false) {  //开始的时间没有数据，结束的时间有数据
-    start_hour_map = end_hour_map;
     start_min_map = end_min_map;
   }
   return load_error;
@@ -349,7 +341,6 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, int32 frame_time,
                              const HIS_DATA_TYPE& data_type,
                              const STK_TYPE& stk_type, DAYPOS_MAP& day_pos_map,
                              future_infos::TimeUnit* frame_time_unit,
-                             HOURPOS_MAP& hour_pos_map,
                              MINUTEPOS_MAP& min_pos_map) {
   bool r = false;
   bool ret = false;
@@ -366,7 +357,7 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, int32 frame_time,
     {
       base_logic::RLockGd lk(lock);
       r = base::MapGet<DAYPOS_MAP, DAYPOS_MAP::iterator, const int32,
-          HOURPOS_MAP>(day_pos_map, time_unit.full_day(), hour_pos_map);
+          MINUTEPOS_MAP>(day_pos_map, time_unit.full_day(), min_pos_map);
     }
     if (!r)
       ret = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
@@ -457,14 +448,12 @@ void IndexManager::SetIndexPos(struct threadrw_t* lock, SYMBOL_MAP& symbol_map,
                                DATETYPE_MAP& type_map,
                                const HIS_DATA_TYPE type_key,
                                DAYPOS_MAP& day_map, const int32 day_key,
-                               HOURPOS_MAP& hour_map, const int32 hour_key,
+                               const int32 hour_key,
                                MINUTEPOS_MAP& minute_map) {
 
   base_logic::WLockGd lk(lock);
   if (minute_map.size() != 0)
-    hour_map[hour_key] = minute_map;
-  if (hour_map.size() != 0)
-    day_map[day_key] = hour_map;
+    day_map[day_key] = minute_map;
   if (day_map.size() != 0)
     type_map[type_key] = day_map;
   if (type_map.size() != 0)

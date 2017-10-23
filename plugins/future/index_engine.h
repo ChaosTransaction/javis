@@ -15,8 +15,8 @@
 namespace future_logic {
 
 typedef std::map<int32, future_infos::TickTimePos> MINUTEPOS_MAP;  //每分钟行情的位置 /key:分钟
-typedef std::map<int32, MINUTEPOS_MAP> HOURPOS_MAP;  //每小时行情位置 /key:小时
-typedef std::map<int32, HOURPOS_MAP> DAYPOS_MAP;  //每天行情位置 //key:天20150608
+//typedef std::map<int32, MINUTEPOS_MAP> HOURPOS_MAP;  //每小时行情位置 /key:小时
+typedef std::map<int32, MINUTEPOS_MAP> DAYPOS_MAP;  //每天行情位置 //key:天20150608
 typedef std::map<HIS_DATA_TYPE, DAYPOS_MAP> DATETYPE_MAP;  //数据类型 参照 g_his_data_type_en
 typedef std::map<std::string, DATETYPE_MAP> SYMBOL_MAP;  //合约行情 //key:合约代码
 //typedef std::map<std::string, SYMBOL_MAP> MKT_MAP;//交易所行情 //交易所编号
@@ -86,8 +86,6 @@ class IndexManager {
                              DAYPOS_MAP& start_day_pos_map,
                              DAYPOS_MAP& end_day_pos_map,
                              future_infos::TimeFrame& time_frame,
-                             HOURPOS_MAP& start_hour_map,
-                             HOURPOS_MAP& end_hour_map,
                              MINUTEPOS_MAP& start_min_map,
                              MINUTEPOS_MAP& end_min_map);
 
@@ -102,7 +100,7 @@ class IndexManager {
                    struct threadrw_t* lock, const std::string& symbol,
                    const HIS_DATA_TYPE& data_type, const STK_TYPE& stk_type,
                    SYMBOL_MAP& symbol_map, DATETYPE_MAP& type_map,
-                   DAYPOS_MAP& day_map, HOURPOS_MAP& hour_map,
+                   DAYPOS_MAP& day_map,
                    MINUTEPOS_MAP& minute_map);
 
   bool OnLoadLoaclPos(const std::string& sec, const std::string& symbol,
@@ -113,7 +111,7 @@ class IndexManager {
   void SetIndexPos(struct threadrw_t* lock, SYMBOL_MAP& symbol_map,
                    const std::string& symbol_key, DATETYPE_MAP& type_map,
                    const HIS_DATA_TYPE type_key, DAYPOS_MAP& day_map,
-                   const int32 day_key, HOURPOS_MAP& hour_map,
+                   const int32 day_key,
                    const int32 hour_key, MINUTEPOS_MAP& minute_map);
 
   bool OnFetchIndexPos(SYMBOL_MAP& symbol_map, struct threadrw_t* lock,
