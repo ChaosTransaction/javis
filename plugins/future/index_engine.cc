@@ -234,7 +234,7 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
                                HOURPOS_MAP& hour_map,
                                MINUTEPOS_MAP& minute_map) {
 
-  future_infos::TimeUnit temp_unit;
+  future_infos::TimeUnit temp_unit(time_unit->ToUnixTime());
   //夜盘判断
   if(time_unit->exploded().hour > 20){
     future_infos::TimeUnit s_time_unit(time_unit->ToUnixTime() + 60 * 60 * 5);
