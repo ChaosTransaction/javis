@@ -332,7 +332,14 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, int32 frame_time,
                              MINUTEPOS_MAP& min_pos_map) {
   bool r = false;
   bool ret = false;
-  int64 start_time = frame_time_unit->ToUnixTime();
+  int32 full_day = 0;
+  int64 start_time = 0;
+  //夜盘判断
+   if(frame_time_unit->exploded().hour > 20)
+       start_time = frame_time_unit->ToUnixTime() + 60 * 60 * 5;
+   else
+       start_time = frame_time_unit->ToUnixTime();
+
   frame_time_unit->set_last_time(start_time);
   do {
     future_infos::TimeUnit time_unit(start_time);
