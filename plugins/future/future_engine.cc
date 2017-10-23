@@ -90,7 +90,7 @@ bool FutureManager::OnDynaTick(const int socket, const int64 uid,
     net_reply::DynaTick dyna_tick;
     SendDynamMarket(start_time_pos, end_time_pos, max_count, static_list,
                     market_hash, dyna_tick);
-    if(dyna_tick.next_time() > 0)
+    if (dyna_tick.next_time() > 0)
       dyna_tick.check_minute();
     base_logic::DictionaryValue* value = dyna_tick.get();
     send_value(socket, value);
@@ -123,11 +123,13 @@ bool FutureManager::SendDynamMarket(
     if (!r)
       continue;
 
-    if (start_pos.market_date() == end_pos.market_date()/*start_time_unit.full_day() == end_time_unit.full_day()*/) {  //开始结束同一天
+    if (start_pos.market_date()
+        == end_pos.market_date()/*start_time_unit.full_day() == end_time_unit.full_day()*/) {  //开始结束同一天
       CalcuDynamMarket(day_market.market_data().c_str() + start_pos.start_pos(),
                        end_pos.end_pos() - start_pos.start_pos(), index_pos,
                        max_count, static_info, dyna_tick);
-    } else if (start_pos.market_date() != end_pos.market_date()/*start_time_unit.full_day() != end_time_unit.full_day()*/) {
+    } else if (start_pos.market_date()
+        != end_pos.market_date()/*start_time_unit.full_day() != end_time_unit.full_day()*/) {
       if (static_info.static_info().market_date()
           == start_time_unit.full_day()) {  //开始日期
         CalcuDynamMarket(
@@ -170,58 +172,60 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     chaos_data::SymbolDynamMarket dynma_market;
     dynma_market.ParseFromString(packet);
     net_reply::DynaTickUnit* r_dyna_tick_unit = new net_reply::DynaTickUnit;
-    r_dyna_tick_unit->set_current_time(dynma_market.current_time());
-    r_dyna_tick_unit->set_open_price(dynma_market.open_price() * price_digit);
-    r_dyna_tick_unit->set_high_price(dynma_market.high_price() * price_digit);
-    r_dyna_tick_unit->set_low_price(dynma_market.low_price() * price_digit);
-    r_dyna_tick_unit->set_new_price(dynma_market.new_price() * price_digit);
-    r_dyna_tick_unit->set_volume(dynma_market.volume() * vol_unit);
-    r_dyna_tick_unit->set_amount(dynma_market.amount());
-    r_dyna_tick_unit->set_inner_vol(dynma_market.inner_vol() * vol_unit);
-    r_dyna_tick_unit->set_tick_count(dynma_market.tick_count());
+    if (dynma_market.current_time() > 0) {
+      r_dyna_tick_unit->set_current_time(dynma_market.current_time());
+      r_dyna_tick_unit->set_open_price(dynma_market.open_price() * price_digit);
+      r_dyna_tick_unit->set_high_price(dynma_market.high_price() * price_digit);
+      r_dyna_tick_unit->set_low_price(dynma_market.low_price() * price_digit);
+      r_dyna_tick_unit->set_new_price(dynma_market.new_price() * price_digit);
+      r_dyna_tick_unit->set_volume(dynma_market.volume() * vol_unit);
+      r_dyna_tick_unit->set_amount(dynma_market.amount());
+      r_dyna_tick_unit->set_inner_vol(dynma_market.inner_vol() * vol_unit);
+      r_dyna_tick_unit->set_tick_count(dynma_market.tick_count());
 
-    r_dyna_tick_unit->set_buy_price_one(
-        dynma_market.buy_price(0) * price_digit);
-    r_dyna_tick_unit->set_buy_price_two(
-        dynma_market.buy_price(1) * price_digit);
-    r_dyna_tick_unit->set_buy_price_three(
-        dynma_market.buy_price(2) * price_digit);
-    r_dyna_tick_unit->set_buy_price_four(
-        dynma_market.buy_price(3) * price_digit);
-    r_dyna_tick_unit->set_buy_price_five(
-        dynma_market.buy_price(4) * price_digit);
+      r_dyna_tick_unit->set_buy_price_one(
+          dynma_market.buy_price(0) * price_digit);
+      r_dyna_tick_unit->set_buy_price_two(
+          dynma_market.buy_price(1) * price_digit);
+      r_dyna_tick_unit->set_buy_price_three(
+          dynma_market.buy_price(2) * price_digit);
+      r_dyna_tick_unit->set_buy_price_four(
+          dynma_market.buy_price(3) * price_digit);
+      r_dyna_tick_unit->set_buy_price_five(
+          dynma_market.buy_price(4) * price_digit);
 
-    r_dyna_tick_unit->set_buy_vol_one(dynma_market.buy_vol(0) * vol_unit);
-    r_dyna_tick_unit->set_buy_vol_two(dynma_market.buy_vol(1) * vol_unit);
-    r_dyna_tick_unit->set_buy_vol_three(dynma_market.buy_vol(2) * vol_unit);
-    r_dyna_tick_unit->set_buy_vol_four(dynma_market.buy_vol(3) * vol_unit);
-    r_dyna_tick_unit->set_buy_vol_five(dynma_market.buy_vol(4) * vol_unit);
+      r_dyna_tick_unit->set_buy_vol_one(dynma_market.buy_vol(0) * vol_unit);
+      r_dyna_tick_unit->set_buy_vol_two(dynma_market.buy_vol(1) * vol_unit);
+      r_dyna_tick_unit->set_buy_vol_three(dynma_market.buy_vol(2) * vol_unit);
+      r_dyna_tick_unit->set_buy_vol_four(dynma_market.buy_vol(3) * vol_unit);
+      r_dyna_tick_unit->set_buy_vol_five(dynma_market.buy_vol(4) * vol_unit);
 
-    r_dyna_tick_unit->set_sell_price_one(
-        dynma_market.sell_price(0) * price_digit);
-    r_dyna_tick_unit->set_sell_price_two(
-        dynma_market.sell_price(1) * price_digit);
-    r_dyna_tick_unit->set_sell_price_three(
-        dynma_market.sell_price(2) * price_digit);
-    r_dyna_tick_unit->set_sell_price_four(
-        dynma_market.sell_price(3) * price_digit);
-    r_dyna_tick_unit->set_sell_price_five(
-        dynma_market.sell_price(4) * price_digit);
+      r_dyna_tick_unit->set_sell_price_one(
+          dynma_market.sell_price(0) * price_digit);
+      r_dyna_tick_unit->set_sell_price_two(
+          dynma_market.sell_price(1) * price_digit);
+      r_dyna_tick_unit->set_sell_price_three(
+          dynma_market.sell_price(2) * price_digit);
+      r_dyna_tick_unit->set_sell_price_four(
+          dynma_market.sell_price(3) * price_digit);
+      r_dyna_tick_unit->set_sell_price_five(
+          dynma_market.sell_price(4) * price_digit);
 
-    r_dyna_tick_unit->set_sell_vol_one(dynma_market.sell_vol(0) * vol_unit);
-    r_dyna_tick_unit->set_sell_vol_two(dynma_market.sell_vol(1) * vol_unit);
-    r_dyna_tick_unit->set_sell_vol_three(dynma_market.sell_vol(2) * vol_unit);
-    r_dyna_tick_unit->set_sell_vol_four(dynma_market.sell_vol(3) * vol_unit);
-    r_dyna_tick_unit->set_sell_vol_five(dynma_market.sell_vol(4) * vol_unit);
+      r_dyna_tick_unit->set_sell_vol_one(dynma_market.sell_vol(0) * vol_unit);
+      r_dyna_tick_unit->set_sell_vol_two(dynma_market.sell_vol(1) * vol_unit);
+      r_dyna_tick_unit->set_sell_vol_three(dynma_market.sell_vol(2) * vol_unit);
+      r_dyna_tick_unit->set_sell_vol_four(dynma_market.sell_vol(3) * vol_unit);
+      r_dyna_tick_unit->set_sell_vol_five(dynma_market.sell_vol(4) * vol_unit);
 
-    r_dyna_tick_unit->set_open_interest(
-        dynma_market.open_interest() * vol_unit);
-    r_dyna_tick_unit->set_settle_price(
-        dynma_market.settle_price() * price_digit);
+      r_dyna_tick_unit->set_open_interest(
+          dynma_market.open_interest() * vol_unit);
+      r_dyna_tick_unit->set_settle_price(
+          dynma_market.settle_price() * price_digit);
 
-    dyna_tick.set_unit(r_dyna_tick_unit->get());
+      dyna_tick.set_unit(r_dyna_tick_unit->get());
+      last_time = dynma_market.current_time();
+    }
     index_pos++;
-    last_time = dynma_market.current_time();
   }
 
   if (pos < raw_data_length) {  //有未完成的數據
