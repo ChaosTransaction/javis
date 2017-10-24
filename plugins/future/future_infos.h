@@ -277,7 +277,7 @@ class TimeUnit {
       //判断是否是夜盘时间
       if (time_explod_.hour > NIGHT_START_HOUR) {
         base::Time::Exploded time_explod;
-        int64 new_unix_time = data_->base_time_.ToTimeT();
+        int64 new_unix_time = base_time_.ToTimeT();
         base::Time base_time = base::Time::FromTimeT(
             new_unix_time + 60 * 60 * 24);
         base_time.LocalExplode(&time_explod);

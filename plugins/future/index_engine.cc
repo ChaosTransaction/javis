@@ -215,7 +215,7 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
   //循环判断
   do {
     r = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
-                       (temp_unit.start_date()/10000), (temp_unit.start_date() /10000 %100),
+                       (temp_unit.start_date()/10000), (temp_unit.start_date() /100 %100),
                        temp_unit.start_date() % 100, minute_map);
     if (r)
       SetIndexPos(lock, symbol_map, symbol, type_map, data_type, day_map,
@@ -232,9 +232,9 @@ LOADERROR IndexManager::GetCompareMintuePos(
   bool r = false;
   //开始时间向前移40分钟
   int32 start_unix = start_key;
-  int32 max_start_unix = start_key - 60 * 60 * 8;
+  int32 max_start_unix = start_key - 60 * 60 * 72;
   int32 end_unix = end_key;
-  int32 max_end_unix = end_key + 60 * 60 * 8;
+  int32 max_end_unix = end_key + 60 * 60 * 72;
   while (!r && start_unix > max_start_unix) {
     r = base::MapGet<MINUTEPOS_MAP, MINUTEPOS_MAP::iterator, int32,
         future_infos::TickTimePos>(ss_start_map, start_unix, start_val);
@@ -334,7 +334,7 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, int32 frame_time,
     if (!r)
       ret = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
                            time_unit.start_date() / 10000,
-                           (time_unit.start_date() / 10000 % 100),
+                           (time_unit.start_date() / 100 % 100),
                            time_unit.start_date() % 100, min_pos_map);
 
     if (ret)

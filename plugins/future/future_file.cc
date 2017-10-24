@@ -21,7 +21,7 @@ bool FutureFile::ReadStaticFile(const std::string& sec,
                                 const std::string& stk_type, const int32 year,
                                 const int32 month, const int32 day,
                                 std::string* content) {
-  std::string dir = "/home/stm/" + stk_type + "/" + sec + "/" + symbol
+  std::string dir = "/record/javis/" + stk_type + "/" + sec + "/" + symbol
       + "/STATIC/" + base::BasicUtil::StringUtil::Int64ToString(year) + "/"
       + base::BasicUtil::StringUtil::Int64ToString(month) + "/";
 
@@ -40,7 +40,7 @@ bool FutureFile::ReadFile(const std::string& sec, const std::string& data_type,
                           std::string* content) {
 
   ///home/d/ftr_idx/CZCE/SR0000/STATIC/2010/2
-  const std::string dir = "/home/stm/" + stk_type + "/" + sec + "/" + symbol + "/"
+  const std::string dir = "/record/javis/" + stk_type + "/" + sec + "/" + symbol + "/"
       + data_type + "/" + base::BasicUtil::StringUtil::Int64ToString(year) + "/"
       + base::BasicUtil::StringUtil::Int64ToString(month) + "/";
 
