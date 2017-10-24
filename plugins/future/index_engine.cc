@@ -215,11 +215,11 @@ void IndexManager::OnLoadIndex(future_infos::TimeUnit* time_unit,
   //循环判断
   do {
     r = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
-                       temp_unit.exploded().year, temp_unit.exploded().month,
-                       temp_unit.exploded().day_of_month, minute_map);
+                       (temp_unit.start_date()/10000), (temp_unit.start_date() /10000 %100),
+                       temp_unit.start_date() % 100, minute_map);
     if (r)
       SetIndexPos(lock, symbol_map, symbol, type_map, data_type, day_map,
-                  temp_unit.full_day(), time_unit->exploded().hour, minute_map);
+                  temp_unit.start_date(), time_unit->exploded().hour, minute_map);
     temp_unit.reset_time(temp_unit.ToUnixTime() + 60 * 60 * 24);
   } while (!r);
 }
@@ -291,7 +291,7 @@ LOADERROR IndexManager::GetCompareDayPos(struct threadrw_t* lock,
   /*if (end_time_unit.exploded().hour > 20) {
    end_time_unit.reset_time(end_time_unit.ToUnixTime() + 60 * 60 * 5);
    }*/
-  if (start_time_unit.full_day() == end_time_unit.full_day() && r) {
+  if (start_time_unit.start_date() == end_time_unit.start_date() && r) {
     end_min_map = start_min_map;
   } else {
     if (end_min_map.empty())
@@ -329,13 +329,13 @@ bool IndexManager::GetDayPos(struct threadrw_t* lock, int32 frame_time,
     {
       base_logic::RLockGd lk(lock);
       r = base::MapGet<DAYPOS_MAP, DAYPOS_MAP::iterator, const int32,
-          MINUTEPOS_MAP>(day_pos_map, time_unit.full_day(), min_pos_map);
+          MINUTEPOS_MAP>(day_pos_map, time_unit.start_date(), min_pos_map);
     }
     if (!r)
       ret = OnLoadLoaclPos(sec, symbol, data_type, stk_type,
-                           time_unit.exploded().year,
-                           time_unit.exploded().month,
-                           time_unit.exploded().day_of_month, min_pos_map);
+                           time_unit.start_date() / 10000,
+                           (time_unit.start_date() / 10000 % 100),
+                           time_unit.start_date() % 100, min_pos_map);
 
     if (ret)
       frame_time_unit->reset_time(start_time);
