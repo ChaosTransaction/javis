@@ -228,7 +228,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
     index_pos++;
   }
 
-  if (pos < raw_data_length) {  //有未完成的數據
+  while (pos < raw_data_length && next_time == 0) {  //有未完成的數據 //处理时间中有0的问题
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
     packet.assign(raw_data + pos + sizeof(int16),
