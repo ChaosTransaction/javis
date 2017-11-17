@@ -131,13 +131,13 @@ bool FutureManager::SendDynamMarket(
     } else if (start_pos.market_date()
         != end_pos.market_date()/*start_time_unit.full_day() != end_time_unit.full_day()*/) {
       if (static_info.static_info().market_date()
-          == start_time_unit.full_day()) {  //开始日期
+          == start_pos.market_date()) {  //开始日期
         CalcuDynamMarket(
             day_market.market_data().c_str() + start_pos.start_pos(),
             day_market.market_data().length() - start_pos.start_pos(),
             index_pos, max_count, static_info, dyna_tick);
       } else if (static_info.static_info().market_date()
-          == end_time_unit.full_day()) {  //结束日期
+          == end_pos.market_date()) {  //结束日期
         CalcuDynamMarket(day_market.market_data().c_str(), end_pos.end_pos(),
                          index_pos, max_count, static_info, dyna_tick);
       } else {
@@ -268,19 +268,19 @@ bool FutureManager::ExtractDynamMarket(
     if (!r)
       continue;
 
-    if (start_time_unit.full_day() == end_time_unit.full_day()) {  //开始结束同一天
+    if (start_pos.market_date() == end_pos.market_date()) {  //开始结束同一天
       CalcuDynamMarket(day_market.market_data().c_str() + start_pos.start_pos(),
                        end_pos.end_pos() - start_pos.start_pos(), static_info,
                        dynam_list);
-    } else if (start_time_unit.full_day() != end_time_unit.full_day()) {
+    } else if (start_pos.market_date() != end_pos.market_date()) {
       if (static_info.static_info().market_date()
-          == start_time_unit.full_day()) {  //开始日期
+          == start_pos.market_date()) {  //开始日期
         CalcuDynamMarket(
             day_market.market_data().c_str() + start_pos.start_pos(),
             day_market.market_data().length() - start_pos.start_pos(),
             static_info, dynam_list);
       } else if (static_info.static_info().market_date()
-          == end_time_unit.full_day()) {  //结束日期
+          == end_pos.market_date()) {  //结束日期
         CalcuDynamMarket(day_market.market_data().c_str(), end_pos.end_pos(),
                          static_info, dynam_list);
       } else {
