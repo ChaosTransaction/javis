@@ -182,6 +182,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
       r_dyna_tick_unit->set_amount(dynma_market.amount());
       r_dyna_tick_unit->set_inner_vol(dynma_market.inner_vol() * vol_unit);
       r_dyna_tick_unit->set_tick_count(dynma_market.tick_count());
+      r_dyna_tick_unit->set_market_date(static_info.static_info().market_date());
 
       r_dyna_tick_unit->set_buy_price_one(
           dynma_market.buy_price(0) * price_digit);

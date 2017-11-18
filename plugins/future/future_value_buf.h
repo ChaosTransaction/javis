@@ -349,6 +349,7 @@ class DynaTickUnit {
         sell_vol_five_(NULL),
         open_interest_(NULL),
         settle_price_(NULL),
+        market_date_(NULL),
         value_(NULL) {
   }
 
@@ -479,6 +480,10 @@ class DynaTickUnit {
     settle_price_ = new base_logic::FundamentalValue(settle_price);
   }
 
+  void set_market_date(const int32 market_date) {
+    market_date_ = new base_logic::FundamentalValue(market_date);
+  }
+
   base_logic::DictionaryValue* get() {
     value_ = new base_logic::DictionaryValue();
     if (current_time_ != NULL)
@@ -548,6 +553,10 @@ class DynaTickUnit {
       value_->Set(L"oi", open_interest_);
     if (settle_price_ != NULL)
       value_->Set(L"sp", settle_price_);
+
+    if (market_date_ != NULL)
+      value_->Set(L"md", market_date_);
+
     return value_;
   }
 
@@ -583,6 +592,7 @@ class DynaTickUnit {
   base_logic::FundamentalValue* sell_vol_five_;
   base_logic::FundamentalValue* open_interest_;
   base_logic::FundamentalValue* settle_price_;
+  base_logic::FundamentalValue* market_date_;
 
   base_logic::DictionaryValue* value_;
 
