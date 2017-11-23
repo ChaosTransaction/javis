@@ -42,7 +42,7 @@ FutureManager::~FutureManager() {
 
 bool FutureManager::OnDynaFile(const int socket, const int64 uid,
                                const std::string& token,
-                               const sdtd::string* field, const int32 net_code,
+                               const std::string& field, const int32 net_code,
                                const std::string& sec_symbol,
                                const STK_TYPE& stk_type,
                                const std::string& start_time,
@@ -71,8 +71,8 @@ bool FutureManager::OnDynaFile(const int socket, const int64 uid,
   r = DataEngine::GetSchdulerManager()->OnLoadData(data_type, stk_type,
                                                    static_list, market_hash);
   if (!static_list.empty()) {
-    SendDynamMarket(start_time_pos, end_time_pos, max_count, static_list,
-                    market_hash, dyna_tick);
+  //  SendDynamMarket(start_time_pos, end_time_pos, max_count, static_list,
+    //                market_hash, dyna_tick);
   }
 
   return true;
@@ -196,7 +196,6 @@ bool FutureManager::WriteDynamMarket(
   future_infos::TimeUnit end_time_unit(end_pos.time_index());
   bool r = false;
 
-  int32 index_pos = 0;
   for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
       it != static_list.end(); it++) {
     future_infos::StaticInfo static_info = (*it);
@@ -223,7 +222,7 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   size_t pos = 0;
   int price_digit = GetPriceMul(static_info.static_info().price_digit());
   int vol_unit = static_info.static_info().vol_unit();
-  while (pos < raw_data_length && index_pos < max_count) {
+  while (pos < raw_data_length) {
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;
     packet.assign(raw_data + pos + sizeof(int16),

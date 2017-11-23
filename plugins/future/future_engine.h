@@ -47,8 +47,7 @@ class FutureManager {
   bool WriteDynamMarket(future_infos::TickTimePos& start_pos,
                         future_infos::TickTimePos& end_pos,
                         std::list<future_infos::StaticInfo>& static_list,
-                        std::map<int32, future_infos::DayMarket>& market_hash,
-                        );
+                        std::map<int32, future_infos::DayMarket>& market_hash);
 
   bool SendDynamMarket(future_infos::TickTimePos& start_pos,
                        future_infos::TickTimePos& end_pos,
