@@ -40,6 +40,44 @@ FutureManager::~FutureManager() {
   DataEngine::FreeDataEngine();
 }
 
+bool FutureManager::OnDynaFile(const int socket, const int64 uid,
+                               const std::string& token,
+                               const sdtd::string* field, const int32 net_code,
+                               const std::string& sec_symbol,
+                               const STK_TYPE& stk_type,
+                               const std::string& start_time,
+                               const std::string& end_time) {
+  bool r = false;
+  HIS_DATA_TYPE data_type = _DYNA_DATA;
+  size_t start_pos = sec_symbol.find(".");
+  std::string symbol = sec_symbol.substr(0, start_pos);
+  std::string sec = sec_symbol.substr(
+      start_pos + 1, sec_symbol.length() - symbol.length() - 1);
+
+  future_infos::TickTimePos start_time_pos;
+  future_infos::TickTimePos end_time_pos;
+  r = IndexEngine::GetSchdulerManager()->OnFetchIndexPos(sec, symbol, data_type,
+                                                         start_time, end_time,
+                                                         start_time_pos,
+                                                         end_time_pos);
+
+  std::list<future_infos::StaticInfo> static_list;
+  r = StaticEngine::GetSchdulerManager()->OnFetchStaticInfo(sec, symbol, FUTURE,
+                                                            start_time_pos,
+                                                            end_time_pos,
+                                                            static_list);
+
+  std::map<int32, future_infos::DayMarket> market_hash;
+  r = DataEngine::GetSchdulerManager()->OnLoadData(data_type, stk_type,
+                                                   static_list, market_hash);
+  if (!static_list.empty()) {
+    SendDynamMarket(start_time_pos, end_time_pos, max_count, static_list,
+                    market_hash, dyna_tick);
+  }
+
+  return true;
+}
+
 bool FutureManager::OnDynaTick(const int socket, const int64 uid,
                                const std::string& token,
                                const std::string& field, const int32 net_code,
@@ -130,8 +168,7 @@ bool FutureManager::SendDynamMarket(
                        max_count, static_info, dyna_tick);
     } else if (start_pos.market_date()
         != end_pos.market_date()/*start_time_unit.full_day() != end_time_unit.full_day()*/) {
-      if (static_info.static_info().market_date()
-          == start_pos.market_date()) {  //开始日期
+      if (static_info.static_info().market_date() == start_pos.market_date()) {  //开始日期
         CalcuDynamMarket(
             day_market.market_data().c_str() + start_pos.start_pos(),
             day_market.market_data().length() - start_pos.start_pos(),
@@ -150,6 +187,112 @@ bool FutureManager::SendDynamMarket(
 
   return true;
 }
+
+bool FutureManager::WriteDynamMarket(
+    future_infos::TickTimePos& start_pos, future_infos::TickTimePos& end_pos,
+    std::list<future_infos::StaticInfo>& static_list,
+    std::map<int32, future_infos::DayMarket>& market_hash) {
+  future_infos::TimeUnit start_time_unit(start_pos.time_index());
+  future_infos::TimeUnit end_time_unit(end_pos.time_index());
+  bool r = false;
+
+  int32 index_pos = 0;
+  for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
+      it != static_list.end(); it++) {
+    future_infos::StaticInfo static_info = (*it);
+    //读取数据
+    future_infos::DayMarket day_market;
+    r = base::MapGet<std::map<int32, future_infos::DayMarket>,
+        std::map<int32, future_infos::DayMarket>::iterator, int32,
+        future_infos::DayMarket>(market_hash,
+                                 static_info.static_info().market_date(),
+                                 day_market);
+    if (!r)
+      continue;
+
+
+
+  }
+  return true;
+}
+
+bool FutureManager::CalcuDynamMarket(const char* raw_data,
+                                     const size_t raw_data_length,
+                                     future_infos::StaticInfo& static_info,
+                                     net_reply::DynaTick& dyna_tick) {
+  size_t pos = 0;
+  int price_digit = GetPriceMul(static_info.static_info().price_digit());
+  int vol_unit = static_info.static_info().vol_unit();
+  while (pos < raw_data_length && index_pos < max_count) {
+    int16 packet_length = *(int16*) (raw_data + pos);
+    std::string packet;
+    packet.assign(raw_data + pos + sizeof(int16),
+                  packet_length - sizeof(int16));
+    pos += packet_length;
+    chaos_data::SymbolDynamMarket dynma_market;
+    dynma_market.ParseFromString(packet);
+    net_reply::DynaTickUnit* r_dyna_tick_unit = new net_reply::DynaTickUnit;
+    if (dynma_market.current_time() > 0) {
+      r_dyna_tick_unit->set_current_time(dynma_market.current_time());
+      r_dyna_tick_unit->set_open_price(dynma_market.open_price() * price_digit);
+      r_dyna_tick_unit->set_high_price(dynma_market.high_price() * price_digit);
+      r_dyna_tick_unit->set_low_price(dynma_market.low_price() * price_digit);
+      r_dyna_tick_unit->set_new_price(dynma_market.new_price() * price_digit);
+      r_dyna_tick_unit->set_volume(dynma_market.volume() * vol_unit);
+      r_dyna_tick_unit->set_amount(dynma_market.amount());
+      r_dyna_tick_unit->set_inner_vol(dynma_market.inner_vol() * vol_unit);
+      r_dyna_tick_unit->set_tick_count(dynma_market.tick_count());
+      r_dyna_tick_unit->set_market_date(
+          static_info.static_info().market_date());
+
+      r_dyna_tick_unit->set_buy_price_one(
+          dynma_market.buy_price(0) * price_digit);
+      r_dyna_tick_unit->set_buy_price_two(
+          dynma_market.buy_price(1) * price_digit);
+      r_dyna_tick_unit->set_buy_price_three(
+          dynma_market.buy_price(2) * price_digit);
+      r_dyna_tick_unit->set_buy_price_four(
+          dynma_market.buy_price(3) * price_digit);
+      r_dyna_tick_unit->set_buy_price_five(
+          dynma_market.buy_price(4) * price_digit);
+
+      r_dyna_tick_unit->set_buy_vol_one(dynma_market.buy_vol(0) * vol_unit);
+      r_dyna_tick_unit->set_buy_vol_two(dynma_market.buy_vol(1) * vol_unit);
+      r_dyna_tick_unit->set_buy_vol_three(dynma_market.buy_vol(2) * vol_unit);
+      r_dyna_tick_unit->set_buy_vol_four(dynma_market.buy_vol(3) * vol_unit);
+      r_dyna_tick_unit->set_buy_vol_five(dynma_market.buy_vol(4) * vol_unit);
+
+      r_dyna_tick_unit->set_sell_price_one(
+          dynma_market.sell_price(0) * price_digit);
+      r_dyna_tick_unit->set_sell_price_two(
+          dynma_market.sell_price(1) * price_digit);
+      r_dyna_tick_unit->set_sell_price_three(
+          dynma_market.sell_price(2) * price_digit);
+      r_dyna_tick_unit->set_sell_price_four(
+          dynma_market.sell_price(3) * price_digit);
+      r_dyna_tick_unit->set_sell_price_five(
+          dynma_market.sell_price(4) * price_digit);
+
+      r_dyna_tick_unit->set_sell_vol_one(dynma_market.sell_vol(0) * vol_unit);
+      r_dyna_tick_unit->set_sell_vol_two(dynma_market.sell_vol(1) * vol_unit);
+      r_dyna_tick_unit->set_sell_vol_three(dynma_market.sell_vol(2) * vol_unit);
+      r_dyna_tick_unit->set_sell_vol_four(dynma_market.sell_vol(3) * vol_unit);
+      r_dyna_tick_unit->set_sell_vol_five(dynma_market.sell_vol(4) * vol_unit);
+
+      r_dyna_tick_unit->set_open_interest(
+          dynma_market.open_interest() * vol_unit);
+      r_dyna_tick_unit->set_settle_price(
+          dynma_market.settle_price() * price_digit);
+
+      dyna_tick.set_unit(r_dyna_tick_unit->get());
+    }
+  }
+
+  //写入文件
+
+  return true;
+}
+
 
 bool FutureManager::CalcuDynamMarket(const char* raw_data,
                                      const size_t raw_data_length,
@@ -182,7 +325,8 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
       r_dyna_tick_unit->set_amount(dynma_market.amount());
       r_dyna_tick_unit->set_inner_vol(dynma_market.inner_vol() * vol_unit);
       r_dyna_tick_unit->set_tick_count(dynma_market.tick_count());
-      r_dyna_tick_unit->set_market_date(static_info.static_info().market_date());
+      r_dyna_tick_unit->set_market_date(
+          static_info.static_info().market_date());
 
       r_dyna_tick_unit->set_buy_price_one(
           dynma_market.buy_price(0) * price_digit);
@@ -274,8 +418,7 @@ bool FutureManager::ExtractDynamMarket(
                        end_pos.end_pos() - start_pos.start_pos(), static_info,
                        dynam_list);
     } else if (start_pos.market_date() != end_pos.market_date()) {
-      if (static_info.static_info().market_date()
-          == start_pos.market_date()) {  //开始日期
+      if (static_info.static_info().market_date() == start_pos.market_date()) {  //开始日期
         CalcuDynamMarket(
             day_market.market_data().c_str() + start_pos.start_pos(),
             day_market.market_data().length() - start_pos.start_pos(),

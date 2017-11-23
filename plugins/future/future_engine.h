@@ -20,9 +20,13 @@ class FutureManager {
  protected:
   bool OnDynaTick(const int socket, const int64 uid, const std::string& token,
                   const std::string& field, const int32 net_code,
-                  const std::string& sec_symbol,
-                  const STK_TYPE& stk_type, const std::string& start_time,
-                  const std::string& end_time);
+                  const std::string& sec_symbol, const STK_TYPE& stk_type,
+                  const std::string& start_time, const std::string& end_time);
+
+  bool OnDynaFile(const int socket, const int64 uid, const std::string& token,
+                  const std::string& filed, const int32 net_code,
+                  const std::string& sec_symbol, const STK_TYPE& stk_type,
+                  const std::string& start_time, const std::string& endt_time);
 
   bool OnBasicFuture(const int socket, const int64 uid,
                      const std::string& token, const std::string& field,
@@ -40,6 +44,12 @@ class FutureManager {
                         future_infos::StaticInfo& static_info,
                         std::list<chaos_data::SymbolDynamMarket>& dynam_list);
 
+  bool WriteDynamMarket(future_infos::TickTimePos& start_pos,
+                        future_infos::TickTimePos& end_pos,
+                        std::list<future_infos::StaticInfo>& static_list,
+                        std::map<int32, future_infos::DayMarket>& market_hash,
+                        );
+
   bool SendDynamMarket(future_infos::TickTimePos& start_pos,
                        future_infos::TickTimePos& end_pos,
                        const int32 max_count,
@@ -49,6 +59,10 @@ class FutureManager {
 
   bool CalcuDynamMarket(const char* raw_data, const size_t raw_data_length,
                         int32& index, const int32 max_count,
+                        future_infos::StaticInfo& static_info,
+                        net_reply::DynaTick& dyna_tick);
+
+  bool CalcuDynamMarket(const char* raw_data, const size_t raw_data_length,
                         future_infos::StaticInfo& static_info,
                         net_reply::DynaTick& dyna_tick);
 
