@@ -80,10 +80,10 @@ class FutureManager {
   void CreateDir(const int64 uid, const std::string& symbol, std::string& dir);
 
   void CreateFile(const std::string& dir,
-                  const std::string& relative,
                   const std::string& symbol,
                   const int32 market_date,
-                  file::FilePath& file_name);
+                  file::FilePath& file_name,
+                  std::string& relative);
 };
 
 class FutureEngine {

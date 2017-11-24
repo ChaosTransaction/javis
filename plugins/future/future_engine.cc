@@ -203,7 +203,7 @@ bool FutureManager::WriteDynamMarket(
   CreateDir(uid, symbol, dir);
 
   dyna_file.set_host("http://ctm.smartdata-x.com");
-  relative = base::BasicUtil::StringUtil::Int64ToString(uid) + "/";
+  relative = base::BasicUtil::StringUtil::Int64ToString(uid) + "/" + symbol;
   for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
       it != static_list.end(); it++) {
     future_infos::StaticInfo static_info = (*it);
@@ -311,14 +311,17 @@ bool FutureManager::CalcuDynamMarket(const std::string& dir,
 
   //写入文件
   file::FilePath file_name;
-  CreateFile(dir, relative, static_info.static_info().symbol(),
-             static_info.static_info().market_date(), file_name);
+  std::string file_relative;
+  file_relative = relative;
+  CreateFile(dir, static_info.static_info().symbol(),
+             static_info.static_info().market_date(), 
+             file_name, file_relative);
   WriteDynamFile(file_name, dyna_tick.get());
 
   net_reply::DynaFileUnit* unit = new net_reply::DynaFileUnit;
   unit->set_found_date(time(NULL));
   unit->set_market_date(static_info.static_info().market_date());
-  unit->set_url(relative);
+  unit->set_url(file_relative);
   dyna_file.set_unit(unit->get());
   return true;
 }
@@ -429,10 +432,10 @@ void FutureManager::CreateDir(const int64 uid, const std::string& symbol,
 }
 
 void FutureManager::CreateFile(const std::string& dir,
-                               const std::string& relative,
                                const std::string& symbol,
                                const int32 market_date,
-                               file::FilePath& file_name) {
+                               file::FilePath& file_name,
+                               std::string& relative) {
   std::string filename = symbol + "_"
       + base::BasicUtil::StringUtil::Int64ToString(market_date);
 

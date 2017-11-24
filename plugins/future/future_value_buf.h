@@ -247,7 +247,7 @@ class DynaFile {
   }
 
   void set_host(const std::string& host) {
-    host_->StringValue(host);
+    host_ = new base_logic::StringValue(host);
   }
 
 
