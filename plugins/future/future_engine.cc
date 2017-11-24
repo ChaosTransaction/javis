@@ -207,8 +207,6 @@ bool FutureManager::WriteDynamMarket(
   for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
       it != static_list.end(); it++) {
     future_infos::StaticInfo static_info = (*it);
-
-    net_reply::DynaTick dyna_tick;
     //读取数据
     future_infos::DayMarket day_market;
     r = base::MapGet<std::map<int32, future_infos::DayMarket>,
@@ -220,7 +218,7 @@ bool FutureManager::WriteDynamMarket(
       continue;
 
     CalcuDynamMarket(dir, relative, day_market.market_data().c_str(),
-                     day_market.market_data().length(), static_info, dyna_tick,
+                     day_market.market_data().length(), static_info,
                      dyna_file);
 
     //ULOG_DEBUG2("%d--->%d",static_info.static_info().market_date(), dyna_tick.Size());
@@ -239,11 +237,11 @@ bool FutureManager::CalcuDynamMarket(const std::string& dir,
                                      const char* raw_data,
                                      const size_t raw_data_length,
                                      future_infos::StaticInfo& static_info,
-                                     net_reply::DynaTick& dyna_tick,
                                      net_reply::DynaFile& dyna_file) {
   size_t pos = 0;
   int price_digit = GetPriceMul(static_info.static_info().price_digit());
   int vol_unit = static_info.static_info().vol_unit();
+  net_reply::DynaTick dyna_tick;
   while (pos < raw_data_length) {
     int16 packet_length = *(int16*) (raw_data + pos);
     std::string packet;

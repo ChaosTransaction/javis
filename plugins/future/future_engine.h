@@ -69,7 +69,6 @@ class FutureManager {
                         const char* raw_data,
                         const size_t raw_data_length,
                         future_infos::StaticInfo& static_info,
-                        net_reply::DynaTick& dyna_tick,
                         net_reply::DynaFile& dyna_file);
 
   int GetPriceMul(const uint8 price_digit) const;
