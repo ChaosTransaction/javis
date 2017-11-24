@@ -230,6 +230,7 @@ class DynaFile {
  public:
   DynaFile()
       : dyna_file_(NULL)
+      , host_(NULL)
       , value_(NULL) {
     dyna_file_ = new base_logic::ListValue;
   }
@@ -245,6 +246,10 @@ class DynaFile {
     dyna_file_->Append(value);
   }
 
+  void set_host(const std::string& host) {
+    host_->StringValue(host);
+  }
+
 
   base_logic::DictionaryValue* get() {
     value_ = new base_logic::DictionaryValue();
@@ -254,6 +259,7 @@ class DynaFile {
       delete dyna_file_;
       dyna_file_ = NULL;
     }
+    value_->Set(L"host", host_);
     return value_;
   }
 
@@ -271,6 +277,7 @@ class DynaFile {
 
  private:
   base_logic::ListValue* dyna_file_;
+  base_logic::StringValue* host_;
   base_logic::DictionaryValue* value_;
 };
 

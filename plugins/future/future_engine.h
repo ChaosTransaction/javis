@@ -64,7 +64,9 @@ class FutureManager {
                         future_infos::StaticInfo& static_info,
                         net_reply::DynaTick& dyna_tick);
 
-  bool CalcuDynamMarket(const std::string& dir, const char* raw_data,
+  bool CalcuDynamMarket(const std::string& dir,
+                        const std::string& relative,
+                        const char* raw_data,
                         const size_t raw_data_length,
                         future_infos::StaticInfo& static_info,
                         net_reply::DynaTick& dyna_tick,
@@ -78,6 +80,7 @@ class FutureManager {
   void CreateDir(const int64 uid, const std::string& symbol, std::string& dir);
 
   void CreateFile(const std::string& dir,
+                  const std::string& relative,
                   const std::string& symbol,
                   const int32 market_date,
                   file::FilePath& file_name);

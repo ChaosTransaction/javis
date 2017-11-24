@@ -72,8 +72,8 @@ bool FutureManager::OnDynaFile(const int socket, const int64 uid,
   r = DataEngine::GetSchdulerManager()->OnLoadData(data_type, stk_type,
                                                    static_list, market_hash);
   if (!static_list.empty()) {
-    WriteDynamMarket(socket, uid, symbol, start_time_pos, end_time_pos, static_list,
-                     market_hash);
+    WriteDynamMarket(socket, uid, symbol, start_time_pos, end_time_pos,
+                     static_list, market_hash);
   }
 
   return true;
@@ -189,8 +189,8 @@ bool FutureManager::SendDynamMarket(
   return true;
 }
 
-bool FutureManager::WriteDynamMarket(const int socket,
-    const int64 uid, const std::string& symbol,
+bool FutureManager::WriteDynamMarket(
+    const int socket, const int64 uid, const std::string& symbol,
     future_infos::TickTimePos& start_pos, future_infos::TickTimePos& end_pos,
     std::list<future_infos::StaticInfo>& static_list,
     std::map<int32, future_infos::DayMarket>& market_hash) {
@@ -199,8 +199,11 @@ bool FutureManager::WriteDynamMarket(const int socket,
   future_infos::TimeUnit end_time_unit(end_pos.time_index());
   bool r = false;
   std::string dir;
+  std::string relative;
   CreateDir(uid, symbol, dir);
 
+  dyna_file.set_host("http://ctm.smartdata-x.com");
+  relative = base::BasicUtil::StringUtil::Int64ToString(uid) + "/";
   for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
       it != static_list.end(); it++) {
     future_infos::StaticInfo static_info = (*it);
@@ -216,13 +219,12 @@ bool FutureManager::WriteDynamMarket(const int socket,
     if (!r)
       continue;
 
-    CalcuDynamMarket(dir, day_market.market_data().c_str(),
-                     day_market.market_data().length(), static_info,
-                     dyna_tick,dyna_file);
+    CalcuDynamMarket(dir, relative, day_market.market_data().c_str(),
+                     day_market.market_data().length(), static_info, dyna_tick,
+                     dyna_file);
 
     //ULOG_DEBUG2("%d--->%d",static_info.static_info().market_date(), dyna_tick.Size());
   }
-
 
   //返回路徑
   base_logic::DictionaryValue* value = dyna_file.get();
@@ -233,6 +235,7 @@ bool FutureManager::WriteDynamMarket(const int socket,
 }
 
 bool FutureManager::CalcuDynamMarket(const std::string& dir,
+                                     const std::string& relative,
                                      const char* raw_data,
                                      const size_t raw_data_length,
                                      future_infos::StaticInfo& static_info,
@@ -308,14 +311,14 @@ bool FutureManager::CalcuDynamMarket(const std::string& dir,
 
   //写入文件
   file::FilePath file_name;
-  CreateFile(dir, static_info.static_info().symbol(),
-             static_info.static_info().market_date(),file_name);
-
+  CreateFile(dir, relative, static_info.static_info().symbol(),
+             static_info.static_info().market_date(), file_name);
   WriteDynamFile(file_name, dyna_tick.get());
+
   net_reply::DynaFileUnit* unit = new net_reply::DynaFileUnit;
   unit->set_found_date(time(NULL));
   unit->set_market_date(static_info.static_info().market_date());
-  unit->set_url("http://ctm.smartdata-x.com" + file_name.value());
+  unit->set_url(relative);
   dyna_file.set_unit(unit->get());
   return true;
 }
@@ -426,6 +429,7 @@ void FutureManager::CreateDir(const int64 uid, const std::string& symbol,
 }
 
 void FutureManager::CreateFile(const std::string& dir,
+                               const std::string& relative,
                                const std::string& symbol,
                                const int32 market_date,
                                file::FilePath& file_name) {
@@ -435,6 +439,8 @@ void FutureManager::CreateFile(const std::string& dir,
   std::string temp_path = dir + "/" + filename + ".jcsv";
   file::FilePath temp_file_path(temp_path);
   file_name = temp_file_path;
+
+  relative = relative + "/" + filename + ".jcsv";
 }
 
 bool FutureManager::WriteDynamFile(file::FilePath& file_name,
