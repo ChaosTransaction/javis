@@ -316,7 +316,7 @@ bool FutureManager::CalcuDynamMarket(const std::string& dir,
   unit->set_found_date(time(NULL));
   unit->set_market_date(static_info.static_info().market_date());
   unit->set_url("http://ctm.smartdata-x.com" + file_name.value());
-  dyna_file.set_unit(unit);
+  dyna_file.set_unit(unit->get());
   return true;
 }
 

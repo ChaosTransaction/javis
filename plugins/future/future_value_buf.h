@@ -293,15 +293,15 @@ class DynaFileUnit {
     value_ = new base_logic::DictionaryValue();
     if (market_date_ != NULL)
       value_->Set(L"md", market_date_);
-    if (foud_date_ != NULL)
-      value_->Set(L"fd",foud_date_);
+    if (found_date_ != NULL)
+      value_->Set(L"fd",found_date_);
     if (url_ != NULL)
-      value_->Set(L"url", url);
+      value_->Set(L"url", url_);
     return value_;
   }
 
   void set_url(const std::string& url){
-    url_ = new base_logic::StringValue(ulr);
+    url_ = new base_logic::StringValue(url);
   }
   base_logic::FundamentalValue* market_date_;
   base_logic::FundamentalValue* found_date_;

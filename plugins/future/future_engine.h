@@ -46,7 +46,7 @@ class FutureManager {
                         future_infos::StaticInfo& static_info,
                         std::list<chaos_data::SymbolDynamMarket>& dynam_list);
 
-  bool WriteDynamMarket(const int64 uid, const std::string& symbol,
+  bool WriteDynamMarket(const int socket, const int64 uid, const std::string& symbol,
                         future_infos::TickTimePos& start_pos,
                         future_infos::TickTimePos& end_pos,
                         std::list<future_infos::StaticInfo>& static_list,
