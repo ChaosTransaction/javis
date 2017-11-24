@@ -117,6 +117,10 @@ bool Futurelogic::OnFutureMessage(struct server *srv, const int socket,
      r =  OnDynaTick(srv, socket, packet);
       break;
     }
+    case R_FUTURE_DYNA_FILE: {
+    r = OnDynaFile(srv, socket, packet);
+        break;
+    }
     default:
       break;
   }
@@ -155,6 +159,34 @@ bool Futurelogic::OnTimeout(struct server *srv, char *id, int opcode,
   }
   return true;
 }
+
+
+bool Futurelogic::OnDynaFile(struct server* srv, int socket,
+                             struct PacketHead* packet) {
+  future_logic::net_request::DynaTick dyna_tick;
+
+  if (packet->packet_length <= PACKET_HEAD_LENGTH) {
+    send_error(socket, PACKET_LEN_ERRNO, net_error(PACKET_LEN_ERRNO));
+    return false;
+  }
+
+  struct PacketControl* packet_control = (struct PacketControl*) (packet);
+  NET_ERRNO r = dyna_tick.set_http_packet(packet_control->body_);
+  if (r != NO_ERRNO) {
+    send_error(socket, r, net_error(r));
+    return false;
+  }
+
+  FutureEngine::GetSchdulerManager()->OnDynaFile(socket, dyna_tick.uid(),
+                                                 dyna_tick.access_token(),
+                                                 dyna_tick.field(),
+                                                 dyna_tick.net_code(),
+                                                 dyna_tick.sec_id(), FUTURE,
+                                                 dyna_tick.start_time(),
+                                                 dyna_tick.end_time());
+  return true;
+}
+
 
 bool Futurelogic::OnDynaTick(struct server* srv, int socket,
                              struct PacketHead* packet) {

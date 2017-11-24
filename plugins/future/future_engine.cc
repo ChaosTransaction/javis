@@ -12,6 +12,9 @@
 #include "basic/template.h"
 #include "file/file_path.h"
 #include "file/file_util.h"
+#include "basic/basictypes.h"
+#include "logic/base_values.h"
+
 namespace future_logic {
 
 FutureEngine* FutureEngine::schduler_engine_ = NULL;
@@ -71,8 +74,8 @@ bool FutureManager::OnDynaFile(const int socket, const int64 uid,
   r = DataEngine::GetSchdulerManager()->OnLoadData(data_type, stk_type,
                                                    static_list, market_hash);
   if (!static_list.empty()) {
-  //  SendDynamMarket(start_time_pos, end_time_pos, max_count, static_list,
-    //                market_hash, dyna_tick);
+      WriteDynamMarket(uid, symbol, start_time_pos, end_time_pos, static_list,
+              market_hash);
   }
 
   return true;
@@ -188,17 +191,20 @@ bool FutureManager::SendDynamMarket(
   return true;
 }
 
-bool FutureManager::WriteDynamMarket(
+bool FutureManager::WriteDynamMarket(const int64 uid, const std::string& symbol,
     future_infos::TickTimePos& start_pos, future_infos::TickTimePos& end_pos,
     std::list<future_infos::StaticInfo>& static_list,
     std::map<int32, future_infos::DayMarket>& market_hash) {
   future_infos::TimeUnit start_time_unit(start_pos.time_index());
   future_infos::TimeUnit end_time_unit(end_pos.time_index());
   bool r = false;
-
+  std::string dir;
+  CreateDir(uid, symbol, dir);
   for (std::list<future_infos::StaticInfo>::iterator it = static_list.begin();
       it != static_list.end(); it++) {
     future_infos::StaticInfo static_info = (*it);
+    
+    net_reply::DynaTick dyna_tick; 
     //读取数据
     future_infos::DayMarket day_market;
     r = base::MapGet<std::map<int32, future_infos::DayMarket>,
@@ -209,13 +215,17 @@ bool FutureManager::WriteDynamMarket(
     if (!r)
       continue;
 
+    CalcuDynamMarket(dir, day_market.market_data().c_str(), day_market.market_data().length(),
+            static_info, dyna_tick);
 
-
+    //ULOG_DEBUG2("%d--->%d",static_info.static_info().market_date(), dyna_tick.Size());
   }
+  
+  //返回路徑
   return true;
 }
 
-bool FutureManager::CalcuDynamMarket(const char* raw_data,
+bool FutureManager::CalcuDynamMarket(const std::string& dir, const char* raw_data,
                                      const size_t raw_data_length,
                                      future_infos::StaticInfo& static_info,
                                      net_reply::DynaTick& dyna_tick) {
@@ -288,7 +298,8 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   }
 
   //写入文件
-
+  WriteDynamFile(dir, static_info.static_info().symbol(),
+          static_info.static_info().market_date(),dyna_tick.get());
   return true;
 }
 
@@ -386,6 +397,34 @@ bool FutureManager::CalcuDynamMarket(const char* raw_data,
   dyna_tick.set_last_time(last_time);
   dyna_tick.set_next_time(next_time);
   return true;
+}
+
+void FutureManager::CreateDir(const int64 uid, const std::string& symbol, std::string& dir) {
+    std::string base_dir = "/record/output";
+    dir = base_dir + "/" + base::BasicUtil::StringUtil::Int64ToString(uid) + "/" + symbol + "/";
+    file::FilePath current_dir_path(dir);
+    if (!file::DirectoryExists(current_dir_path))
+        file::CreateDirectory(current_dir_path);
+}
+
+bool FutureManager::WriteDynamFile(const std::string& dir, const std::string& symbol,const int32 market_date, 
+                    base_logic::DictionaryValue* dyna_tick) {
+
+    std::string filename = symbol + "_" + base::BasicUtil::StringUtil::Int64ToString(market_date);
+
+    std::string temp_path = dir + "/" + filename + ".jcsv";
+    file::FilePath temp_file_path(temp_path);
+
+    ULOG_DEBUG2("dir:%s file:%s",dir.c_str(), filename.c_str());
+    std::string body_stream;
+    base_logic::ValueSerializer* engine = base_logic::ValueSerializer::Create(
+                  base_logic::IMPL_JSON);
+    
+    bool r = engine->Serialize((*dyna_tick), &body_stream);
+    if (r)
+        file::WriteFile(temp_file_path, body_stream.c_str(), 
+            body_stream.length());
+    return true;
 }
 
 bool FutureManager::ExtractDynamMarket(

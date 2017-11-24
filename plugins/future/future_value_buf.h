@@ -224,6 +224,14 @@ class BasicFuture {
 }
 
 namespace net_reply {
+
+class DynaFileUnit{
+ public:
+     base_logic::FundamentalValue* market_date_;
+     base_logic::FundamentalValue* mk_date_;
+     base_logic::StringValue*     url_;
+};
+
 class DynaTick {
  public:
   DynaTick()

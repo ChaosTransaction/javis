@@ -44,7 +44,8 @@ class FutureManager {
                         future_infos::StaticInfo& static_info,
                         std::list<chaos_data::SymbolDynamMarket>& dynam_list);
 
-  bool WriteDynamMarket(future_infos::TickTimePos& start_pos,
+  bool WriteDynamMarket(const int64 uid,const std::string& symbol, 
+                        future_infos::TickTimePos& start_pos,
                         future_infos::TickTimePos& end_pos,
                         std::list<future_infos::StaticInfo>& static_list,
                         std::map<int32, future_infos::DayMarket>& market_hash);
@@ -61,11 +62,16 @@ class FutureManager {
                         future_infos::StaticInfo& static_info,
                         net_reply::DynaTick& dyna_tick);
 
-  bool CalcuDynamMarket(const char* raw_data, const size_t raw_data_length,
+  bool CalcuDynamMarket(const std::string& dir, const char* raw_data, const size_t raw_data_length,
                         future_infos::StaticInfo& static_info,
                         net_reply::DynaTick& dyna_tick);
 
   int GetPriceMul(const uint8 price_digit) const;
+
+  bool WriteDynamFile(const std::string& dir, const std::string& symbol, const int32 market_date, 
+                     base_logic::DictionaryValue*  dyna_tick);
+
+  void CreateDir(const int64 uid, const std::string& symbol, std::string& dir);
 };
 
 class FutureEngine {

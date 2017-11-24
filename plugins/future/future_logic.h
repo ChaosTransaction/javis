@@ -42,6 +42,7 @@ class Futurelogic {
  private:
   bool OnDynaTick(struct server* srv, int socket, struct PacketHead* packet);
 
+  bool OnDynaFile(struct server* srv, int socket, struct PacketHead* packet);
  private:
   bool Init();
  private:

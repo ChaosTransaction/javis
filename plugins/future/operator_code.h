@@ -9,6 +9,6 @@
 namespace future_logic {
 
 #define R_FUTURE_DYNA_TICK FUTURE_TYPE * 1000 + 1
-
+#define R_FUTURE_DYNA_FILE FUTURE_TYPE * 1000 + 3 
 }
 #endif
