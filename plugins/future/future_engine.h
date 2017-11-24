@@ -7,6 +7,8 @@
 #include "future_infos.h"
 #include "basic/basictypes.h"
 #include "future_value_buf.h"
+#include "file/file_path.h"
+#include "file/file_util.h"
 #include <string>
 #include <list>
 namespace future_logic {
@@ -44,7 +46,7 @@ class FutureManager {
                         future_infos::StaticInfo& static_info,
                         std::list<chaos_data::SymbolDynamMarket>& dynam_list);
 
-  bool WriteDynamMarket(const int64 uid,const std::string& symbol, 
+  bool WriteDynamMarket(const int64 uid, const std::string& symbol,
                         future_infos::TickTimePos& start_pos,
                         future_infos::TickTimePos& end_pos,
                         std::list<future_infos::StaticInfo>& static_list,
@@ -62,16 +64,23 @@ class FutureManager {
                         future_infos::StaticInfo& static_info,
                         net_reply::DynaTick& dyna_tick);
 
-  bool CalcuDynamMarket(const std::string& dir, const char* raw_data, const size_t raw_data_length,
+  bool CalcuDynamMarket(const std::string& dir, const char* raw_data,
+                        const size_t raw_data_length,
                         future_infos::StaticInfo& static_info,
-                        net_reply::DynaTick& dyna_tick);
+                        net_reply::DynaTick& dyna_tick,
+                        net_reply::DynaFile& dyna_file);
 
   int GetPriceMul(const uint8 price_digit) const;
 
-  bool WriteDynamFile(const std::string& dir, const std::string& symbol, const int32 market_date, 
-                     base_logic::DictionaryValue*  dyna_tick);
+  bool WriteDynamFile(file::FilePath& file_name,
+                      base_logic::DictionaryValue* dyna_tick);
 
   void CreateDir(const int64 uid, const std::string& symbol, std::string& dir);
+
+  void CreateFile(const std::string& dir,
+                  const std::string& symbol,
+                  const int32 market_date,
+                  file::FilePath& file_name);
 };
 
 class FutureEngine {

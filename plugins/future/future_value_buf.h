@@ -225,12 +225,92 @@ class BasicFuture {
 
 namespace net_reply {
 
-class DynaFileUnit{
+
+class DynaFile {
  public:
-     base_logic::FundamentalValue* market_date_;
-     base_logic::FundamentalValue* mk_date_;
-     base_logic::StringValue*     url_;
+  DynaFile()
+      : dyna_file_(NULL)
+      , value_(NULL) {
+    dyna_file_ = new base_logic::ListValue;
+  }
+
+  ~DynaFile() {
+    if (value_) {
+      delete value_;
+      value_ = NULL;
+    }
+  }
+
+  void set_unit(base_logic::DictionaryValue* value) {
+    dyna_file_->Append(value);
+  }
+
+
+  base_logic::DictionaryValue* get() {
+    value_ = new base_logic::DictionaryValue();
+    if (!dyna_file_->empty()) {
+      value_->Set(L"df", dyna_file_);
+    } else {
+      delete dyna_file_;
+      dyna_file_ = NULL;
+    }
+    return value_;
+  }
+
+  void Reset() {
+    if (value_) {
+      delete value_;
+      value_ = NULL;
+    }
+    dyna_file_ = new base_logic::ListValue;
+  }
+
+  int32 Size() const {
+    return dyna_file_->GetSize();
+  }
+
+ private:
+  base_logic::ListValue* dyna_file_;
+  base_logic::DictionaryValue* value_;
 };
+
+class DynaFileUnit {
+ public:
+  DynaFileUnit()
+   : market_date_(NULL)
+   , found_date_(NULL)
+   , url_(NULL)
+   , value_(NULL){}
+
+  void set_market_date(const int32 market_date){
+    market_date_ = new base_logic::FundamentalValue(market_date);
+  }
+  void set_found_date(const int64 found_date){
+    found_date_ = new base_logic::FundamentalValue(found_date);
+  }
+
+  base_logic::DictionaryValue* get() {
+    value_ = new base_logic::DictionaryValue();
+    if (market_date_ != NULL)
+      value_->Set(L"md", market_date_);
+    if (foud_date_ != NULL)
+      value_->Set(L"fd",foud_date_);
+    if (url_ != NULL)
+      value_->Set(L"url", url);
+    return value_;
+  }
+
+  void set_url(const std::string& url){
+    url_ = new base_logic::StringValue(ulr);
+  }
+  base_logic::FundamentalValue* market_date_;
+  base_logic::FundamentalValue* found_date_;
+  base_logic::StringValue* url_;
+
+  base_logic::DictionaryValue* value_;
+};
+
+
 
 class DynaTick {
  public:
@@ -255,7 +335,7 @@ class DynaTick {
 
   int64 next_time() const {
     int64 next_time = 0;
-    if(next_time_ != NULL)
+    if (next_time_ != NULL)
       next_time_->GetAsBigInteger(&next_time);
     return next_time;
   }
@@ -299,18 +379,20 @@ class DynaTick {
     base_logic::Value* value = NULL;
     int64 current_time;
     dyna_tick_->Get(index, &value);
-    base_logic::DictionaryValue* dict = (base_logic::DictionaryValue*)(value);
-    dict->GetBigInteger(L"ct",&current_time);
+    base_logic::DictionaryValue* dict = (base_logic::DictionaryValue*) (value);
+    dict->GetBigInteger(L"ct", &current_time);
     return current_time;
   }
 
   bool Remove(const int index) {
     base_logic::Value* value = NULL;
-    bool r = dyna_tick_->Remove(index,& value);
-    if(value) {delete value; value = NULL;}
+    bool r = dyna_tick_->Remove(index, &value);
+    if (value) {
+      delete value;
+      value = NULL;
+    }
     return r;
   }
-
 
   int32 Size() const {
     return dyna_tick_->GetSize();
